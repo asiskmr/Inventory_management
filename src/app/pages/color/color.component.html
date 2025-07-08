@@ -1,0 +1,30 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6">
+            <div class="row">
+                <h3>Color Master</h3>             
+            </div>
+            <form>
+                <div class="row mt-4">
+                    <div class="col-4">
+                        <label for="colorNo">Color No</label>
+                        <input type="text" (change)="updateForm('colorNo',$event)" name="colorNo" id="colorNo" class="form-control" placeholder="Enter Color Number">
+                    </div>
+                    <div class="col-4">
+                        <label for="colorName">Color Name</label>
+                        <input type="text" (change)="updateForm('colorName',$event)" name="colorName" id="colorName" class="form-control" placeholder="Enter Color name">
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-6"></div>
+                    <div class="col-6">
+                        <button class="btn btn-sm btn-secondary m-1"> Reset</button>
+                        <button class="btn btn-sm btn-success" (click)="onSaveColor()"> Save</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        
+    </div>
+</div>

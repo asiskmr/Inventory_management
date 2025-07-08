@@ -1,0 +1,96 @@
+<div class="container">
+  <h2 class="align-center">Create Contractor</h2>
+  <form #form="ngForm" class="row g-3 needs-validation" novalidate>
+    <div class="col-md-4">
+      <label for="contractorName" class="form-label">Contractor Name <span class="text-danger">*</span></label>
+      <input type="text" class="form-control" [readOnly]="action=='view'" #contractorName="ngModel" name="contractorName"
+        [(ngModel)]="contractorObj.contractorName" id="contractorName" required>
+
+      <div class="text-danger">
+        @if(contractorName.errors?.['required'] && contractorName.touched && contractorName.dirty) {
+        <span>This is required</span>
+        }
+      </div>
+    </div>
+    <div class="col-md-4">
+      <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+      <input type="text" class="form-control" minlength="4" #email="ngModel" name="email" [readOnly]="action=='view'"
+        [(ngModel)]="contractorObj.email" id="email" required>
+
+      <div class="text-danger">
+        <span *ngIf="email.errors?.['required'] && email.touched">This is required</span>
+      </div>
+      <div class="text-danger">
+        <span *ngIf="email.errors?.['minlength'] && email.touched">Min 4 Char is Required</span>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <label for="mobile" class="form-label">Mobile Number</label>
+      <div class="input-group has-validation">
+        <!-- <span class="input-group-text" id="inputGroupPrepend">&#64;</span> -->
+        <input type="text" class="form-control" name="mobile" [readOnly]="action=='view'" [(ngModel)]="contractorObj.mobile"
+          id="mobile" aria-describedby="inputGroupPrepend">
+        <div class="invalid-feedback">
+          Please Enter Mobile Number.
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <label for="address" class="form-label">Address</label>
+      <input type="text" class="form-control" name="address" [readOnly]="action=='view'" [(ngModel)]="contractorObj.address"
+        id="address">
+      <div class="invalid-feedback">
+        Please Enter Address.
+      </div>
+    </div>
+    <div class="col-md-4">
+      <label for="city" class="form-label">City</label>
+      <input type="text" class="form-control" name="city" [readOnly]="action=='view'" [(ngModel)]="contractorObj.city"
+        id="city">
+      <div class="invalid-feedback">
+        Please Enter City.
+      </div>
+    </div>
+    <div class="col-md-4">
+      <label for="state" class="form-label">State</label>
+      <select class="form-select" name="state" [disabled]="action=='view'" [(ngModel)]="contractorObj.state" id="state">
+        <option selected disabled value="">Choose...</option>
+        <option>Delhi</option>
+        <option>UP</option>
+        <option>Haryana</option>
+      </select>
+      <div class="invalid-feedback">
+        Please select a valid state.
+      </div>
+    </div>
+    <div class="col-md-4">
+      <label for="gstNo" class="form-label">GST Number</label>
+      <input type="text" maxlength="10" class="form-control" name="gstNo" [readOnly]="action=='view'" [(ngModel)]="contractorObj.gstNo"
+        id="gstNo">
+      <div class="invalid-feedback">
+        Please provide a valid GST No.
+      </div>
+    </div>
+    <div class="col-8">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="active" [disabled]="action=='view'"
+          [(ngModel)]="contractorObj.active" value="" id="active">
+        <label class="form-check-label" for="active">
+          Status
+        </label>
+        <div class="invalid-feedback">
+          You must agree before submitting.
+        </div>
+      </div>
+    </div>
+
+    <div class="col-10">
+
+    </div>
+    <div class="col-2 ">
+      <button [disabled]="form.invalid" *ngIf="action != 'view'" class="btn btn-primary align-left" type="submit"
+        (click)="onSave()">Submit</button>
+      <button class="btn btn-primary margin-left-10" type="submit" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+</div>

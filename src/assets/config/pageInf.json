@@ -1,0 +1,20 @@
+[
+    {
+        "client": {
+            "new": "/create-client",
+            "list": "/list-client"
+        }
+    },
+    {
+        "customer": {
+            "new": "/create-contractor",
+            "list": "/list-contractor"
+        }
+    },
+    {
+        "design": {
+            "new": "/create-design",
+            "list": "/list-design"
+        }
+    }
+]

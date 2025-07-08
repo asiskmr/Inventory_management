@@ -1,0 +1,32 @@
+<div class="container">
+    <form #form="ngForm" class="row g-3 needs-validation" novalidate>
+        <div class="col-md-4">
+            <label for="designName" class="form-label">Design Name <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" [readOnly]="action=='view'" #designName="ngModel" name="designName"
+                [(ngModel)]="designObj.designName" id="designName"
+                (ngModelChange)="designObj.designName = $event.toUpperCase()" required>
+
+            <div class="text-danger">
+                @if(designName.errors?.['required'] && designName.touched && designName.dirty) {
+                <span>This is required</span>
+                }
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label for="description" class="form-label">Description <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" #description="ngModel" name="description"
+                [readOnly]="action=='view'" [(ngModel)]="designObj.description" id="description" required>
+
+            <div class="text-danger">
+                <span *ngIf="description.errors?.['required'] && description.touched">This is required</span>
+            </div>
+        </div>
+
+        <div class="col-6"> </div>
+        <div class="col-2 margin-top-54 align-right">
+            <button [disabled]="form.invalid" *ngIf="action != 'view'" class="btn btn-primary align-left" type="submit"
+                (click)="onSave()">Submit</button>
+            <button class="btn btn-primary margin-left-10" type="submit" (click)="cancel()">Cancel</button>
+        </div>
+    </form>
+</div>

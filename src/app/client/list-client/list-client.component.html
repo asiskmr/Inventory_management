@@ -1,0 +1,73 @@
+<div class="row div-margin-botton">
+
+  <form #form="ngForm" class="row g-3 needs-validation" novalidate>
+    <div class="col-md-3">
+      <label for="clientName" class="form-label">Client Name </label>
+      <input type="text" class="form-control" [readOnly]="action=='view'" #clientName="ngModel" name="clientName"
+        [(ngModel)]="clientObj.clientName" (ngModelChange)="clientObj.clientName = $event.toUpperCase()"
+        id="clientName">
+    </div>
+    <div class="col-md-4">
+      <label for="email" class="form-label">Email </label>
+      <input type="text" class="form-control" minlength="4" #email="ngModel" name="email" [readOnly]="action=='view'"
+        [(ngModel)]="clientObj.email" id="email">
+    </div>
+    <div class="col-md-2">
+      <label for="mobile" class="form-label">Mobile Number</label>
+      <div class="input-group has-validation">       
+        <input type="text" class="form-control" name="mobile" [readOnly]="action=='view'" [(ngModel)]="clientObj.mobile"
+          id="mobile" aria-describedby="inputGroupPrepend">
+        <div class="invalid-feedback">
+          Please Enter Mobile Number.
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <label for="gstNo" class="form-label">GST Number</label>
+      <input type="text" maxlength="10" class="form-control" name="gstNo" [readOnly]="action=='view'"
+        [(ngModel)]="clientObj.gstNo" id="gstNo">
+      <div class="invalid-feedback">
+        Please provide a valid GST No.
+      </div>
+    </div> 
+    <div class="col-1 align-right">
+      <button class="margin-top-25 btn btn-primary" name="gstNo" (click)="searchClient()" id="gstNo"> Search </button>
+    </div>
+  </form>
+</div>
+<div class="row">
+  <div class="col-11"></div>
+  <div class="col-1 align-right"><i class="bi bi-filetype-csv font-size-30" (click)="onBtnExport()"></i></div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <ag-grid-angular class="ag-theme-quartz" style="height: 500px;" [rowData]="clints" [columnDefs]="colDefs"
+      [defaultColDef]="defaultColDef" (gridReady)="onGridReady($event)" />
+  </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Delete Customer</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        Do you want to delete the Customer?
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="deleteClient()" data-bs-dismiss="modal">Confirm</button>
+      </div>
+
+    </div>
+  </div>
+</div>
