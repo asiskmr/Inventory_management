@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, Input, OnInit, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { MasterDataService } from '../../pages/service/master-data.service';
-import { client } from '../../model/client';
 import { FormsModule } from '@Angular/forms';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -15,11 +14,12 @@ import { design } from '../../model/design';
   styleUrl: './create-design.component.css'
 })
 export class CreateDesignComponent {
-  
+
   id: string = '';
   action: string = '';
   url: string = 'designs/';
-
+  showSuccessMessage: boolean = false;
+  successMessage: string = '';
   http = inject(HttpClient)
   designFromData = signal(new design())
   masterDataService = inject(MasterDataService)
@@ -30,27 +30,29 @@ export class CreateDesignComponent {
   }
 
   ngOnInit() {
-    debugger;
     this.router.queryParams.subscribe((params: Params) => {
       this.id = params['id']
-      this.action = params['action']     
+      this.action = params['action']
     });
 
-    if (this.id) {    
+    if (this.id) {
       this.masterDataService.findById(this.id, this.url)
         .subscribe((res: any) => {
           this.designObj = res;
         })
     }
   }
-
- 
-
-  onSave = () => {    
+  onSave = () => {
     this.masterDataService.save(this.url, this.designObj)
       .subscribe((res: any) => {
         if (res.status === 'success') {
-          this.route.navigate(["/list-design"])
+          this.successMessage = 'Data saved successfully!';
+          this.showSuccessMessage = true;
+          this.designObj = new design();
+          setTimeout(() => {
+            this.showSuccessMessage = false;
+            this.successMessage = '';
+          }, 3000);
         } else {
           console.log(res.message)
         }

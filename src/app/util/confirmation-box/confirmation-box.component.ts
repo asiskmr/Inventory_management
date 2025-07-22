@@ -21,7 +21,6 @@ export class ConfirmationBoxComponent {
   }
 
   ngOnInit() {
-    debugger;
     this.router.queryParams.subscribe((params: Params) => {
       this.id = params['id']
       this.action = params['action']

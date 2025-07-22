@@ -1,0 +1,101 @@
+<div class="row div-margin-botton">
+
+    <form #form="ngForm" class="row g-3 needs-validation" novalidate>
+        <div class="col-md-2">
+            <label for="challannumber" class="form-label">challan Number</label>
+            <input type="text" class="form-control" [readOnly]="action=='view'" #challannumber="ngModel"
+                name="challannumber" [(ngModel)]="filterObj.challannumber"
+                (ngModelChange)="filterObj.challannumber = $event.toUpperCase()" id="challannumber">
+        </div>
+        <div class="col-md-3">
+            <label for="party" class="form-label">Contractor</label>
+            <div class="dropdown">
+                <input class="form-control dropdown-toggle" [(ngModel)]="filterObj.contractorid"
+                    (input)="filterData($event)" type="text" name="contractorid" id="contractorid" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    <li *ngFor="let party of dropdownData" [value]="party.id">{{ party.contractorName }}</li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <label for="fromDate" class="form-label">From Date</label>
+            <div class="input-group">
+                <input matInput [matDatepicker]="picker1" id="fromDate" [(ngModel)]="fromDate" name="fromDate"
+                    class="form-control height-39" #challanDate="ngModel" />
+                <span class="input-group-text height-39" style="cursor: pointer;">
+                    <mat-datepicker-toggle [for]="picker1"></mat-datepicker-toggle>
+                </span>
+            </div>
+            <mat-datepicker #picker1></mat-datepicker>
+            <div class="text-danger">
+                @if(challanDate.errors?.['required'] && challanDate.touched && challanDate.dirty) {
+                <span>This is required</span>
+                }
+            </div>
+        </div>
+        <div class="col-md-2">
+            <label for="toDate" class="form-label">To Date</label>
+            <div class="input-group">
+                <input matInput [matDatepicker]="picker" id="toDate" [(ngModel)]="toDate" name="toDate"
+                    class="form-control height-39" #challanDate="ngModel" />
+                <span class="input-group-text height-39" style="cursor: pointer;">
+                    <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
+                </span>
+            </div>
+            <mat-datepicker #picker></mat-datepicker>
+            <div class="text-danger">
+                @if(challanDate.errors?.['required'] && challanDate.touched && challanDate.dirty) {
+                <span>This is required</span>
+                }
+            </div>
+        </div>
+        <div class="col-md-2">
+            <label for="challantype" class="form-label">Challan Type <span class="text-danger">*</span></label>
+            <select class="form-select" name="challantype" id="challantype" [disabled]="action=='view'"
+                [(ngModel)]="filterObj.challantype" id="challantype">
+                <option value="I" selected>Issue</option>
+                <option value="R">Recive</option>
+            </select>
+        </div>
+        <div class="col-1 align-right">
+            <button class="margin-top-30 btn btn-primary" name="search" (click)="searchClientChallan()" id="search">
+                Search </button>
+        </div>
+    </form>
+</div>
+<div class="row">
+    <div class="col-9"></div>
+    <div class="col-2 div-margin-top align-right">Total No of records : {{totalRecord}}</div>
+    <div class="col-1  align-center"><i class="bi bi-filetype-csv font-size-30" (click)="onBtnExport()"></i></div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <ag-grid-angular class="ag-theme-quartz" style="height: 500px;" [rowData]="contractorChallans"
+            [columnDefs]="colDefs" [defaultColDef]="defaultColDef" (gridReady)="onGridReady($event)" />
+    </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Challan Items</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ag-grid-angular class="ag-theme-quartz" style="height: 300px;" [rowData]="itemDetails"
+                    [columnDefs]="itemDetailsColDefs" [defaultColDef]="defaultColDef"
+                    (gridReady)="onGridReady($event)" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

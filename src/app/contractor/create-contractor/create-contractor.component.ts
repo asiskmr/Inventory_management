@@ -20,12 +20,14 @@ export class CreateContractorComponent {
   http = inject(HttpClient)
   contractorFromData = signal(new contractor())
   masterDataService = inject(MasterDataService)
+   showSuccessMessage: boolean = false;
+  successMessage: string = '';
+  contractorObj: contractor = new contractor();
 
   constructor(public router: ActivatedRoute, public route: Router) {
   }
 
   ngOnInit() {
-    debugger;
     this.router.queryParams.subscribe((params: Params) => {
       this.id = params['id']
       this.action = params['action']      
@@ -39,15 +41,18 @@ export class CreateContractorComponent {
     }
   }
 
-
-  contractorObj: contractor = new contractor();
-
   onSave = () => {
     const formValue = this.contractorObj;
     this.masterDataService.saveContractor(formValue)
       .subscribe((res: any) => {
         if (res.status === 'success') {
-          this.route.navigate(["/list-contractor"])
+         this.successMessage = 'Data saved successfully!';
+                   this.showSuccessMessage = true;
+                   this.contractorObj = new contractor();
+                   setTimeout(() => {
+                     this.showSuccessMessage = false;
+                     this.successMessage = '';
+                   }, 3000);
         } else {
           console.log(res.message)
         }

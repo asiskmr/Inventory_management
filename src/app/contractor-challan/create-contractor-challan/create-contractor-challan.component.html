@@ -1,0 +1,104 @@
+<div class="container">
+    <div class="row">
+    <div class="col-12 div-margin-top">
+      <div *ngIf="showSuccessMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ successMessage }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+  <form #form="ngForm" class="row g-3 needs-validation div-margin-top" novalidate>
+    {{challanDate}}
+    <div class="col-md-3">
+      <label for="challanDate" class="form-label">Challan Date <span class="text-danger">*</span></label>
+      <div class="input-group">
+        <input matInput [matDatepicker]="picker" id="challanDate" [(ngModel)]="challanDate" name="challanDate"
+          class="form-control height-39" #challanDate="ngModel" />
+        <span class="input-group-text height-39" style="cursor: pointer;">
+          <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
+        </span>
+      </div>
+      <mat-datepicker #picker></mat-datepicker>
+      <div class="text-danger">
+        @if(challanDate.errors?.['required'] && challanDate.touched && challanDate.dirty) {
+        <span>This is required</span>
+        }
+      </div>
+    </div>
+    <div class="col-md-3">
+      <label for="challanType" class="form-label">Challan Type <span class="text-danger">*</span></label>
+      <select class="form-select" name="party" [disabled]="action=='view'" [(ngModel)]="contractorChallanObj.challanType"
+        id="party">
+        <option *ngFor="let challan of challanTypes" [value]="challan.val">{{ challan.name }}</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <label for="party" class="form-label">Contractor</label>
+      <div class="input-group has-validation">
+        <!-- <span class="input-group-text" id="inputGroupPrepend">&#64;</span> -->
+        <select class="form-select" name="party" [disabled]="action=='view'" [(ngModel)]="contractorChallanObj.party"
+          id="party">
+          <option *ngFor="let party of constructors" [value]="party.id">{{ party.contractorName }}</option>
+        </select>
+        <div class="invalid-feedback">
+          Please Select paryt.
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <label for="challanNumber" class="form-label">Challan Number</label>
+      <input type="text" class="form-control" name="challanNumber" [readOnly]="action=='view'"
+        [(ngModel)]="contractorChallanObj.challanNumber" id="challanNumber">
+      <div class="invalid-feedback">
+        Please Enter challan Number.
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <label for="design" class="form-label">Desing</label>
+      <select class="form-select" name="design" (blur)="onInputBlur()" [disabled]="action=='view'"
+        [(ngModel)]="contractorChallanObj.design" id="design">
+        <option *ngFor="let design of designs" [value]="design.id">{{ design.designName }}</option>
+      </select>
+      <div class="invalid-feedback">
+        Please Select Desing.
+      </div>
+    </div>
+    <div class="col-md-3">
+      <label for="color" class="form-label">Color</label>
+      <select class="form-select" name="color" (blur)="onInputBlur()" [disabled]="action=='view'"
+        [(ngModel)]="contractorChallanObj.color" id="color">
+        <option *ngFor="let color of colors" [value]="color.id">{{ color.colorName }}</option>
+      </select>
+      <div class="invalid-feedback">
+        Please select a valid Color.
+      </div>
+    </div>
+    <div class="col-md-3">
+      <label for="quantity" class="form-label">Quantity</label>
+      <input type="text"  (keypress)="utilsService.numberOnly($event)" (blur)="onInputBlur()" class="form-control" name="quantity"
+        [readOnly]="action=='view'" [(ngModel)]="contractorChallanObj.quantity" id="quantity" name="quantity">
+      <div class="invalid-feedback">
+        Please Entity Quantity.
+      </div>
+    </div>
+    <div class="col-3 margin-top-45">
+      <button class="btn btn-primary align-left" [disabled]="disableAdd" type="submit" (click)="addItems()">Add</button>
+    </div>
+    <div class="row margin-top-30">
+      <div class="col-12">
+        <ag-grid-angular class="ag-theme-quartz" style="height: 340px;" [rowData]="items" [columnDefs]="colDefs"
+          [defaultColDef]="defaultColDef" (gridReady)="onGridReady($event)" [getRowId]="getRowId"
+          (cellValueChanged)="onCellValueChanged($event)" />
+      </div>
+    </div>
+    <div class="col-10">
+
+    </div>
+    <div class="col-2 ">
+      <button [disabled]="form.invalid" *ngIf="action != 'view'" class="btn btn-primary align-left" type="submit"
+        (click)="onSave()">Submit</button>
+      <button class="btn btn-primary margin-left-10" type="submit" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+</div>

@@ -7,15 +7,12 @@ import { AgGridAngular } from "ag-grid-angular";
 import type { ColDef, CsvExportParams, GridReadyEvent } from "ag-grid-community";
 import { provideGlobalGridOptions, GridApi } from 'ag-grid-community';
 import { CustomeCellComponent } from '../../util/custome-cell/custome-cell.component';
-import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
-
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormsModule } from '@Angular/forms';
 import { CommonModule } from '@angular/common';
 import { UtilsService } from '../../util/utils.service';
 
 provideGlobalGridOptions({ theme: "legacy" });
-
-
 @Component({
   selector: 'app-list-client',
   standalone: true,
@@ -25,34 +22,36 @@ provideGlobalGridOptions({ theme: "legacy" });
 })
 export class ListClientComponent implements OnInit {
 
+  private readonly http = inject(HttpClient)
+  private readonly masterDataService = inject(MasterDataService);
+  readonly utilsService = inject(UtilsService);
+  private readonly route = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
 
   id: string = '';
   action: string = '';
   url: string = 'clients/';
-
-  http = inject(HttpClient)
-  masterDataService = inject(MasterDataService)
-  utilsService: UtilsService = inject(UtilsService);
+  totalRecord: number = 0;
   clints: client[] = [];
   clientObj: client = new client();
   private gridApi!: GridApi;
+  clientList$: Observable<client[]> = new Observable<client[]>;
 
-  constructor(public router: ActivatedRoute, public route: Router) {
+  constructor(public router: ActivatedRoute) {
   }
 
   ngOnInit() {
-    //this.getClientData();
-    //debugger;
     this.router.queryParams.subscribe((params: Params) => {
       this.id = params['id']
-      this.action = params['action']     
+      this.action = params['action']
     });
   }
 
   getClientData = () => {
     this.masterDataService.getData(this.url)
       .subscribe((res: any) => {
-        this.clints = res;
+        this.clints = res.data;
+        this.totalRecord = res.metadata.recordcount
       })
 
   }
@@ -104,8 +103,6 @@ export class ListClientComponent implements OnInit {
 
   };
 
-  clientList$: Observable<client[]> = new Observable<client[]>;
-
   creatClient = () => {
     this.route.navigate(["/create-client"])
   }
@@ -122,10 +119,13 @@ export class ListClientComponent implements OnInit {
   }
 
   searchClient = () => {
-    this.url += this.utilsService.buildUrl(this.clientObj);
-    this.masterDataService.search(this.url)
+    this.clientObj.active = false;
+    let url = ''
+    url = this.url + this.utilsService.buildUrl(this.clientObj);
+    this.masterDataService.search(url)
       .subscribe((res: any) => {
-        this.clints = res;
+        this.clints = res.data;
+        this.totalRecord = res.metadata.recordcount;
       })
   }
 
@@ -139,7 +139,7 @@ export class ListClientComponent implements OnInit {
       fileName: 'client_data.csv',
       //onlySelected: false,       // Export only selected rows
       // allColumns: true,         // Export all columns, even if not visible
-      //columnKeys: ['name'],     // Export only specific columns
+      columnKeys: ['id', 'clientName', 'address', 'city', 'state', 'country', 'email'],     // Export only specific columns
     };
 
     this.gridApi.exportDataAsCsv(params);

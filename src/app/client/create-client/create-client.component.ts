@@ -16,49 +16,66 @@ import { UtilsService } from '../../util/utils.service';
 })
 export class CreateClientComponent implements OnInit {
 
+  private readonly http = inject(HttpClient)
+  private readonly masterDataService = inject(MasterDataService);
+  readonly utilsService = inject(UtilsService);
+
+  private readonly route = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
+
   id: string = '';
   action: string = '';
   url: string = 'clients/';
-
-  http = inject(HttpClient)
+  clientObj: client = new client();
+  showSuccessMessage: boolean = false;
+  successMessage: string = '';
   clientFromData = signal(new client())
-  masterDataService = inject(MasterDataService)
-  utilsService: UtilsService = inject(UtilsService);
 
-  constructor(public router: ActivatedRoute, public route: Router) {
+  constructor(public router: ActivatedRoute) {
   }
 
   ngOnInit() {
-    debugger;
     this.router.queryParams.subscribe((params: Params) => {
       this.id = params['id']
-      this.action = params['action']     
+      this.action = params['action']
     });
 
     if (this.id) {
-    
-      this.masterDataService.findById(this.id, this.url)
-        .subscribe((res: any) => {
-          this.clientObj = res;
-        })
+      this.loadClient(this.id);
     }
   }
 
-  clientObj: client = new client();
-
-  onSave = () => {
-    this.masterDataService.save(this.url, this.clientObj)
-      .subscribe((res: any) => {
-        if (res.status === 'success') {
-          this.route.navigate(["/list-client"])
-        } else {
-          console.log(res.message)
-        }
-      })
+  private loadClient(id: string): void {
+    this.masterDataService.findById(id, this.url).subscribe({
+      next: (res: any) => {
+        this.clientObj = res;
+      },
+      error: (err) => {
+        console.error('Error loading client:', err);
+      }
+    });
   }
 
-  ngOnDestroy(): void {
+  save(): void {
+    this.masterDataService.save(this.url, this.clientObj).subscribe({
+      next: (res: any) => {
+        if (res.status === 'success') {
+          this.successMessage = 'Data saved successfully!';
+          this.showSuccessMessage = true;
+          this.clientObj = new client();
 
+          setTimeout(() => {
+            this.showSuccessMessage = false;
+            this.successMessage = '';
+          }, 3000);
+        } else {
+          console.warn('Save failed:', res.message);
+        }
+      },
+      error: (err) => {
+        console.error('Save error:', err);
+      }
+    });
   }
 
   updateForm = (key: string, event: any) => {
@@ -67,7 +84,7 @@ export class CreateClientComponent implements OnInit {
     )
   }
 
-  cancel = () => {
-    this.route.navigate(["/list-client"])
-  }
+  // cancel = () => {
+  //   this.route.navigate(["/list-client"])
+  // }
 }

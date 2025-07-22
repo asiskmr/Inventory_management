@@ -1,18 +1,14 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { contractor } from '../../model/contractor';
 import { MasterDataService } from '../../pages/service/master-data.service';
 import { AgGridAngular } from "ag-grid-angular";
 import type { ColDef, CsvExportParams, GridApi, GridReadyEvent } from "ag-grid-community";
-import { provideGlobalGridOptions } from 'ag-grid-community';
-
-import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
-
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormsModule } from '@Angular/forms';
 import { CommonModule } from '@angular/common';
 import { CustomeCellComponent } from '../../util/custome-cell/custome-cell.component';
-import { ICellRendererParams, IRowChildrenService } from 'ag-grid-enterprise';
 import { UtilsService } from '../../util/utils.service';
 
 @Component({
@@ -28,6 +24,7 @@ export class ListContractorComponent {
   id: string = '';
   action: string = '';
   url: string = 'contractors/';
+  totalRecord: number = 0;
   http = inject(HttpClient)
   masterDataService = inject(MasterDataService)
   utilsService: UtilsService = inject(UtilsService);
@@ -40,8 +37,6 @@ export class ListContractorComponent {
   }
 
   ngOnInit() {
-    //this.getContractorData();
-    // debugger;
     this.router.queryParams.subscribe((params: Params) => {
       this.id = params['id']
       this.action = params['action']     
@@ -51,7 +46,8 @@ export class ListContractorComponent {
   getContractorData = () => {
     this.masterDataService.getContractor()
       .subscribe((res: any) => {
-        this.clints = res;
+        this.clints = res.data;
+        this.totalRecord = res.metadata.recordcount;
       })
 
   }
@@ -124,7 +120,8 @@ export class ListContractorComponent {
     this.url += this.utilsService.buildUrl(this.contractorObj);
     this.masterDataService.search(this.url)
       .subscribe((res: any) => {
-        this.clints = res;
+        this.clints = res.data;
+        this.totalRecord = res.metadata.recordcount;
       })
   }
 

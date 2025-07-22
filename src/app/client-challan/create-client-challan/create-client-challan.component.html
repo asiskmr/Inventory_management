@@ -1,0 +1,269 @@
+<!-- <div class="container">
+  
+  <div class="row">
+    <div class="col-12 div-margin-top">
+      <div *ngIf="showSuccessMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ successMessage }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
+  <form #form="ngForm" class="row g-3 needs-validation div-margin-top" novalidate>
+    <div class="col-md-3">
+      <label for="challanDate" class="form-label">Challan Date <span class="text-danger">*</span></label>
+      <div class="input-group">
+        <input matInput [matDatepicker]="picker" id="challanDate" [(ngModel)]="challanDate" name="challanDate"
+          class="form-control height-39" #challanDate="ngModel" />
+        <span class="input-group-text height-39" style="cursor: pointer;">
+          <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
+        </span>
+      </div>
+      <mat-datepicker #picker></mat-datepicker>
+      <div class="text-danger">
+        @if(challanDate.errors?.['required'] && challanDate.touched && challanDate.dirty) {
+        <span>This is required</span>
+        }
+      </div>
+    </div>
+    <div class="col-md-3">
+      <label for="challanType" class="form-label">Challan Type <span class="text-danger">*</span></label>
+      <select class="form-select" name="party" [disabled]="action=='view'" [(ngModel)]="clientChallanObj.challanType"
+        id="party">
+        <option *ngFor="let challan of challanTypes" [value]="challan.val">{{ challan.name }}</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <label for="party" class="form-label">Party</label>
+      <div class="input-group has-validation">
+ 
+        <select class="form-select" name="party" [disabled]="action=='view'" [(ngModel)]="clientChallanObj.party"
+          id="party">
+          <option *ngFor="let party of clients" [value]="party.id">{{ party.clientName }}</option>
+        </select>
+        <div class="invalid-feedback">
+          Please Select paryt.
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <label for="challanNumber" class="form-label">Challan Number</label>
+      <input type="text" class="form-control" name="challanNumber" [readOnly]="action=='view'"
+        [(ngModel)]="clientChallanObj.challanNumber" id="challanNumber">
+      <div class="invalid-feedback">
+        Please Enter challan Number.
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <label for="design" class="form-label">Design</label>
+      <select class="form-select" name="design" (blur)="onInputBlur()" [disabled]="action=='view'"
+        [(ngModel)]="clientChallanObj.design" id="design">
+        <option *ngFor="let design of designs" [value]="design.id">{{ design.designName }}</option>
+      </select>
+      <div class="invalid-feedback">
+        Please Select Design.
+      </div>
+    </div>
+    <div class="col-md-3">
+      <label for="color" class="form-label">Color</label>
+      <select class="form-select" name="color" (blur)="onInputBlur()" [disabled]="action=='view'"
+        [(ngModel)]="clientChallanObj.color" id="color">
+        <option *ngFor="let color of colors" [value]="color.id">{{ color.colorName }}</option>
+      </select>
+      <div class="invalid-feedback">
+        Please select a valid Color.
+      </div>
+    </div>
+    <div class="col-md-3">
+      <label for="quantity" class="form-label">Quantity</label>
+      <input type="text"  (keypress)="utilsService.numberOnly($event)"  (blur)="onInputBlur()" class="form-control"
+        [readOnly]="action=='view'" [(ngModel)]="clientChallanObj.quantity" id="quantity" name="quantity">
+      <div class="invalid-feedback">
+        Please Entity Quantity.
+      </div>
+    </div>
+    <div class="col-3 margin-top-45">
+      <button class="btn btn-primary align-left" [disabled]="disableAdd" type="submit" (click)="addItems()">Add</button>
+    </div>
+    <div class="row margin-top-30">
+      <div class="col-12">
+        <ag-grid-angular class="ag-theme-quartz" style="height: 340px;" [rowData]="items" [columnDefs]="colDefs"
+          [defaultColDef]="defaultColDef" (gridReady)="onGridReady($event)" [getRowId]="getRowId"
+          (cellValueChanged)="onCellValueChanged($event)" />
+      </div>
+    </div>
+    <div class="col-10">
+
+    </div>
+    <div class="col-2 ">
+      <button [disabled]="form.invalid" *ngIf="action != 'view'" class="btn btn-primary align-left" type="submit"
+        (click)="onSave()">Submit</button>
+      <button class="btn btn-primary margin-left-10" type="submit" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+</div> -->
+
+<div class="container">
+  <div class="row">
+    <div class="col-12 mt-3">
+      <div *ngIf="showSuccessMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ successMessage }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
+  <form #form="ngForm" class="row g-3 needs-validation mt-3" novalidate>
+    <!-- Challan Date -->
+     
+    <div class="col-md-3">
+      <label for="challanDate" class="form-label">Challan Date <span class="text-danger">*</span></label>
+      <div class="input-group">
+        <input
+          matInput
+          [matDatepicker]="picker"
+          id="challanDate"
+          name="challanDate"
+          class="form-control"
+          [(ngModel)]="challanDate"
+          required
+          #challanDateModel="ngModel"
+        />
+        <span class="input-group-text" style="cursor: pointer;">
+          <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
+        </span>
+      </div>
+      <mat-datepicker #picker></mat-datepicker>
+      <div class="text-danger" *ngIf="challanDateModel.invalid && (challanDateModel.dirty || challanDateModel.touched)">
+        <span *ngIf="challanDateModel.errors?.['required']">This field is required.</span>
+      </div>
+    </div>
+
+    <!-- Challan Type -->
+    <div class="col-md-3">
+      <label for="challanType" class="form-label">Challan Type <span class="text-danger">*</span></label>
+      <select
+        id="challanType"
+        class="form-select"
+        name="challanType"
+        [(ngModel)]="clientChallanObj.challanType"
+        [disabled]="action === 'view'"
+        required
+      >
+        <option *ngFor="let challan of challanTypes" [value]="challan.val">{{ challan.name }}</option>
+      </select>
+    </div>
+
+    <!-- Party -->
+    <div class="col-md-3">
+      <label for="party" class="form-label">Party</label>
+      <select
+        id="party"
+        class="form-select"
+        name="party"
+        [(ngModel)]="clientChallanObj.party"
+        [disabled]="action === 'view'"
+      >
+        <option *ngFor="let party of clients" [value]="party.id">{{ party.clientName }}</option>
+      </select>
+      <div class="invalid-feedback">Please select a party.</div>
+    </div>
+
+    <!-- Challan Number -->
+    <div class="col-md-3">
+      <label for="challanNumber" class="form-label">Challan Number</label>
+      <input
+        id="challanNumber"
+        type="text"
+        class="form-control"
+        name="challanNumber"
+        [(ngModel)]="clientChallanObj.challanNumber"
+        [readonly]="action === 'view'"
+      />
+    </div>
+
+    <!-- Design -->
+    <div class="col-md-3">
+      <label for="design" class="form-label">Design</label>
+      <select
+        id="design"
+        class="form-select"
+        name="design"
+        [(ngModel)]="clientChallanObj.design"
+        [disabled]="action === 'view'"
+        (blur)="onInputBlur()"
+      >
+        <option *ngFor="let design of designs" [value]="design.id">{{ design.designName }}</option>
+      </select>
+      <div class="invalid-feedback">Please select a design.</div>
+    </div>
+
+    <!-- Color -->
+    <div class="col-md-3">
+      <label for="color" class="form-label">Color</label>
+      <select
+        id="color"
+        class="form-select"
+        name="color"
+        [(ngModel)]="clientChallanObj.color"
+        [disabled]="action === 'view'"
+        (blur)="onInputBlur()"
+      >
+        <option *ngFor="let color of colors" [value]="color.id">{{ color.colorName }}</option>
+      </select>
+      <div class="invalid-feedback">Please select a color.</div>
+    </div>
+
+    <!-- Quantity -->
+    <div class="col-md-3">
+      <label for="quantity" class="form-label">Quantity</label>
+      <input
+        id="quantity"
+        type="text"
+        class="form-control"
+        name="quantity"
+        [(ngModel)]="clientChallanObj.quantity"
+        [readonly]="action === 'view'"
+        (keypress)="utilsService.numberOnly($event)"
+        (blur)="onInputBlur()"
+      />
+      <div class="invalid-feedback">Please enter quantity.</div>
+    </div>
+
+    <!-- Add Button -->
+    <div class="col-md-3 align-self-end">
+      <button type="button" class="btn btn-primary" [disabled]="disableAdd" (click)="addItems()">Add</button>
+    </div>
+
+    <!-- Data Grid -->
+    <div class="row mt-4">
+      <div class="col-12">
+        <ag-grid-angular
+          class="ag-theme-quartz"
+          style="height: 340px;"
+          [rowData]="items"
+          [columnDefs]="colDefs"
+          [defaultColDef]="defaultColDef"
+          (gridReady)="onGridReady($event)"
+          [getRowId]="getRowId"
+          (cellValueChanged)="onCellValueChanged($event)"
+        ></ag-grid-angular>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="col-12 text-end mt-4">
+      <button
+        *ngIf="action !== 'view'"
+        type="button"
+        class="btn btn-success"
+        [disabled]="form.invalid"
+        (click)="onSave()"
+      >
+        Submit
+      </button>
+      <button type="button" class="btn btn-secondary ms-2" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+</div>

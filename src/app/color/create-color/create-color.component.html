@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="col-12 div-margin-top">
+        <div *ngIf="showSuccessMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ successMessage }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+
+    <form #form="ngForm" class="row g-3 needs-validation div-margin-top" novalidate>
+        <div class="col-md-4">
+            <label for="colorName" class="form-label">Color Name <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" [readOnly]="action=='view'" #colorName="ngModel" name="colorName"
+                [(ngModel)]="colorObj.colorName" id="colorName"
+                (ngModelChange)="colorObj.colorName = $event.toUpperCase()" required>
+
+            <div class="text-danger">
+                @if(colorName.errors?.['required'] && colorName.touched && colorName.dirty) {
+                <span>This is required</span>
+                }
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label for="description" class="form-label">Description <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" #description="ngModel" name="description"
+                [readOnly]="action=='view'" [(ngModel)]="colorObj.description" id="description" required>
+
+            <div class="text-danger">
+                <span *ngIf="description.errors?.['required'] && description.touched">This is required</span>
+            </div>
+        </div>
+
+        <div class="col-md-4 margin-top-45 align-right">
+            <button [disabled]="form.invalid" *ngIf="action != 'view'" class="btn btn-primary align-left" type="submit"
+                (click)="onSave()">Submit</button>
+            <button class="btn btn-primary margin-left-10" type="submit" (click)="cancel()">Cancel</button>
+        </div>
+    </form>
+</div>

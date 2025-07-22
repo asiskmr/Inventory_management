@@ -12,6 +12,7 @@ export class client {
     gstNo: String;
     active: boolean;
     createdOn: String;
+  name: any;
 
 
     constructor() {
@@ -24,7 +25,7 @@ export class client {
         this.email = "";
         this.mobile = "";
         this.gstNo = "";
-        this.active = false;
+        this.active = true;
         this.createdOn="";
     }
 }

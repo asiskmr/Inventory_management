@@ -1,10 +1,17 @@
 <div class="container">
-  <h2 class="align-center">Create Contractor</h2>
-  <form #form="ngForm" class="row g-3 needs-validation" novalidate>
+   <div class="row">
+    <div class="col-12 div-margin-top">
+      <div *ngIf="showSuccessMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ successMessage }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+  <form #form="ngForm" class="row g-3 needs-validation div-margin-top" novalidate>
     <div class="col-md-4">
       <label for="contractorName" class="form-label">Contractor Name <span class="text-danger">*</span></label>
       <input type="text" class="form-control" [readOnly]="action=='view'" #contractorName="ngModel" name="contractorName"
-        [(ngModel)]="contractorObj.contractorName" id="contractorName" required>
+        [(ngModel)]="contractorObj.contractorName" id="contractorName" (ngModelChange)="contractorObj.contractorName = $event.toUpperCase()" required>
 
       <div class="text-danger">
         @if(contractorName.errors?.['required'] && contractorName.touched && contractorName.dirty) {
@@ -28,7 +35,7 @@
       <label for="mobile" class="form-label">Mobile Number</label>
       <div class="input-group has-validation">
         <!-- <span class="input-group-text" id="inputGroupPrepend">&#64;</span> -->
-        <input type="text" class="form-control" name="mobile" [readOnly]="action=='view'" [(ngModel)]="contractorObj.mobile"
+        <input type="text" maxlength="10" class="form-control" name="mobile" [readOnly]="action=='view'" [(ngModel)]="contractorObj.mobile"
           id="mobile" aria-describedby="inputGroupPrepend">
         <div class="invalid-feedback">
           Please Enter Mobile Number.
@@ -38,7 +45,7 @@
     <div class="col-md-4">
       <label for="address" class="form-label">Address</label>
       <input type="text" class="form-control" name="address" [readOnly]="action=='view'" [(ngModel)]="contractorObj.address"
-        id="address">
+        id="address" (ngModelChange)="contractorObj.address = $event.toUpperCase()">
       <div class="invalid-feedback">
         Please Enter Address.
       </div>
@@ -46,7 +53,7 @@
     <div class="col-md-4">
       <label for="city" class="form-label">City</label>
       <input type="text" class="form-control" name="city" [readOnly]="action=='view'" [(ngModel)]="contractorObj.city"
-        id="city">
+        id="city" (ngModelChange)="contractorObj.city = $event.toUpperCase()">
       <div class="invalid-feedback">
         Please Enter City.
       </div>
@@ -63,6 +70,14 @@
         Please select a valid state.
       </div>
     </div>
+     <div class="col-md-4">
+      <label for="country" class="form-label">Country</label>
+      <input type="text" class="form-control" name="country" [readOnly]="action=='view'" [(ngModel)]="contractorObj.country"
+        id="country" (ngModelChange)="contractorObj.country = $event.toUpperCase()">
+      <div class="invalid-feedback">
+        Please Enter Country.
+      </div>
+    </div>
     <div class="col-md-4">
       <label for="gstNo" class="form-label">GST Number</label>
       <input type="text" maxlength="10" class="form-control" name="gstNo" [readOnly]="action=='view'" [(ngModel)]="contractorObj.gstNo"
@@ -71,23 +86,7 @@
         Please provide a valid GST No.
       </div>
     </div>
-    <div class="col-8">
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="active" [disabled]="action=='view'"
-          [(ngModel)]="contractorObj.active" value="" id="active">
-        <label class="form-check-label" for="active">
-          Status
-        </label>
-        <div class="invalid-feedback">
-          You must agree before submitting.
-        </div>
-      </div>
-    </div>
-
-    <div class="col-10">
-
-    </div>
-    <div class="col-2 ">
+    <div class="col-md-4 margin-top-45 align-right">
       <button [disabled]="form.invalid" *ngIf="action != 'view'" class="btn btn-primary align-left" type="submit"
         (click)="onSave()">Submit</button>
       <button class="btn btn-primary margin-left-10" type="submit" (click)="cancel()">Cancel</button>

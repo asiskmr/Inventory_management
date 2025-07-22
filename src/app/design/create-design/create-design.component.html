@@ -1,5 +1,13 @@
 <div class="container">
-    <form #form="ngForm" class="row g-3 needs-validation" novalidate>
+    <div class="row">
+        <div class="col-12 div-margin-top">
+            <div *ngIf="showSuccessMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ successMessage }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+    <form #form="ngForm" class="row g-3 needs-validation div-margin-top" novalidate>
         <div class="col-md-4">
             <label for="designName" class="form-label">Design Name <span class="text-danger">*</span></label>
             <input type="text" class="form-control" [readOnly]="action=='view'" #designName="ngModel" name="designName"
@@ -22,8 +30,8 @@
             </div>
         </div>
 
-        <div class="col-6"> </div>
-        <div class="col-2 margin-top-54 align-right">
+      
+        <div class="col-md-4 margin-top-45 align-right">
             <button [disabled]="form.invalid" *ngIf="action != 'view'" class="btn btn-primary align-left" type="submit"
                 (click)="onSave()">Submit</button>
             <button class="btn btn-primary margin-left-10" type="submit" (click)="cancel()">Cancel</button>

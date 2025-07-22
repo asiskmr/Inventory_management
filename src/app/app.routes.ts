@@ -16,6 +16,12 @@ import { ListContractorComponent } from './contractor/list-contractor/list-contr
 import { CreateContractorComponent } from './contractor/create-contractor/create-contractor.component';
 import { ListDesignComponent } from './design/list-design/list-design.component';
 import { CreateDesignComponent } from './design/create-design/create-design.component';
+import { ListColorComponent } from './color/list-color/list-color.component';
+import { CreateColorComponent } from './color/create-color/create-color.component';
+import { CreateContractorChallanComponent } from './contractor-challan/create-contractor-challan/create-contractor-challan.component';
+import { ListContractorChallanComponent } from './contractor-challan/list-contractor-challan/list-contractor-challan.component';
+import { CreateClientChallanComponent } from './client-challan/create-client-challan/create-client-challan.component';
+import { ListClientChallanComponent } from './client-challan/list-client-challan/list-client-challan.component';
 
 export const routes: Routes = [
     {
@@ -48,6 +54,36 @@ export const routes: Routes = [
              {
                 path: 'create-design',
                 component: CreateDesignComponent
+
+            },
+            {
+                path: 'list-color',
+                component: ListColorComponent
+
+            },
+             {
+                path: 'create-contractor-challan',
+                component: CreateContractorChallanComponent
+
+            },
+            {
+                path: 'list-contractor-challan',
+                component: ListContractorChallanComponent
+
+            },
+             {
+                path: 'create-client-challan',
+                component: CreateClientChallanComponent
+
+            },
+            {
+                path: 'lsit-client-challan',
+                component: ListClientChallanComponent
+
+            },
+             {
+                path: 'create-color',
+                component: CreateColorComponent
 
             },
             {

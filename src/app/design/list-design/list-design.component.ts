@@ -5,9 +5,9 @@ import { client } from '../../model/client';
 import { MasterDataService } from '../../pages/service/master-data.service';
 import { AgGridAngular } from "ag-grid-angular";
 import type { ColDef, CsvExportParams, GridReadyEvent } from "ag-grid-community";
-import { provideGlobalGridOptions, GridApi } from 'ag-grid-community';
+import { GridApi } from 'ag-grid-community';
 import { CustomeCellComponent } from '../../util/custome-cell/custome-cell.component';
-import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { FormsModule } from '@Angular/forms';
 import { CommonModule } from '@angular/common';
@@ -32,13 +32,12 @@ export class ListDesignComponent implements OnInit{
   designList: design[] = [];
   designObj: design = new design();
   private gridApi!: GridApi;
+  totalRecord: number = 0;
 
   constructor(public router: ActivatedRoute, public route: Router) {
   }
 
   ngOnInit() {
-    //this.getDesignData();
-    //debugger;
     this.router.queryParams.subscribe((params: Params) => {
       this.id = params['id']
       this.action = params['action']     
@@ -48,7 +47,8 @@ export class ListDesignComponent implements OnInit{
   getDesignData = () => {
     this.masterDataService.getData(this.url)
       .subscribe((res: any) => {
-        this.designList = res;
+        this.designList = res.data;
+        this.totalRecord = res.metadata.recordcount
       })
 
   }
@@ -102,7 +102,8 @@ export class ListDesignComponent implements OnInit{
     this.url += this.utilsService.buildUrl(this.designObj);
     this.masterDataService.search(this.url)
       .subscribe((res: any) => {
-        this.designList = res;
+        this.designList = res.data;
+        this.totalRecord = res.metadata.recordcount
       })
   }
 

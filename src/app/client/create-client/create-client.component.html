@@ -1,9 +1,18 @@
 <div class="container">
-  <form #form="ngForm" class="row g-3 needs-validation" novalidate>
+  <div class="row">
+    <div class="col-12 div-margin-top">
+      <div *ngIf="showSuccessMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ successMessage }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+  <form #form="ngForm" class="row g-3 needs-validation div-margin-top" novalidate>
     <div class="col-md-4">
       <label for="clientName" class="form-label">Client Name <span class="text-danger">*</span></label>
       <input type="text" class="form-control" [readOnly]="action=='view'" #clientName="ngModel" name="clientName"
-        [(ngModel)]="clientObj.clientName" id="clientName" (ngModelChange)="clientObj.clientName = $event.toUpperCase()" required>
+        [(ngModel)]="clientObj.clientName" id="clientName" (ngModelChange)="clientObj.clientName = $event.toUpperCase()"
+        required>
 
       <div class="text-danger">
         @if(clientName.errors?.['required'] && clientName.touched && clientName.dirty) {
@@ -13,22 +22,23 @@
     </div>
     <div class="col-md-4">
       <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-      <input type="text" class="form-control" minlength="4" #email="ngModel" name="email" [readOnly]="action=='view'"
+      <input type="text" class="form-control" minlength="10" #email="ngModel" name="email" [readOnly]="action=='view'"
         [(ngModel)]="clientObj.email" id="email" required>
 
       <div class="text-danger">
         <span *ngIf="email.errors?.['required'] && email.touched">This is required</span>
       </div>
       <div class="text-danger">
-        <span *ngIf="email.errors?.['minlength'] && email.touched">Min 4 Char is Required</span>
+        <span *ngIf="email.errors?.['minlength'] && email.touched">Min 10 Char is Required</span>
       </div>
     </div>
     <div class="col-md-4">
       <label for="mobile" class="form-label">Mobile Number</label>
       <div class="input-group has-validation">
         <!-- <span class="input-group-text" id="inputGroupPrepend">&#64;</span> -->
-        <input type="text" class="form-control" name="mobile" (keypress)="utilsService.numberOnly($event)" [readOnly]="action=='view'" maxlength="10" [(ngModel)]="clientObj.mobile"
-          id="mobile" aria-describedby="inputGroupPrepend">
+        <input type="text" class="form-control" name="mobile" (keypress)="utilsService.numberOnly($event)"
+          [readOnly]="action=='view'" maxlength="10" [(ngModel)]="clientObj.mobile" id="mobile"
+          aria-describedby="inputGroupPrepend">
         <div class="invalid-feedback">
           Please Enter Mobile Number.
         </div>
@@ -44,7 +54,7 @@
     </div>
     <div class="col-md-4">
       <label for="city" class="form-label">City</label>
-     <input type="text" class="form-control" name="city" [readOnly]="action=='view'" [(ngModel)]="clientObj.city"
+      <input type="text" class="form-control" name="city" [readOnly]="action=='view'" [(ngModel)]="clientObj.city"
         id="city" (ngModelChange)="clientObj.city = $event.toUpperCase()">
       <div class="invalid-feedback">
         Please Enter City.
@@ -63,22 +73,26 @@
       </div>
     </div>
     <div class="col-md-4">
+      <label for="country" class="form-label">Country</label>
+      <input type="text" class="form-control" name="country" [readOnly]="action=='view'" [(ngModel)]="clientObj.country"
+        id="country" (ngModelChange)="clientObj.country = $event.toUpperCase()">
+      <div class="invalid-feedback">
+        Please Enter Country.
+      </div>
+    </div>
+    <div class="col-md-4">
       <label for="gstNo" class="form-label">GST Number</label>
-      <input type="text" maxlength="10" class="form-control" name="gstNo" [readOnly]="action=='view'" [(ngModel)]="clientObj.gstNo"
-        id="gstNo">
+      <input type="text" maxlength="15" class="form-control" name="gstNo" [readOnly]="action=='view'"
+        [(ngModel)]="clientObj.gstNo" id="gstNo">
       <div class="invalid-feedback">
         Please provide a valid GST No.
       </div>
     </div>
-   
-    <div class="col-6">
 
-    </div>
-    <div class="col-2 margin-top-54 align-right" >
-      
+    <div class="col-md-4 margin-top-45 align-right">
       <button [disabled]="form.invalid" *ngIf="action != 'view'" class="btn btn-primary align-left" type="submit"
-        (click)="onSave()">Submit</button>    
-        <button class="btn btn-primary margin-left-10" type="submit" (click)="cancel()">Cancel</button>  
-    </div>
+        (click)="save()">Submit</button>
+      <!-- <button class="btn btn-primary margin-left-10" type="submit" (click)="cancel()">Cancel</button> -->
+    </div>   
   </form>
 </div>

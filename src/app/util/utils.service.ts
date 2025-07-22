@@ -21,10 +21,18 @@ export class UtilsService {
     return search_url;
   }
 
- public numberOnly(event: any): boolean {
-      let patt = /^([0-9])$/;
-      let result = patt.test(event.key);
-      return result;
-  
-    }
+  public numberOnly(event: any): boolean {
+    let patt = /^([0-9])$/;
+    let result = patt.test(event.key);
+    return result;
+
+  }
+
+  public formatDate_dd_MM_YYYY(date: Date): string {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is zero-based
+    const year = date.getFullYear();
+
+    return `${year}-${month}-${day}`;
+  }
 }

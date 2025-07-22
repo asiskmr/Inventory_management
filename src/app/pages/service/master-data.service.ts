@@ -10,7 +10,7 @@ import { contractor } from '../../model/contractor';
 })
 export class MasterDataService implements OnInit {
 
-  apiUrl: string | undefined;
+  apiUrl: string = 'http://localhost:9090/v2/';
   configData: any;
 
    http = inject(HttpClient)
@@ -20,7 +20,7 @@ export class MasterDataService implements OnInit {
     
     this.getJSON().subscribe(data => {
       this.configData = data;
-      this.apiUrl = this.configData[0].apiUrl;     
+      this.apiUrl = 'http://localhost:9090/v2/';     
     });
   }
 
@@ -33,13 +33,15 @@ export class MasterDataService implements OnInit {
 
 
   getData = (url: string) => {   
+    console.log(`${url} url is ::   ${this.apiUrl}`)
     return this.http.get<client[]>(`${this.apiUrl}${url}`)
       .pipe(map((result: any) => {
-        return result.data
+        return result
       }))
   }
 
   findById = (id: string, url: string) => {
+    console.log(`${this.apiUrl} == ${url} === ${id}`)
     return this.http.get<client[]>(`${this.apiUrl}${url}${id}`)
       .pipe(map((result: any) => {
         return result.data
@@ -57,7 +59,7 @@ export class MasterDataService implements OnInit {
   search = (url: string) => {    
        return this.http.get<client[]>(`${this.apiUrl}${url}`)
       .pipe(map((result: any) => {
-        return result.data
+        return result; //result.data
       }))
   }
 

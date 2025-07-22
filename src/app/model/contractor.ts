@@ -24,7 +24,7 @@ export class contractor {
         this.email = "";
         this.mobile = "";
         this.gstNo = "";
-        this.active = false;
+        this.active = true;
         this.createdOn="";
     }
 }
