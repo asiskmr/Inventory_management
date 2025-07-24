@@ -76,10 +76,10 @@ export class ListClientChallanComponent {
 
   // Column Definitions: Defines & controls grid columns.
   colDefs: ColDef<clientChallan>[] = [
-    {
-      headerName: "Id",
-      field: "id",
-    },
+    // {
+    //   headerName: "Id",
+    //   field: "id",
+    // },
     {
       headerName: "Challan Number",
       field: "challanNumber",
@@ -89,7 +89,7 @@ export class ListClientChallanComponent {
       field: "challanDate",
     },
     {
-      headerName: "Client Name",
+      headerName: "Party",
       field: "client.clientName",
     },
     {
@@ -126,7 +126,7 @@ export class ListClientChallanComponent {
   }
 
   myCellRenderer1(params: any) {     
-        return `<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"> View </button>`;
+        return `<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"> <i class="bi bi-pencil-square"></i> </button>`;
   }
  
 

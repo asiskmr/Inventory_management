@@ -9,7 +9,7 @@
   </div>
   <form #form="ngForm" class="row g-3 needs-validation div-margin-top" novalidate>
     <div class="col-md-4">
-      <label for="clientName" class="form-label">Client Name <span class="text-danger">*</span></label>
+      <label for="clientName" class="form-label">Party <span class="text-danger">*</span></label>
       <input type="text" class="form-control" [readOnly]="action=='view'" #clientName="ngModel" name="clientName"
         [(ngModel)]="clientObj.clientName" id="clientName" (ngModelChange)="clientObj.clientName = $event.toUpperCase()"
         required>
@@ -82,17 +82,19 @@
     </div>
     <div class="col-md-4">
       <label for="gstNo" class="form-label">GST Number</label>
-      <input type="text" maxlength="15" class="form-control" name="gstNo" [readOnly]="action=='view'"
+      <input type="text" maxlength="15" class="form-control" (keyup)="validateGst()" name="gstNo" [readOnly]="action=='view'"
         [(ngModel)]="clientObj.gstNo" id="gstNo">
-      <div class="invalid-feedback">
-        Please provide a valid GST No.
+      <div class="text-danger">      
+        @if(isValidGst) {
+        <span>GST No should be 15 Digit</span>
+        }
       </div>
     </div>
 
     <div class="col-md-4 margin-top-45 align-right">
       <button [disabled]="form.invalid" *ngIf="action != 'view'" class="btn btn-primary align-left" type="submit"
         (click)="save()">Submit</button>
-      <!-- <button class="btn btn-primary margin-left-10" type="submit" (click)="cancel()">Cancel</button> -->
+      <button class="btn btn-primary margin-left-10" type="submit" (click)="cancel()">Cancel</button>
     </div>   
   </form>
 </div>

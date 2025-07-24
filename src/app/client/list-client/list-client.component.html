@@ -2,7 +2,7 @@
 
   <form #form="ngForm" class="row g-3 needs-validation" novalidate>
     <div class="col-md-3">
-      <label for="clientName" class="form-label">Client Name </label>
+      <label for="clientName" class="form-label">Party </label>
       <input type="text" class="form-control" [readOnly]="action=='view'" #clientName="ngModel" name="clientName"
         [(ngModel)]="clientObj.clientName" (ngModelChange)="clientObj.clientName = $event.toUpperCase()"
         id="clientName">
@@ -56,13 +56,13 @@
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Delete Client</h4>
+        <h4 class="modal-title">Delete Pary</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 
       <!-- Modal body -->
       <div class="modal-body">
-        Do you want to delete the Client?
+        Do you want to delete the Pary?
       </div>
       <!-- Modal footer -->
       <div class="modal-footer">

@@ -78,10 +78,10 @@ export class ListContractorChallanComponent {
 
   // Column Definitions: Defines & controls grid columns.
   colDefs: ColDef<contractorChallan>[] = [
-    {
-      headerName: "Id",
-      field: "id",
-    },
+    // {
+    //   headerName: "Id",
+    //   field: "id",
+    // },
     {
       headerName: "Challan Number",
       field: "challanNumber",
@@ -125,7 +125,7 @@ export class ListContractorChallanComponent {
   }
 
   myCellRenderer1(params: any) {
-    return `<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"> View </button>`;
+    return `<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"> <i class="bi bi-pencil-square"></i> </button>`;
   }
 
 
@@ -234,13 +234,13 @@ class challanFilter {
   contractorid: String;
   fromchallandate: String;
   tochallandate: String;
-  challantype: number;
+  challantype: string;
 
   constructor() {
     this.challannumber = "";
     this.contractorid = '';
     this.fromchallandate = '';
     this.tochallandate = '';
-    this.challantype = 0;
+    this.challantype = '';
   }
 }

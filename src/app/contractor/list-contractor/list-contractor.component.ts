@@ -39,7 +39,7 @@ export class ListContractorComponent {
   ngOnInit() {
     this.router.queryParams.subscribe((params: Params) => {
       this.id = params['id']
-      this.action = params['action']     
+      this.action = params['action']
     });
   }
 
@@ -55,28 +55,18 @@ export class ListContractorComponent {
   // Column Definitions: Defines & controls grid columns.
   colDefs: ColDef<contractor>[] = [
     {
-      headerName: "Status",     
-      cellRenderer: this.utilsService.getStatus
+      headerName: "Status",
+      cellClass: 'margin-top-8',
+      cellRenderer: this.utilsService.getStatus,
+
     },
     {
       headerName: "Contractor Name",
       field: "contractorName",
     },
     {
-      headerName: "Address",
-      field: "address",
-    },
-    {
-      headerName: "City",
-      field: "city",
-    },
-    {
-      headerName: "State",
-      field: "state",
-    },
-    {
-      headerName: "Country",
-      field: "country",
+      headerName: "Mobile",
+      field: "mobile",
     },
     {
       headerName: "Email",
@@ -85,7 +75,7 @@ export class ListContractorComponent {
       headerName: 'Action',
       field: 'id',
       cellRenderer: CustomeCellComponent,
-     cellRendererParams: {
+      cellRendererParams: {
         page: { name: "customer" }
       }
     }
@@ -117,8 +107,10 @@ export class ListContractorComponent {
   }
 
   searchContractor = () => {
-    this.url += this.utilsService.buildUrl(this.contractorObj);
-    this.masterDataService.search(this.url)
+    this.contractorObj.active = false;
+    let url = ''
+    url = this.url + this.utilsService.buildUrl(this.contractorObj);
+    this.masterDataService.search(url)
       .subscribe((res: any) => {
         this.clints = res.data;
         this.totalRecord = res.metadata.recordcount;

@@ -57,6 +57,7 @@ export class CustomeCellComponent implements ICellRendererAngularComp {
   }
 
   viewClient(): void {
+    console.log(this.pageData.new, 'param data ', this.param)
     this.router.navigate([this.pageData.new], { queryParams: { id: this.param.data.id, status: this.param.data.active, action: 'view', page: this.param.page.name } });
   }
 }

@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="row">
+  <div class="row">
     <div class="col-12 div-margin-top">
       <div *ngIf="showSuccessMessage" class="alert alert-success alert-dismissible fade show" role="alert">
         {{ successMessage }}
@@ -8,30 +8,49 @@
     </div>
   </div>
   <form #form="ngForm" class="row g-3 needs-validation div-margin-top" novalidate>
-    {{challanDate}}
     <div class="col-md-3">
       <label for="challanDate" class="form-label">Challan Date <span class="text-danger">*</span></label>
       <div class="input-group">
         <input matInput [matDatepicker]="picker" id="challanDate" [(ngModel)]="challanDate" name="challanDate"
-          class="form-control height-39" #challanDate="ngModel" />
+          class="form-control height-39" #challanDateModel="ngModel" />
         <span class="input-group-text height-39" style="cursor: pointer;">
           <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
         </span>
       </div>
       <mat-datepicker #picker></mat-datepicker>
       <div class="text-danger">
-        @if(challanDate.errors?.['required'] && challanDate.touched && challanDate.dirty) {
+        @if(challanDateModel.errors?.['required'] && challanDateModel.touched && challanDateModel.dirty) {
         <span>This is required</span>
         }
       </div>
     </div>
-    <div class="col-md-3">
+    <!-- <div class="col-md-3">
       <label for="challanType" class="form-label">Challan Type <span class="text-danger">*</span></label>
-      <select class="form-select" name="party" [disabled]="action=='view'" [(ngModel)]="contractorChallanObj.challanType"
-        id="party">
+      <select class="form-select" name="party" [disabled]="action=='view'"
+        [(ngModel)]="contractorChallanObj.challanType" id="party">
         <option *ngFor="let challan of challanTypes" [value]="challan.val">{{ challan.name }}</option>
       </select>
+    </div> -->
+    <div class="col-md-3">
+      <label class="form-label d-block">Challan Type</label>
+      <div class="d-flex gap-3">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="challanType" id="challantypeIssue"
+            [disabled]="action == 'view'" [(ngModel)]="contractorChallanObj.challanType" [value]="'I'" />
+          <label class="form-check-label" for="challantypeIssue">
+            Issue
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="challanType" id="challantypeReceive"
+            [disabled]="action == 'view'" [(ngModel)]="contractorChallanObj.challanType" [value]="'R'" />
+          <label class="form-check-label" for="challantypeReceive">
+            Receive
+          </label>
+        </div>
+      </div>
     </div>
+
     <div class="col-md-3">
       <label for="party" class="form-label">Contractor</label>
       <div class="input-group has-validation">
@@ -76,8 +95,9 @@
     </div>
     <div class="col-md-3">
       <label for="quantity" class="form-label">Quantity</label>
-      <input type="text"  (keypress)="utilsService.numberOnly($event)" (blur)="onInputBlur()" class="form-control" name="quantity"
-        [readOnly]="action=='view'" [(ngModel)]="contractorChallanObj.quantity" id="quantity" name="quantity">
+      <input type="text" (keypress)="utilsService.numberOnly($event)" (blur)="onInputBlur()" class="form-control"
+        name="quantity" [readOnly]="action=='view'" [(ngModel)]="contractorChallanObj.quantity" id="quantity"
+        name="quantity">
       <div class="invalid-feedback">
         Please Entity Quantity.
       </div>
@@ -85,7 +105,7 @@
     <div class="col-3 margin-top-45">
       <button class="btn btn-primary align-left" [disabled]="disableAdd" type="submit" (click)="addItems()">Add</button>
     </div>
-    <div class="row margin-top-30">
+    <div class="margin-top-30">
       <div class="col-12">
         <ag-grid-angular class="ag-theme-quartz" style="height: 340px;" [rowData]="items" [columnDefs]="colDefs"
           [defaultColDef]="defaultColDef" (gridReady)="onGridReady($event)" [getRowId]="getRowId"

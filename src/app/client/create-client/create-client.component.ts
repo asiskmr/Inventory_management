@@ -30,7 +30,8 @@ export class CreateClientComponent implements OnInit {
   showSuccessMessage: boolean = false;
   successMessage: string = '';
   clientFromData = signal(new client())
-
+  isValidGst: boolean = false;
+  //searchData: any = null;
   constructor(public router: ActivatedRoute) {
   }
 
@@ -38,6 +39,7 @@ export class CreateClientComponent implements OnInit {
     this.router.queryParams.subscribe((params: Params) => {
       this.id = params['id']
       this.action = params['action']
+      //this.searchData = params['searchObj']
     });
 
     if (this.id) {
@@ -84,7 +86,10 @@ export class CreateClientComponent implements OnInit {
     )
   }
 
-  // cancel = () => {
-  //   this.route.navigate(["/list-client"])
-  // }
+  validateGst(){    
+     this.isValidGst = this.utilsService.validateGST(this.clientObj.gstNo);
+  }
+  cancel = () => {
+    this.route.navigate(["/list-client"])
+  }
 }

@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
+import { client } from '../model/client';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilsService {
 
+  public clientObj: client = new client();
   constructor() { }
 
   public buildUrl(obj: any) {
@@ -41,4 +43,10 @@ export class UtilsService {
       let status = params.node.data.active? '<span class="dot-green"></span>' : '<span class="dot-red"></span>';    
       return `${status}`;
     }
+
+  public validateGST(gstNo: string){
+    console.log((gstNo && gstNo.length < 15),'validate gst no call ',gstNo)
+    return gstNo && gstNo.length < 15 ? true : false; 
+  }
+
 }

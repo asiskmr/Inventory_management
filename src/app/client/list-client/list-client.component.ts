@@ -44,44 +44,26 @@ export class ListClientComponent implements OnInit {
     this.router.queryParams.subscribe((params: Params) => {
       this.id = params['id']
       this.action = params['action']
+      this.clientObj = this.utilsService.clientObj;     
+      this.searchClient() ;
     });
-  }
-
-  getClientData = () => {
-    this.masterDataService.getData(this.url)
-      .subscribe((res: any) => {
-        this.clints = res.data;
-        this.totalRecord = res.metadata.recordcount
-      })
-
   }
 
   // Column Definitions: Defines & controls grid columns.
   colDefs: ColDef<client>[] = [
     {
-      headerName: "Status",     
+      headerName: "Status", 
+      cellClass: 'margin-top-8',    
       cellRenderer: this.utilsService.getStatus
     },
     {
-      headerName: "Client Name",
+      headerName: "Party",
       field: "clientName",
     },
     {
-      headerName: "Address",
-      field: "address",
-    },
-    {
-      headerName: "City",
-      field: "city",
-    },
-    {
-      headerName: "State",
-      field: "state",
-    },
-    {
-      headerName: "Country",
-      field: "country",
-    },
+      headerName: "Mobile",
+      field: "mobile",
+    },    
     {
       headerName: "Email",
       field: "email",
@@ -112,16 +94,16 @@ export class ListClientComponent implements OnInit {
     this.masterDataService.update(this.id, false, this.url)
       .subscribe((res: any) => {
         this.clints[0] = res;
-
+         this.searchClient();
       })
-    this.getClientData();
-    this.route.navigate(["/list-client"])
+   
   }
 
   searchClient = () => {
     this.clientObj.active = false;
     let url = ''
     url = this.url + this.utilsService.buildUrl(this.clientObj);
+    this.utilsService.clientObj = this.clientObj;
     this.masterDataService.search(url)
       .subscribe((res: any) => {
         this.clints = res.data;
@@ -132,6 +114,10 @@ export class ListClientComponent implements OnInit {
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
   }
+
+refreshData(newData: any[]): void {
+ this.gridApi.applyTransaction({add: this.clints }) // Replace with new data
+}
 
   onBtnExport() {
 

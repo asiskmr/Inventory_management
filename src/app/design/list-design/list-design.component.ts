@@ -56,8 +56,9 @@ export class ListDesignComponent implements OnInit{
   // Column Definitions: Defines & controls grid columns.
   colDefs: ColDef<design>[] = [
     {
-      headerName: "Id",
-      field: "id",
+      headerName: "Status", 
+      cellClass: 'margin-top-8',    
+      cellRenderer: this.utilsService.getStatus
     },
     {
       headerName: "Desing Name",
@@ -99,8 +100,11 @@ export class ListDesignComponent implements OnInit{
   }
 
   searcDesign = () => {
-    this.url += this.utilsService.buildUrl(this.designObj);
-    this.masterDataService.search(this.url)
+   // this.url += this.utilsService.buildUrl(this.designObj);
+     let url = ''
+    url = this.url +this.utilsService.buildUrl(this.designObj);
+
+    this.masterDataService.search(url)
       .subscribe((res: any) => {
         this.designList = res.data;
         this.totalRecord = res.metadata.recordcount

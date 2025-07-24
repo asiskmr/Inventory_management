@@ -116,20 +116,12 @@
 
   <form #form="ngForm" class="row g-3 needs-validation mt-3" novalidate>
     <!-- Challan Date -->
-     
+
     <div class="col-md-3">
       <label for="challanDate" class="form-label">Challan Date <span class="text-danger">*</span></label>
       <div class="input-group">
-        <input
-          matInput
-          [matDatepicker]="picker"
-          id="challanDate"
-          name="challanDate"
-          class="form-control"
-          [(ngModel)]="challanDate"
-          required
-          #challanDateModel="ngModel"
-        />
+        <input matInput [matDatepicker]="picker" id="challanDate" name="challanDate" class="form-control"
+          [(ngModel)]="challanDate" required #challanDateModel="ngModel" />
         <span class="input-group-text" style="cursor: pointer;">
           <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
         </span>
@@ -141,7 +133,7 @@
     </div>
 
     <!-- Challan Type -->
-    <div class="col-md-3">
+    <!-- <div class="col-md-3">
       <label for="challanType" class="form-label">Challan Type <span class="text-danger">*</span></label>
       <select
         id="challanType"
@@ -153,18 +145,33 @@
       >
         <option *ngFor="let challan of challanTypes" [value]="challan.val">{{ challan.name }}</option>
       </select>
+    </div> -->
+
+    <div class="col-md-3">
+      <label class="form-label d-block">Challan Type</label>
+      <div class="d-flex gap-3">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="challanType" id="challantypeIssue"
+            [disabled]="action == 'view'" [(ngModel)]="clientChallanObj.challanType" [value]="'I'" />
+          <label class="form-check-label" for="challantypeIssue">
+            Issue
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="challanType" id="challantypeReceive"
+            [disabled]="action == 'view'" [(ngModel)]="clientChallanObj.challanType" [value]="'R'" />
+          <label class="form-check-label" for="challantypeReceive">
+            Receive
+          </label>
+        </div>
+      </div>
     </div>
 
     <!-- Party -->
     <div class="col-md-3">
       <label for="party" class="form-label">Party</label>
-      <select
-        id="party"
-        class="form-select"
-        name="party"
-        [(ngModel)]="clientChallanObj.party"
-        [disabled]="action === 'view'"
-      >
+      <select id="party" class="form-select" name="party" [(ngModel)]="clientChallanObj.party"
+        [disabled]="action === 'view'">
         <option *ngFor="let party of clients" [value]="party.id">{{ party.clientName }}</option>
       </select>
       <div class="invalid-feedback">Please select a party.</div>
@@ -173,27 +180,15 @@
     <!-- Challan Number -->
     <div class="col-md-3">
       <label for="challanNumber" class="form-label">Challan Number</label>
-      <input
-        id="challanNumber"
-        type="text"
-        class="form-control"
-        name="challanNumber"
-        [(ngModel)]="clientChallanObj.challanNumber"
-        [readonly]="action === 'view'"
-      />
+      <input id="challanNumber" type="text" class="form-control" name="challanNumber"
+        [(ngModel)]="clientChallanObj.challanNumber" [readonly]="action === 'view'" />
     </div>
 
     <!-- Design -->
     <div class="col-md-3">
       <label for="design" class="form-label">Design</label>
-      <select
-        id="design"
-        class="form-select"
-        name="design"
-        [(ngModel)]="clientChallanObj.design"
-        [disabled]="action === 'view'"
-        (blur)="onInputBlur()"
-      >
+      <select id="design" class="form-select" name="design" [(ngModel)]="clientChallanObj.design"
+        [disabled]="action === 'view'" (blur)="onInputBlur()">
         <option *ngFor="let design of designs" [value]="design.id">{{ design.designName }}</option>
       </select>
       <div class="invalid-feedback">Please select a design.</div>
@@ -202,14 +197,8 @@
     <!-- Color -->
     <div class="col-md-3">
       <label for="color" class="form-label">Color</label>
-      <select
-        id="color"
-        class="form-select"
-        name="color"
-        [(ngModel)]="clientChallanObj.color"
-        [disabled]="action === 'view'"
-        (blur)="onInputBlur()"
-      >
+      <select id="color" class="form-select" name="color" [(ngModel)]="clientChallanObj.color"
+        [disabled]="action === 'view'" (blur)="onInputBlur()">
         <option *ngFor="let color of colors" [value]="color.id">{{ color.colorName }}</option>
       </select>
       <div class="invalid-feedback">Please select a color.</div>
@@ -218,16 +207,8 @@
     <!-- Quantity -->
     <div class="col-md-3">
       <label for="quantity" class="form-label">Quantity</label>
-      <input
-        id="quantity"
-        type="text"
-        class="form-control"
-        name="quantity"
-        [(ngModel)]="clientChallanObj.quantity"
-        [readonly]="action === 'view'"
-        (keypress)="utilsService.numberOnly($event)"
-        (blur)="onInputBlur()"
-      />
+      <input id="quantity" type="text" class="form-control" name="quantity" [(ngModel)]="clientChallanObj.quantity"
+        [readonly]="action === 'view'" (keypress)="utilsService.numberOnly($event)" (blur)="onInputBlur()" />
       <div class="invalid-feedback">Please enter quantity.</div>
     </div>
 
@@ -237,30 +218,18 @@
     </div>
 
     <!-- Data Grid -->
-    <div class="row mt-4">
+    <div class="mt-4">
       <div class="col-12">
-        <ag-grid-angular
-          class="ag-theme-quartz"
-          style="height: 340px;"
-          [rowData]="items"
-          [columnDefs]="colDefs"
-          [defaultColDef]="defaultColDef"
-          (gridReady)="onGridReady($event)"
-          [getRowId]="getRowId"
-          (cellValueChanged)="onCellValueChanged($event)"
-        ></ag-grid-angular>
+        <ag-grid-angular class="ag-theme-quartz" style="height: 340px;" [rowData]="items" [columnDefs]="colDefs"
+          [defaultColDef]="defaultColDef" (gridReady)="onGridReady($event)" [getRowId]="getRowId"
+          (cellValueChanged)="onCellValueChanged($event)"></ag-grid-angular>
       </div>
     </div>
 
     <!-- Action Buttons -->
     <div class="col-12 text-end mt-4">
-      <button
-        *ngIf="action !== 'view'"
-        type="button"
-        class="btn btn-success"
-        [disabled]="form.invalid"
-        (click)="onSave()"
-      >
+      <button *ngIf="action !== 'view'" type="button" class="btn btn-success" [disabled]="form.invalid"
+        (click)="onSave()">
         Submit
       </button>
       <button type="button" class="btn btn-secondary ms-2" (click)="cancel()">Cancel</button>

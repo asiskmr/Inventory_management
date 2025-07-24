@@ -58,7 +58,8 @@ export class ListColorComponent implements OnInit {
   // Column Definitions: Defines & controls grid columns.
   colDefs: ColDef<color>[] = [
     {
-      headerName: "Status",     
+      headerName: "Status", 
+      cellClass: 'margin-top-8',    
       cellRenderer: this.utilsService.getStatus
     },
     {
@@ -100,10 +101,11 @@ export class ListColorComponent implements OnInit {
     this.route.navigate(["/list-color"])
   }
 
-  searccolor = () => {
-    this.colorList = []
-    const tmpUrl = this.url + this.utilsService.buildUrl(this.colorObj);
-    this.masterDataService.search(tmpUrl)
+  searchcolor = () => {
+    this.colorList = []    
+    let url = ''
+    url = this.url + this.utilsService.buildUrl(this.colorObj);
+    this.masterDataService.search(url)
       .subscribe((res: any) => {
         this.colorList = res.data;
         this.totalRecord = res.metadata.recordcount
