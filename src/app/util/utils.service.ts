@@ -35,4 +35,10 @@ export class UtilsService {
 
     return `${year}-${month}-${day}`;
   }
+
+  public getStatus(params: any) {
+      
+      let status = params.node.data.active? '<span class="dot-green"></span>' : '<span class="dot-red"></span>';    
+      return `${status}`;
+    }
 }

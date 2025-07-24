@@ -55,8 +55,8 @@ export class ListContractorComponent {
   // Column Definitions: Defines & controls grid columns.
   colDefs: ColDef<contractor>[] = [
     {
-      headerName: "Id",
-      field: "id",
+      headerName: "Status",     
+      cellRenderer: this.utilsService.getStatus
     },
     {
       headerName: "Contractor Name",

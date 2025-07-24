@@ -11,7 +11,7 @@ export class design {
         this.id = 0;
         this.designName = "";
         this.description = "";
-        this.active = false;
+        this.active = true;
         this.createdOn = "";
     }
 }

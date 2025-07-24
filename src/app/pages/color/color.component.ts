@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnDestroy, signal } from '@angular/core';
 import { Observable } from 'rxjs';
-import { vehicle } from '../../model/vehicle';
 import { color } from '../../model/color';
 import { MasterDataService } from '../service/master-data.service';
 
@@ -17,8 +16,6 @@ export class ColorComponent {
     masterDataservice = inject(MasterDataService)
   
     colorFromData = signal(new color())
-    carList$: Observable<vehicle[]> = new Observable<vehicle[]>;
-   
     constructor() {
      
     }

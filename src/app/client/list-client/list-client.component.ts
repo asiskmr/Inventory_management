@@ -59,8 +59,8 @@ export class ListClientComponent implements OnInit {
   // Column Definitions: Defines & controls grid columns.
   colDefs: ColDef<client>[] = [
     {
-      headerName: "Id",
-      field: "id",
+      headerName: "Status",     
+      cellRenderer: this.utilsService.getStatus
     },
     {
       headerName: "Client Name",

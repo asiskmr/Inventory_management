@@ -1,12 +1,12 @@
 export class searchClientChallan {
 
     challanNumber: number;
-    clientId: number;    
+    clientId: number;
     fromDate: number;
     toDate: number;
     challanType: string;
 
-    constructor() {       
+    constructor() {
         this.challanNumber = 0;
         this.clientId = 0;
         this.fromDate = 0;

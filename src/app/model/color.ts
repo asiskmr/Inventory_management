@@ -10,7 +10,7 @@ export class color {
         this.id = 0;
         this.colorName = "";
         this.description = "";
-        this.active = false;
+        this.active = true;
         this.createdOn = "";
     }
 }

@@ -1,6 +1,6 @@
 
 export class contractor {
-    
+
     id: Number;
     contractorName: String;
     address: String;
@@ -17,14 +17,14 @@ export class contractor {
     constructor() {
         this.id = 0;
         this.contractorName = "";
-        this.address= "";
-        this.city="";
+        this.address = "";
+        this.city = "";
         this.state = "";
         this.country = "";
         this.email = "";
         this.mobile = "";
         this.gstNo = "";
         this.active = true;
-        this.createdOn="";
+        this.createdOn = "";
     }
 }

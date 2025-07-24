@@ -6,15 +6,15 @@ export class clientChallan {
 
     id: Number;
     challanNumber: string;
-    challanDate: String;   
-    client : client; 
+    challanDate: String;
+    client: client;
     challanType: String;
-    challanItems: challanItems[]  ;
+    challanItems: challanItems[];
     party: number;
     design: number;
     color: number;
     quantity: number;
-    createdOn: string;   
+    createdOn: string;
 
     constructor() {
         this.id = 0;

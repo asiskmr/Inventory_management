@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, OnInit } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { vehicle } from '../../model/vehicle';
 import { client } from '../../model/client';
 import { contractor } from '../../model/contractor';
 
@@ -12,19 +11,17 @@ export class MasterDataService implements OnInit {
 
   apiUrl: string = 'http://localhost:9090/v2/';
   configData: any;
-
-   http = inject(HttpClient)
-  carList$: Observable<vehicle[]> = new Observable<vehicle[]>;
+  http = inject(HttpClient)
 
   constructor() {
-    
+
     this.getJSON().subscribe(data => {
       this.configData = data;
-      this.apiUrl = 'http://localhost:9090/v2/';     
+      this.apiUrl = 'http://localhost:9090/v2/';
     });
   }
 
-  ngOnInit(): void {   
+  ngOnInit(): void {
   }
 
   public getJSON(): Observable<any> {
@@ -32,7 +29,7 @@ export class MasterDataService implements OnInit {
   }
 
 
-  getData = (url: string) => {   
+  getData = (url: string) => {
     console.log(`${url} url is ::   ${this.apiUrl}`)
     return this.http.get<client[]>(`${this.apiUrl}${url}`)
       .pipe(map((result: any) => {
@@ -56,8 +53,8 @@ export class MasterDataService implements OnInit {
     return this.http.patch(`${this.apiUrl}${url}${id}/${status}`, null);
   }
 
-  search = (url: string) => {    
-       return this.http.get<client[]>(`${this.apiUrl}${url}`)
+  search = (url: string) => {
+    return this.http.get<client[]>(`${this.apiUrl}${url}`)
       .pipe(map((result: any) => {
         return result; //result.data
       }))

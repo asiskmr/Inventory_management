@@ -58,8 +58,8 @@ export class ListColorComponent implements OnInit {
   // Column Definitions: Defines & controls grid columns.
   colDefs: ColDef<color>[] = [
     {
-      headerName: "Id",
-      field: "id",
+      headerName: "Status",     
+      cellRenderer: this.utilsService.getStatus
     },
     {
       headerName: "Color Name",
