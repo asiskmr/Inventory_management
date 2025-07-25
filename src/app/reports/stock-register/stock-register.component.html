@@ -1,0 +1,73 @@
+<div class="row div-margin-botton">
+
+    <form #form="ngForm" class="row g-3 needs-validation" novalidate>
+        <div class="col-md-2">
+            <label for="fromDate" class="form-label">From Date</label>
+            <div class="input-group">
+                <input matInput [matDatepicker]="picker1" id="fromDate" [(ngModel)]="fromDate" name="fromDate"
+                    class="form-control height-39" #challanDate="ngModel" />
+                <span class="input-group-text height-39" style="cursor: pointer;">
+                    <mat-datepicker-toggle [for]="picker1"></mat-datepicker-toggle>
+                </span>
+            </div>
+            <mat-datepicker #picker1></mat-datepicker>
+            <div class="text-danger">
+                @if(challanDate.errors?.['required'] && challanDate.touched && challanDate.dirty) {
+                <span>This is required</span>
+                }
+            </div>
+        </div>
+        <div class="col-md-2">
+            <label for="toDate" class="form-label">To Date</label>
+            <div class="input-group">
+                <input matInput [matDatepicker]="picker" id="toDate" [(ngModel)]="toDate" name="toDate"
+                    class="form-control height-39" #challanDate="ngModel" />
+                <span class="input-group-text height-39" style="cursor: pointer;">
+                    <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
+                </span>
+            </div>
+            <mat-datepicker #picker></mat-datepicker>
+            <div class="text-danger">
+                @if(challanDate.errors?.['required'] && challanDate.touched && challanDate.dirty) {
+                <span>This is required</span>
+                }
+            </div>
+        </div>
+        <!-- Design -->
+        <div class="col-md-3">
+            <label for="design" class="form-label">Design</label>
+            <select id="design" class="form-select" name="design" [(ngModel)]="filterObj.design">
+                <option *ngFor="let design of designs" [value]="design.id">{{ design.designName }}</option>
+            </select>
+            <div class="invalid-feedback">Please select a design.</div>
+        </div>
+
+        <!-- Color -->
+        <div class="col-md-3">
+            <label for="color" class="form-label">Color</label>
+            <select id="color" class="form-select" name="color" [(ngModel)]="filterObj.color">
+                <option *ngFor="let color of colors" [value]="color.id">{{ color.colorName }}</option>
+            </select>
+            <div class="invalid-feedback">Please select a color.</div>
+        </div>
+
+
+        <div class="col-1 align-right">
+            <button class="margin-top-30 btn btn-primary" name="search" id="search" (click)="searchStock()">
+                Search </button>
+        </div>
+    </form>
+
+    <div class="row">
+        <div class="col-2 div-margin-top align-left font-bold">Record Count : {{totalRecord}}</div>
+        <div class="col-9"></div>
+        <div class="col-1  align-center"><i class="bi bi-filetype-csv font-size-30" (click)="onBtnExport()"></i></div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <ag-grid-angular class="ag-theme-quartz" style="height: 500px;" [rowData]="clientChallans"
+                [columnDefs]="colDefs" [defaultColDef]="defaultColDef" (gridReady)="onGridReady($event)" />
+        </div>
+    </div>
+</div>
