@@ -2,13 +2,13 @@
 
     <form #form="ngForm" class="row g-3 needs-validation" novalidate>
         <div class="col-md-3">
-            <label for="colorName" class="form-label">color Name </label>
+            <label for="colorName" class="form-label fw-bold">color Name </label>
             <input type="text" class="form-control" [readOnly]="action=='view'" name="colorName"
                 [(ngModel)]="colorObj.colorName" (ngModelChange)="colorObj.colorName = $event.toUpperCase()"
                 id="colorName">
         </div>
         <div class="col-md-4">
-            <label for="description" class="form-label">Description </label>
+            <label for="description" class="form-label fw-bold">Description </label>
             <input type="text" class="form-control" minlength="4" #description="ngModel" name="description"
                 [readOnly]="action=='view'" [(ngModel)]="colorObj.description" id="description">
         </div>

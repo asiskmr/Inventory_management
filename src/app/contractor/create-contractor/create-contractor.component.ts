@@ -5,6 +5,7 @@ import { contractor } from '../../model/contractor';
 import { FormsModule } from '@Angular/forms';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { UtilsService } from '../../util/utils.service';
 
 @Component({
   selector: 'app-create-contractor',
@@ -19,8 +20,9 @@ export class CreateContractorComponent {
   url: string = 'contractors/';
   http = inject(HttpClient)
   contractorFromData = signal(new contractor())
+  readonly utilsService = inject(UtilsService);
   masterDataService = inject(MasterDataService)
-   showSuccessMessage: boolean = false;
+  showSuccessMessage: boolean = false;
   successMessage: string = '';
   contractorObj: contractor = new contractor();
 
@@ -30,7 +32,7 @@ export class CreateContractorComponent {
   ngOnInit() {
     this.router.queryParams.subscribe((params: Params) => {
       this.id = params['id']
-      this.action = params['action']      
+      this.action = params['action']
     });
 
     if (this.id) {
@@ -46,13 +48,13 @@ export class CreateContractorComponent {
     this.masterDataService.saveContractor(formValue)
       .subscribe((res: any) => {
         if (res.status === 'success') {
-         this.successMessage = 'Data saved successfully!';
-                   this.showSuccessMessage = true;
-                   this.contractorObj = new contractor();
-                   setTimeout(() => {
-                     this.showSuccessMessage = false;
-                     this.successMessage = '';
-                   }, 3000);
+          this.successMessage = 'Data saved successfully!';
+          this.showSuccessMessage = true;
+          this.contractorObj = new contractor();
+          setTimeout(() => {
+            this.showSuccessMessage = false;
+            this.successMessage = '';
+          }, 3000);
         } else {
           console.log(res.message)
         }

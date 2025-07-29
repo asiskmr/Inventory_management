@@ -40,17 +40,19 @@ export class ListContractorComponent {
     this.router.queryParams.subscribe((params: Params) => {
       this.id = params['id']
       this.action = params['action']
+      this.contractorObj = this.utilsService.contractorObj
+      this.searchContractor()
     });
   }
 
-  getContractorData = () => {
-    this.masterDataService.getContractor()
-      .subscribe((res: any) => {
-        this.clints = res.data;
-        this.totalRecord = res.metadata.recordcount;
-      })
+  // getContractorData = () => {
+  //   this.masterDataService.getContractor()
+  //     .subscribe((res: any) => {
+  //       this.clints = res.data;
+  //       this.totalRecord = res.metadata.recordcount;
+  //     })
 
-  }
+  // }
 
   // Column Definitions: Defines & controls grid columns.
   colDefs: ColDef<contractor>[] = [
@@ -102,13 +104,14 @@ export class ListContractorComponent {
         this.clints[0] = res;
 
       })
-    this.getContractorData();
+    this.searchContractor();
     this.route.navigate(["/list-contractor"])
   }
 
   searchContractor = () => {
     this.contractorObj.active = false;
     let url = ''
+    this.utilsService.contractorObj = this.contractorObj;
     url = this.url + this.utilsService.buildUrl(this.contractorObj);
     this.masterDataService.search(url)
       .subscribe((res: any) => {

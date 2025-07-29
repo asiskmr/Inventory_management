@@ -6,9 +6,9 @@ export class contractorChallan {
 
     id: Number;
     challanNumber: string;
-    challanDate: String;
+    challanDate: string;
     contractor: contractor;
-    challanType: String;
+    challanType: string;
     challanItems: challanItems[];
     party: number;
     design: number;

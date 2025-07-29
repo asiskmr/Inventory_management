@@ -22,6 +22,10 @@ import { CreateContractorChallanComponent } from './contractor-challan/create-co
 import { ListContractorChallanComponent } from './contractor-challan/list-contractor-challan/list-contractor-challan.component';
 import { CreateClientChallanComponent } from './client-challan/create-client-challan/create-client-challan.component';
 import { ListClientChallanComponent } from './client-challan/list-client-challan/list-client-challan.component';
+import { StockRegisterComponent } from './reports/stock-register/stock-register.component';
+import { ContractorRegisterComponent } from './reports/contractor-register/contractor-register.component';
+import { PartyChallanRegisterComponent } from './reports/party-challan-register/party-challan-register.component';
+import { ContractorChallanRegisterComponent } from './reports/contractor-challan-register/contractor-challan-register.component';
 
 export const routes: Routes = [
     {
@@ -138,6 +142,22 @@ export const routes: Routes = [
             {
                 path: 'confirm',
                 component: ConfirmationBoxComponent
+            },
+            {
+                path: 'stock-register',
+                component: StockRegisterComponent
+            },
+            {
+                path: 'contractor-register',
+                component: ContractorRegisterComponent
+            },
+            {
+                path: 'party-challan-register',
+                component: PartyChallanRegisterComponent
+            },
+            {
+                path: 'contractor-challan-register',
+                component: ContractorChallanRegisterComponent
             }
         ]
     }

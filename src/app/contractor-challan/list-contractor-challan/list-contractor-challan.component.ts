@@ -12,12 +12,15 @@ import { UtilsService } from '../../util/utils.service';
 
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
-import { MatNativeDateModule } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { debounceTime, distinctUntilChanged, Observable, of, switchMap } from 'rxjs';
 import { challanItems } from '../../model/challanItems';
 import { contractorChallan } from '../../model/contractorChallan';
 import { contractor } from '../../model/contractor';
+import { formatDate } from '@angular/common';
+//import { MY_DATE_FORMATS } from '../../util/dateFormat';
+//import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 
 @Component({
   selector: 'app-list-contractor-challan',
@@ -25,6 +28,7 @@ import { contractor } from '../../model/contractor';
     MatNativeDateModule, MatInputModule, NgbTypeaheadModule],
   templateUrl: './list-contractor-challan.component.html',
   styleUrl: './list-contractor-challan.component.css'
+
 })
 export class ListContractorChallanComponent {
 
@@ -88,7 +92,7 @@ export class ListContractorChallanComponent {
     },
     {
       headerName: "Challan Date",
-      field: "challanDate",
+      cellRenderer: this.renderDate
     },
     {
       headerName: "Contractor Name",
@@ -100,7 +104,7 @@ export class ListContractorChallanComponent {
     },
     {
       headerName: "Challan Type",
-      field: "challanType",
+      field: 'challanType'
     },
     {
       headerName: "Pices Count",
@@ -115,12 +119,14 @@ export class ListContractorChallanComponent {
     }
   ];
 
-
+  renderDate(params: any) {
+    return formatDate(params.node.data.challanDate, 'dd-MM-yyyy', 'en-US');
+  }
 
 
   myCellRenderer(params: any) {
     let totalQuantity = 0;
-    console.log('Cell value:', params.node.data.challanItems.forEach((e: { quantity: number; }) => totalQuantity += e.quantity)); // This should log the value
+    params.node.data.challanItems.forEach((e: { quantity: number; }) => totalQuantity += e.quantity);
     return `<span>${totalQuantity}</span>`;
   }
 
@@ -159,6 +165,7 @@ export class ListContractorChallanComponent {
     this.masterDataService.search(url)
       .subscribe((res: any) => {
         this.contractorChallans = res.data;
+        this.contractorChallans.forEach(e1 => { e1.challanType = this.utilsService.challanTypes?.find(e => e.val === e1.challanType)?.name ?? '' })
         this.totalRecord = res.metadata.recordcount;
       })
     console.log(' this.contractorChallans ', this.contractorChallans)
@@ -197,15 +204,23 @@ export class ListContractorChallanComponent {
   onBtnExport() {
 
     const params: CsvExportParams = {
-      fileName: 'client_data.csv',
+      fileName: 'contractor_challan_data.csv',
       //onlySelected: false,       // Export only selected rows
       // allColumns: true,         // Export all columns, even if not visible
-      //columnKeys: ['name'],     // Export only specific columns
+      columnKeys: ['challanNumber', 'challanDate' ],     // Export only specific columns
     };
 
     this.gridApi.exportDataAsCsv(params);
   }
 
+  formatDate(event: any) {
+    console.log(' date formate ', event.value, 'converted date ', formatDate(event.value, 'dd-MM-yyyy', 'en-US'))
+
+    const [day, month, year] = formatDate(event.value, 'dd-MM-yyyy', 'en-US').split('-').map(Number);
+    const dateObj = new Date(year, month - 1, day)
+    console.log('dateObj ', dateObj)
+    this.fromDate = dateObj;
+  }
   //=================Items details =============
 
   itemDetailsColDefs: ColDef<challanItems>[] = [
