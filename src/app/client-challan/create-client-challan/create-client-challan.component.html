@@ -11,7 +11,7 @@
 
   <form #form="ngForm" class="row g-3 needs-validation div-margin-top" novalidate>
     <div class="col-md-3">
-      <label for="challanDate" class="form-label">Challan Date <span class="text-danger">*</span></label>
+      <label for="challanDate" class="form-label fw-bold">Challan Date <span class="text-danger">*</span></label>
       <div class="input-group">
         <input matInput [matDatepicker]="picker" id="challanDate" [(ngModel)]="challanDate" name="challanDate"
           class="form-control height-39" #challanDate="ngModel" />
@@ -27,14 +27,14 @@
       </div>
     </div>
     <div class="col-md-3">
-      <label for="challanType" class="form-label">Challan Type <span class="text-danger">*</span></label>
+      <label for="challanType" class="form-label fw-bold">Challan Type <span class="text-danger">*</span></label>
       <select class="form-select" name="party" [disabled]="action=='view'" [(ngModel)]="clientChallanObj.challanType"
         id="party">
         <option *ngFor="let challan of challanTypes" [value]="challan.val">{{ challan.name }}</option>
       </select>
     </div>
     <div class="col-md-3">
-      <label for="party" class="form-label">Party</label>
+      <label for="party" class="form-label fw-bold">Party</label>
       <div class="input-group has-validation">
 
         <select class="form-select" name="party" [disabled]="action=='view'" [(ngModel)]="clientChallanObj.party"
@@ -47,7 +47,7 @@
       </div>
     </div>
     <div class="col-md-3">
-      <label for="challanNumber" class="form-label">Challan Number</label>
+      <label for="challanNumber" class="form-label fw-bold">Challan Number</label>
       <input type="text" class="form-control" name="challanNumber" [readOnly]="action=='view'"
         [(ngModel)]="clientChallanObj.challanNumber" id="challanNumber">
       <div class="invalid-feedback">
@@ -56,7 +56,7 @@
     </div>
 
     <div class="col-md-3">
-      <label for="design" class="form-label">Design</label>
+      <label for="design" class="form-label fw-bold">Design</label>
       <select class="form-select" name="design" (blur)="onInputBlur()" [disabled]="action=='view'"
         [(ngModel)]="clientChallanObj.design" id="design">
         <option *ngFor="let design of designs" [value]="design.id">{{ design.designName }}</option>
@@ -66,7 +66,7 @@
       </div>
     </div>
     <div class="col-md-3">
-      <label for="color" class="form-label">Color</label>
+      <label for="color" class="form-label fw-bold">Color</label>
       <select class="form-select" name="color" (blur)="onInputBlur()" [disabled]="action=='view'"
         [(ngModel)]="clientChallanObj.color" id="color">
         <option *ngFor="let color of colors" [value]="color.id">{{ color.colorName }}</option>
@@ -76,7 +76,7 @@
       </div>
     </div>
     <div class="col-md-3">
-      <label for="quantity" class="form-label">Quantity</label>
+      <label for="quantity" class="form-label fw-bold">Quantity</label>
       <input type="text"  (keypress)="utilsService.numberOnly($event)"  (blur)="onInputBlur()" class="form-control"
         [readOnly]="action=='view'" [(ngModel)]="clientChallanObj.quantity" id="quantity" name="quantity">
       <div class="invalid-feedback">
@@ -118,11 +118,11 @@
     <!-- Challan Date -->
 
     <div class="col-md-3">
-      <label for="challanDate" class="form-label">Challan Date <span class="text-danger">*</span></label>
+      <label for="challanDate" class="form-label fw-bold">Challan Date <span class="text-danger">*</span></label>
       <div class="input-group">
-        <input matInput [matDatepicker]="picker" id="challanDate" name="challanDate" class="form-control"
+        <input matInput [matDatepicker]="picker" id="challanDate" name="challanDate" class="form-control height-39"
           [(ngModel)]="challanDate" required #challanDateModel="ngModel" />
-        <span class="input-group-text" style="cursor: pointer;">
+        <span class="input-group-text  height-39" style="cursor: pointer;">
           <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
         </span>
       </div>
@@ -134,7 +134,7 @@
 
     <!-- Challan Type -->
     <!-- <div class="col-md-3">
-      <label for="challanType" class="form-label">Challan Type <span class="text-danger">*</span></label>
+      <label for="challanType" class="form-label fw-bold">Challan Type <span class="text-danger">*</span></label>
       <select
         id="challanType"
         class="form-select"
@@ -147,8 +147,9 @@
       </select>
     </div> -->
 
+    <!-- Challan Type -->
     <div class="col-md-3">
-      <label class="form-label d-block">Challan Type</label>
+      <label class="form-label fw-bold d-block">Challan Type</label>
       <div class="d-flex gap-3">
         <div class="form-check">
           <input class="form-check-input" type="radio" name="challanType" id="challantypeIssue"
@@ -168,25 +169,38 @@
     </div>
 
     <!-- Party -->
-    <div class="col-md-3">
-      <label for="party" class="form-label">Party</label>
+    <!-- <div class="col-md-3">
+      <label for="party" class="form-label fw-bold">Party</label>
       <select id="party" class="form-select" name="party" [(ngModel)]="clientChallanObj.party"
         [disabled]="action === 'view'">
         <option *ngFor="let party of clients" [value]="party.id">{{ party.clientName }}</option>
       </select>
       <div class="invalid-feedback">Please select a party.</div>
+    </div> -->
+
+ <!-- Party -->
+    <div class="col-md-3">
+      <div class="dropdown">
+        <label for="party" class="form-label fw-bold">Pary</label>
+        <input class="form-control" [(ngModel)]="party" list="datalistOptions" name="party" id="party" placeholder="Type to search..."
+          (change)="selectedParty($any($event.target).value)">
+        <datalist id="datalistOptions">
+          <option *ngFor="let party of clients" [value]="party.clientName">
+            </option>
+        </datalist>
+      </div>
     </div>
 
     <!-- Challan Number -->
     <div class="col-md-3">
-      <label for="challanNumber" class="form-label">Challan Number</label>
+      <label for="challanNumber" class="form-label fw-bold">Challan Number</label>
       <input id="challanNumber" type="text" class="form-control" name="challanNumber"
         [(ngModel)]="clientChallanObj.challanNumber" [readonly]="action === 'view'" />
     </div>
 
     <!-- Design -->
     <div class="col-md-3">
-      <label for="design" class="form-label">Design</label>
+      <label for="design" class="form-label fw-bold">Design</label>
       <select id="design" class="form-select" name="design" [(ngModel)]="clientChallanObj.design"
         [disabled]="action === 'view'" (blur)="onInputBlur()">
         <option *ngFor="let design of designs" [value]="design.id">{{ design.designName }}</option>
@@ -196,7 +210,7 @@
 
     <!-- Color -->
     <div class="col-md-3">
-      <label for="color" class="form-label">Color</label>
+      <label for="color" class="form-label fw-bold">Color</label>
       <select id="color" class="form-select" name="color" [(ngModel)]="clientChallanObj.color"
         [disabled]="action === 'view'" (blur)="onInputBlur()">
         <option *ngFor="let color of colors" [value]="color.id">{{ color.colorName }}</option>
@@ -206,7 +220,7 @@
 
     <!-- Quantity -->
     <div class="col-md-3">
-      <label for="quantity" class="form-label">Quantity</label>
+      <label for="quantity" class="form-label fw-bold">Quantity</label>
       <input id="quantity" type="text" class="form-control" name="quantity" [(ngModel)]="clientChallanObj.quantity"
         [readonly]="action === 'view'" (keypress)="utilsService.numberOnly($event)" (blur)="onInputBlur()" />
       <div class="invalid-feedback">Please enter quantity.</div>
@@ -228,11 +242,11 @@
 
     <!-- Action Buttons -->
     <div class="col-12 text-end mt-4">
-      <button *ngIf="action !== 'view'" type="button" class="btn btn-success" [disabled]="form.invalid"
+      <button *ngIf="action !== 'view'" type="button" class="btn btn-primary" [disabled]="form.invalid"
         (click)="onSave()">
         Submit
       </button>
-      <button type="button" class="btn btn-secondary ms-2" (click)="cancel()">Cancel</button>
+      <button type="button" class="btn btn-primary ms-2" (click)="cancel()">Cancel</button>
     </div>
   </form>
 </div>

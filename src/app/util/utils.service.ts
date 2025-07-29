@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { client } from '../model/client';
+import { contractor } from '../model/contractor';
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +8,8 @@ import { client } from '../model/client';
 export class UtilsService {
 
   public clientObj: client = new client();
+  public contractorObj: contractor = new contractor();
+  public challanTypes = [{ val: "I", name: "Issue" }, { val: "R", name: "Recieve" }]
   constructor() { }
 
   public buildUrl(obj: any) {
@@ -44,8 +47,7 @@ export class UtilsService {
       return `${status}`;
     }
 
-  public validateGST(gstNo: string){
-    console.log((gstNo && gstNo.length < 15),'validate gst no call ',gstNo)
+  public validateGST(gstNo: string){   
     return gstNo && gstNo.length < 15 ? true : false; 
   }
 

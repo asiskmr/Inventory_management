@@ -9,7 +9,7 @@
   </div>
   <form #form="ngForm" class="row g-3 needs-validation div-margin-top" novalidate>
     <div class="col-md-4">
-      <label for="clientName" class="form-label">Party <span class="text-danger">*</span></label>
+      <label for="clientName" class="form-label fw-bold">Party <span class="text-danger">*</span></label>
       <input type="text" class="form-control" [readOnly]="action=='view'" #clientName="ngModel" name="clientName"
         [(ngModel)]="clientObj.clientName" id="clientName" (ngModelChange)="clientObj.clientName = $event.toUpperCase()"
         required>
@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="col-md-4">
-      <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+      <label for="email" class="form-label fw-bold">Email <span class="text-danger">*</span></label>
       <input type="text" class="form-control" minlength="10" #email="ngModel" name="email" [readOnly]="action=='view'"
         [(ngModel)]="clientObj.email" id="email" required>
 
@@ -33,7 +33,7 @@
       </div>
     </div>
     <div class="col-md-4">
-      <label for="mobile" class="form-label">Mobile Number</label>
+      <label for="mobile" class="form-label fw-bold">Mobile Number</label>
       <div class="input-group has-validation">
         <!-- <span class="input-group-text" id="inputGroupPrepend">&#64;</span> -->
         <input type="text" class="form-control" name="mobile" (keypress)="utilsService.numberOnly($event)"
@@ -45,7 +45,7 @@
       </div>
     </div>
     <div class="col-md-4">
-      <label for="address" class="form-label">Address</label>
+      <label for="address" class="form-label fw-bold">Address</label>
       <input type="text" class="form-control" name="address" [readOnly]="action=='view'" [(ngModel)]="clientObj.address"
         id="address" (ngModelChange)="clientObj.address = $event.toUpperCase()">
       <div class="invalid-feedback">
@@ -53,7 +53,7 @@
       </div>
     </div>
     <div class="col-md-4">
-      <label for="city" class="form-label">City</label>
+      <label for="city" class="form-label fw-bold">City</label>
       <input type="text" class="form-control" name="city" [readOnly]="action=='view'" [(ngModel)]="clientObj.city"
         id="city" (ngModelChange)="clientObj.city = $event.toUpperCase()">
       <div class="invalid-feedback">
@@ -61,7 +61,7 @@
       </div>
     </div>
     <div class="col-md-4">
-      <label for="state" class="form-label">State</label>
+      <label for="state" class="form-label fw-bold">State</label>
       <select class="form-select" name="state" [disabled]="action=='view'" [(ngModel)]="clientObj.state" id="state">
         <option selected disabled value="">Choose...</option>
         <option>Delhi</option>
@@ -73,7 +73,7 @@
       </div>
     </div>
     <div class="col-md-4">
-      <label for="country" class="form-label">Country</label>
+      <label for="country" class="form-label fw-bold">Country</label>
       <input type="text" class="form-control" name="country" [readOnly]="action=='view'" [(ngModel)]="clientObj.country"
         id="country" (ngModelChange)="clientObj.country = $event.toUpperCase()">
       <div class="invalid-feedback">
@@ -81,20 +81,29 @@
       </div>
     </div>
     <div class="col-md-4">
-      <label for="gstNo" class="form-label">GST Number</label>
-      <input type="text" maxlength="15" class="form-control" (keyup)="validateGst()" name="gstNo" [readOnly]="action=='view'"
-        [(ngModel)]="clientObj.gstNo" id="gstNo">
-      <div class="text-danger">      
+      <label for="gstNo" class="form-label fw-bold">GST Number</label>
+      <input type="text" maxlength="15" class="form-control" (keyup)="validateGst()" name="gstNo"
+        [readOnly]="action=='view'" [(ngModel)]="clientObj.gstNo" id="gstNo">
+      <div class="text-danger">
         @if(isValidGst) {
         <span>GST No should be 15 Digit</span>
         }
       </div>
     </div>
 
-    <div class="col-md-4 margin-top-45 align-right">
+    <div class="col-md-4">
+      <label for="active" class="form-label fw-bold">Status</label>
+      <select class="form-select" name="active" [disabled]="action=='view'" [(ngModel)]="clientObj.active" id="active">       
+        <option value="true">Active</option>
+        <option value="false">InActive</option>
+      </select>
+     
+    </div>
+
+    <div class="col-md-12 margin-top-45 align-right">
       <button [disabled]="form.invalid" *ngIf="action != 'view'" class="btn btn-primary align-left" type="submit"
-        (click)="save()">Submit</button>
+        (click)="save()">Save</button>
       <button class="btn btn-primary margin-left-10" type="submit" (click)="cancel()">Cancel</button>
-    </div>   
+    </div>
   </form>
 </div>

@@ -2,15 +2,16 @@
 
   <form #form="ngForm" class="row g-3 needs-validation" novalidate>
     <div class="col-md-2">
-      <label for="challannumber" class="form-label">challan Number</label>
-      <input type="text" class="form-control" [readOnly]="action=='view'" #challannumber="ngModel" name="challannumber"
+      <label for="challannumber" class="form-label fw-bold">challan Number</label>
+      <input type="text" class="form-control" maxlength="8" [readOnly]="action=='view'" #challannumber="ngModel" name="challannumber"
         [(ngModel)]="filterObj.challannumber" (ngModelChange)="filterObj.challannumber = $event.toUpperCase()"
         id="challannumber">
     </div>
     <div class="col-md-3">
       <div class="dropdown">
+
         <label for="party" class="form-label">Party</label>
-        <input class="form-control" list="datalistOptions" id="party" placeholder="Type to search..."
+        <input class="form-control" list="datalistOptions" [(ngModel)]="filterObj.clientid" name="party" id="party" placeholder="Type to search..."               
           (change)="selectedParty($any($event.target).value)">
         <datalist id="datalistOptions">
           <option *ngFor="let party of dropdownData" [value]="party.clientName">
@@ -18,7 +19,7 @@
       </div>
     </div>
     <div class="col-md-2">
-      <label for="fromDate" class="form-label">From Date</label>
+      <label for="fromDate" class="form-label fw-bold">From Date</label>
       <div class="input-group">
         <input matInput [matDatepicker]="picker1" id="fromDate" [(ngModel)]="fromDate" name="fromDate"
           class="form-control height-39" #challanDate="ngModel" />
@@ -34,7 +35,7 @@
       </div>
     </div>
     <div class="col-md-2">
-      <label for="toDate" class="form-label">To Date</label>
+      <label for="toDate" class="form-label fw-bold">To Date</label>
       <div class="input-group">
         <input matInput [matDatepicker]="picker" id="toDate" [(ngModel)]="toDate" name="toDate"
           class="form-control height-39" #challanDate="ngModel" />
@@ -50,7 +51,7 @@
       </div>
     </div>
     <!-- <div class="col-md-2">
-      <label for="challantype" class="form-label">Challan Type <span class="text-danger">*</span></label>
+      <label for="challantype" class="form-label fw-bold">Challan Type <span class="text-danger">*</span></label>
       <select class="form-select" name="challantype" id="challantype" [disabled]="action=='view'"
         [(ngModel)]="filterObj.challantype" id="challantype">
         <option value="I" selected>Issue</option>
@@ -58,7 +59,7 @@
       </select>
     </div> -->
     <div class="col-md-2">
-  <label class="form-label d-block">Challan Type</label>
+  <label class="form-label fw-bold d-block">Challan Type</label>
   <div class="d-flex gap-3">
     <div class="form-check">
       <input

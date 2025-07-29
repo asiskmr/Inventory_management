@@ -9,7 +9,7 @@
     </div>
     <form #form="ngForm" class="row g-3 needs-validation div-margin-top" novalidate>
         <div class="col-md-4">
-            <label for="designName" class="form-label">Design Name <span class="text-danger">*</span></label>
+            <label for="designName" class="form-label fw-bold">Design Name <span class="text-danger">*</span></label>
             <input type="text" class="form-control" [readOnly]="action=='view'" #designName="ngModel" name="designName"
                 [(ngModel)]="designObj.designName" id="designName"
                 (ngModelChange)="designObj.designName = $event.toUpperCase()" required>
@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <label for="description" class="form-label">Description <span class="text-danger">*</span></label>
+            <label for="description" class="form-label fw-bold">Description <span class="text-danger">*</span></label>
             <input type="text" class="form-control" #description="ngModel" name="description"
                 [readOnly]="action=='view'" [(ngModel)]="designObj.description" id="description" required>
 
@@ -33,7 +33,7 @@
       
         <div class="col-md-4 margin-top-45 align-right">
             <button [disabled]="form.invalid" *ngIf="action != 'view'" class="btn btn-primary align-left" type="submit"
-                (click)="onSave()">Submit</button>
+                (click)="onSave()">Save</button>
             <button class="btn btn-primary margin-left-10" type="submit" (click)="cancel()">Cancel</button>
         </div>
     </form>
