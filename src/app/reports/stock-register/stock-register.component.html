@@ -2,7 +2,7 @@
 
     <form #form="ngForm" class="row g-3 needs-validation" novalidate>
         <div class="col-md-2">
-            <label for="fromDate" class="form-label">From Date</label>
+            <label for="fromDate" class="form-label fw-bold">From Date</label>
             <div class="input-group">
                 <input matInput [matDatepicker]="picker1" id="fromDate" [(ngModel)]="fromDate" name="fromDate"
                     class="form-control height-39" #challanDate="ngModel" />
@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="col-md-2">
-            <label for="toDate" class="form-label">To Date</label>
+            <label for="toDate" class="form-label fw-bold">To Date</label>
             <div class="input-group">
                 <input matInput [matDatepicker]="picker" id="toDate" [(ngModel)]="toDate" name="toDate"
                     class="form-control height-39" #challanDate="ngModel" />
@@ -35,7 +35,7 @@
         </div>
         <!-- Design -->
         <div class="col-md-3">
-            <label for="design" class="form-label">Design</label>
+            <label for="design" class="form-label fw-bold">Design</label>
             <select id="design" class="form-select" name="design" [(ngModel)]="filterObj.design">
                 <option *ngFor="let design of designs" [value]="design.id">{{ design.designName }}</option>
             </select>
@@ -44,7 +44,7 @@
 
         <!-- Color -->
         <div class="col-md-3">
-            <label for="color" class="form-label">Color</label>
+            <label for="color" class="form-label fw-bold">Color</label>
             <select id="color" class="form-select" name="color" [(ngModel)]="filterObj.color">
                 <option *ngFor="let color of colors" [value]="color.id">{{ color.colorName }}</option>
             </select>

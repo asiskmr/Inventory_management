@@ -9,7 +9,7 @@
   </div>
   <form #form="ngForm" class="row g-3 needs-validation div-margin-top" novalidate>
     <div class="col-md-3">
-      <label for="challanDate" class="form-label">Challan Date <span class="text-danger">*</span></label>
+      <label for="challanDate" class="form-label fw-bold">Challan Date <span class="text-danger">*</span></label>
       <div class="input-group">
         <input matInput [matDatepicker]="picker" id="challanDate" [(ngModel)]="challanDate" name="challanDate"
           class="form-control height-39" #challanDateModel="ngModel" />
@@ -25,14 +25,14 @@
       </div>
     </div>
     <!-- <div class="col-md-3">
-      <label for="challanType" class="form-label">Challan Type <span class="text-danger">*</span></label>
+      <label for="challanType" class="form-label fw-bold">Challan Type <span class="text-danger">*</span></label>
       <select class="form-select" name="party" [disabled]="action=='view'"
         [(ngModel)]="contractorChallanObj.challanType" id="party">
         <option *ngFor="let challan of challanTypes" [value]="challan.val">{{ challan.name }}</option>
       </select>
     </div> -->
     <div class="col-md-3">
-      <label class="form-label d-block">Challan Type</label>
+      <label class="form-label fw-bold d-block">Challan Type</label>
       <div class="d-flex gap-3">
         <div class="form-check">
           <input class="form-check-input" type="radio" name="challanType" id="challantypeIssue"
@@ -52,7 +52,7 @@
     </div>
 
     <div class="col-md-3">
-      <label for="party" class="form-label">Contractor</label>
+      <label for="party" class="form-label fw-bold">Contractor</label>
       <div class="input-group has-validation">
         <!-- <span class="input-group-text" id="inputGroupPrepend">&#64;</span> -->
         <select class="form-select" name="party" [disabled]="action=='view'" [(ngModel)]="contractorChallanObj.party"
@@ -60,13 +60,13 @@
           <option *ngFor="let party of constructors" [value]="party.id">{{ party.contractorName }}</option>
         </select>
         <div class="invalid-feedback">
-          Please Select paryt.
+          Please Select Contractor.
         </div>
       </div>
     </div>
     <div class="col-md-3">
-      <label for="challanNumber" class="form-label">Challan Number</label>
-      <input type="text" class="form-control" name="challanNumber" [readOnly]="action=='view'"
+      <label for="challanNumber" class="form-label fw-bold">Challan Number</label>
+      <input type="text" class="form-control" name="challanNumber" [readOnly]="action=='view'" maxlength="8"
         [(ngModel)]="contractorChallanObj.challanNumber" id="challanNumber">
       <div class="invalid-feedback">
         Please Enter challan Number.
@@ -74,7 +74,7 @@
     </div>
 
     <div class="col-md-3">
-      <label for="design" class="form-label">Desing</label>
+      <label for="design" class="form-label fw-bold">Desing</label>
       <select class="form-select" name="design" (blur)="onInputBlur()" [disabled]="action=='view'"
         [(ngModel)]="contractorChallanObj.design" id="design">
         <option *ngFor="let design of designs" [value]="design.id">{{ design.designName }}</option>
@@ -84,7 +84,7 @@
       </div>
     </div>
     <div class="col-md-3">
-      <label for="color" class="form-label">Color</label>
+      <label for="color" class="form-label fw-bold">Color</label>
       <select class="form-select" name="color" (blur)="onInputBlur()" [disabled]="action=='view'"
         [(ngModel)]="contractorChallanObj.color" id="color">
         <option *ngFor="let color of colors" [value]="color.id">{{ color.colorName }}</option>
@@ -94,7 +94,7 @@
       </div>
     </div>
     <div class="col-md-3">
-      <label for="quantity" class="form-label">Quantity</label>
+      <label for="quantity" class="form-label fw-bold">Quantity</label>
       <input type="text" (keypress)="utilsService.numberOnly($event)" (blur)="onInputBlur()" class="form-control"
         name="quantity" [readOnly]="action=='view'" [(ngModel)]="contractorChallanObj.quantity" id="quantity"
         name="quantity">
@@ -117,7 +117,7 @@
     </div>
     <div class="col-2 ">
       <button [disabled]="form.invalid" *ngIf="action != 'view'" class="btn btn-primary align-left" type="submit"
-        (click)="onSave()">Submit</button>
+        (click)="onSave()">Save</button>
       <button class="btn btn-primary margin-left-10" type="submit" (click)="cancel()">Cancel</button>
     </div>
   </form>

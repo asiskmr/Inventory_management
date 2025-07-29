@@ -2,18 +2,18 @@
 
   <form #form="ngForm" class="row g-3 needs-validation" novalidate>
     <div class="col-md-3">
-      <label for="clientName" class="form-label">Party </label>
+      <label for="clientName" class="form-label fw-bold">Party </label>
       <input type="text" class="form-control" [readOnly]="action=='view'" #clientName="ngModel" name="clientName"
         [(ngModel)]="clientObj.clientName" (ngModelChange)="clientObj.clientName = $event.toUpperCase()"
         id="clientName">
     </div>
     <div class="col-md-4">
-      <label for="email" class="form-label">Email </label>
+      <label for="email" class="form-label fw-bold">Email </label>
       <input type="text" class="form-control" minlength="4" #email="ngModel" name="email" [readOnly]="action=='view'"
         [(ngModel)]="clientObj.email" id="email">
     </div>
     <div class="col-md-2">
-      <label for="mobile" class="form-label">Mobile Number</label>
+      <label for="mobile" class="form-label fw-bold">Mobile Number</label>
       <div class="input-group has-validation">       
         <input type="text" class="form-control" name="mobile" [readOnly]="action=='view'" [(ngModel)]="clientObj.mobile"
           id="mobile" aria-describedby="inputGroupPrepend">
@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="col-md-2">
-      <label for="gstNo" class="form-label">GST Number</label>
+      <label for="gstNo" class="form-label fw-bold">GST Number</label>
       <input type="text" maxlength="10" class="form-control" name="gstNo" [readOnly]="action=='view'"
         [(ngModel)]="clientObj.gstNo" id="gstNo">
       <div class="invalid-feedback">

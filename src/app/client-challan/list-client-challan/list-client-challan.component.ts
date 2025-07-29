@@ -164,14 +164,14 @@ export class ListClientChallanComponent {
     console.log(' this.clientChallans ', this.clientChallans)
   }
 
-  search = (text$: Observable<string>) =>
-    text$.pipe(
-      debounceTime(200),
-      distinctUntilChanged(),
-      switchMap(term =>
-        term.length < 2 ? of([]) : this.http.get<client[]>(`clients/?clientName=${term}`)
-      )
-    );
+  // search = (text$: Observable<string>) =>
+  //   text$.pipe(
+  //     debounceTime(200),
+  //     distinctUntilChanged(),
+  //     switchMap(term =>
+  //       term.length < 2 ? of([]) : this.http.get<client[]>(`clients/?clientName=${term}`)
+  //     )
+  //   );
 
   formatter = (result: any) => result.clientName;
 

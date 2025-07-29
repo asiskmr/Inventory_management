@@ -43,6 +43,7 @@ export class CreateClientChallanComponent {
   disableAdd: boolean = true;
   showSuccessMessage: boolean = false;
   successMessage: string = '';
+  party: string = '';
 
   constructor(public router: ActivatedRoute, public route: Router) {
     this.rowCnt = 1;
@@ -117,7 +118,7 @@ export class CreateClientChallanComponent {
       cellRenderer: this.buttonRenderer,
       cellRendererParams: {
         onClick: this.onDeconsteItem.bind(this),
-        label: 'Deconste'
+        label: 'Delete'
       },
       width: 120
     }
@@ -176,7 +177,7 @@ export class CreateClientChallanComponent {
     return {
       challanNumber: this.clientChallanObj.challanNumber,
       challanDate: this.utilsService.formatDate_dd_MM_YYYY(this.challanDate),
-      client: { id: this.clientChallanObj.party },
+      client: { id: this.clients.find(e => e.clientName == this.party)?.id },
       challanType: this.clientChallanObj.challanType,
       challanItems: this.items.map(item => ({
         design: { id: item.designId },
@@ -243,7 +244,14 @@ export class CreateClientChallanComponent {
     this.disableAdd = !(design && color && quantity);
   }
 
-  challanTypes = [{ val: "I", name: "Issue" }, { val: "R", name: "Recieve" }]
+  challanTypes = this.utilsService.challanTypes; 
+
+  selectedParty(party: any){
+   
+    console.log("party ", party)
+    const obj: client | undefined= this.clients.find(e => e.clientName==party);    
+    //this.clientChallanObj.party = obj?.clientName ? obj.clientName: 0;
+  }
 
 }
 
