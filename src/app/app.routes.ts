@@ -26,6 +26,8 @@ import { StockRegisterComponent } from './reports/stock-register/stock-register.
 import { ContractorRegisterComponent } from './reports/contractor-register/contractor-register.component';
 import { PartyChallanRegisterComponent } from './reports/party-challan-register/party-challan-register.component';
 import { ContractorChallanRegisterComponent } from './reports/contractor-challan-register/contractor-challan-register.component';
+import { DesignStockReportsComponent } from './reports/design-stock-reports/design-stock-reports.component';
+import { ContractorStockReportsComponent } from './reports/contractor-stock-reports/contractor-stock-reports.component';
 
 export const routes: Routes = [
     {
@@ -129,7 +131,7 @@ export const routes: Routes = [
                 path: 'user',
                 component: UserComponent
 
-            },            
+            },
             {
                 path: 'dashboard',
                 component: DashboardComponent
@@ -158,6 +160,15 @@ export const routes: Routes = [
             {
                 path: 'contractor-challan-register',
                 component: ContractorChallanRegisterComponent
+            },
+            {
+                path: 'design-stock-reports',
+                component: DesignStockReportsComponent
+            },
+            {
+                path: 'contractor-stock-reports',
+                component: ContractorStockReportsComponent
+
             }
         ]
     }
