@@ -13,8 +13,9 @@
         [(ngModel)]="clientObj.email" id="email">
     </div>
     <div class="col-md-2">
-      <label for="mobile" class="form-label fw-bold">Mobile Number</label>
-      <div class="input-group has-validation">       
+
+      <label for="mobile"  class="form-label fw-bold">Mobile Number</label>
+      <div class="input-group has-validation">
         <input type="text" class="form-control" name="mobile" [readOnly]="action=='view'" [(ngModel)]="clientObj.mobile"
           id="mobile" aria-describedby="inputGroupPrepend">
         <div class="invalid-feedback">
@@ -29,14 +30,14 @@
       <div class="invalid-feedback">
         Please provide a valid GST No.
       </div>
-    </div> 
+    </div>
     <div class="col-1 align-right">
       <button class="margin-top-30 btn btn-primary" name="gstNo" (click)="searchClient()" id="gstNo"> Search </button>
     </div>
   </form>
 </div>
 <div class="row">
-  
+
     <div class="col-2 div-margin-top align-left font-bold">Record Count : {{totalRecord}}</div>
     <div class="col-9"></div>
   <div class="col-1  align-center"><i class="bi bi-filetype-csv font-size-30" (click)="onBtnExport()"></i></div>
@@ -56,13 +57,13 @@
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Delete Pary</h4>
+        <h4 class="modal-title">Delete Party</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 
       <!-- Modal body -->
       <div class="modal-body">
-        Do you want to delete the Pary?
+        Do you want to delete the Party?
       </div>
       <!-- Modal footer -->
       <div class="modal-footer">

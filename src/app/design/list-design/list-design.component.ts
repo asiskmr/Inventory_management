@@ -99,7 +99,7 @@ export class ListDesignComponent implements OnInit{
     this.route.navigate(["/list-design"])
   }
 
-  searcDesign = () => {
+  searchDesign = () => {
    // this.url += this.utilsService.buildUrl(this.designObj);
      let url = ''
     url = this.url +this.utilsService.buildUrl(this.designObj);

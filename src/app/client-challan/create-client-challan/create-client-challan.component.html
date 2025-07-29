@@ -1,5 +1,5 @@
 <!-- <div class="container">
-  
+
   <div class="row">
     <div class="col-12 div-margin-top">
       <div *ngIf="showSuccessMessage" class="alert alert-success alert-dismissible fade show" role="alert">
@@ -36,13 +36,13 @@
     <div class="col-md-3">
       <label for="party" class="form-label fw-bold">Party</label>
       <div class="input-group has-validation">
- 
+
         <select class="form-select" name="party" [disabled]="action=='view'" [(ngModel)]="clientChallanObj.party"
           id="party">
           <option *ngFor="let party of clients" [value]="party.id">{{ party.clientName }}</option>
         </select>
         <div class="invalid-feedback">
-          Please Select paryt.
+          Please Select party.
         </div>
       </div>
     </div>
