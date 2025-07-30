@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject,  signal } from '@angular/core';
-import { MasterDataService } from '../../pages/service/master-data.service';
+import { MasterDataService } from '../../service/master-data.service';
 
 import { FormsModule } from '@Angular/forms';
 import { CommonModule } from '@angular/common';

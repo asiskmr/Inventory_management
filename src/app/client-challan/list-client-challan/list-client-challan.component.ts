@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { client } from '../../model/client';
-import { MasterDataService } from '../../pages/service/master-data.service';
+import { MasterDataService } from '../../service/master-data.service';
 import { AgGridAngular } from "ag-grid-angular";
 import type { ColDef, CsvExportParams, GridReadyEvent } from "ag-grid-community";
-import { provideGlobalGridOptions, GridApi } from 'ag-grid-community';
-import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
+import { GridApi } from 'ag-grid-community';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormsModule } from '@Angular/forms';
 import { CommonModule } from '@angular/common';
 import { UtilsService } from '../../util/utils.service';
@@ -14,7 +14,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
-import { debounceTime, distinctUntilChanged, Observable, of, switchMap } from 'rxjs';
 import { challanItems } from '../../model/challanItems';
 import { NgSelectModule } from '@ng-select/ng-select';
 
@@ -60,8 +59,6 @@ export class ListClientChallanComponent {
       .subscribe((res: any) => {
         this.clients = res.data;
         this.dropdownData = this.clients;
-
-        console.log('client data ', this.clients)
       })
   }
 
@@ -71,15 +68,10 @@ export class ListClientChallanComponent {
         this.clientChallans = res.data;
         this.totalRecord = res.metadata.recordcount
       })
-
   }
 
   // Column Definitions: Defines & controls grid columns.
-  colDefs: ColDef<clientChallan>[] = [
-    // {
-    //   headerName: "Id",
-    //   field: "id",
-    // },
+  colDefs: ColDef<clientChallan>[] = [    
     {
       headerName: "Challan Number",
       field: "challanNumber",
@@ -106,37 +98,34 @@ export class ListClientChallanComponent {
     },
     {
       headerName: 'Action',
-      cellRenderer: this.myCellRenderer1,
+      cellClass: 'align-center',
+      cellRenderer: this.myCellRendererAction,
       onCellClicked: (event) => {
         this.itemDetails = event.data?.challanItems;
       }     
     }
   ];
 
-  challanType(params: any){
-    console.log(' params.node.data.challanType ', params.node.data.challanType)
+  challanType(params: any){    
     return `<span> ${params.node.data.challanType == 'R'? 'Recieve': 'Issue'} </span>`
   }
     
 
   myCellRenderer(params: any) {
     let totalQuantity = 0;
-    console.log('Cell value:', params.node.data.challanItems.forEach((e: { quantity: number; }) => totalQuantity += e.quantity)); // This should log the value
+    params.node.data.challanItems.forEach((e: { quantity: number; }) => totalQuantity += e.quantity);   
     return `<span>${totalQuantity}</span>`;
   }
 
-  myCellRenderer1(params: any) {     
-        return `<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"> <i class="bi bi-pencil-square"></i> </button>`;
+  myCellRendererAction(params: any) {     
+        return `<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"> <i class="bi bi-search"></i> </button>`;
   }
  
-
-
   defaultColDef: ColDef = {
     flex: 1,
     minWidth: 100,
     sortable: true,
     filter: true,
-
   };
 
   deleteClient() {
@@ -164,27 +153,6 @@ export class ListClientChallanComponent {
     console.log(' this.clientChallans ', this.clientChallans)
   }
 
-  // search = (text$: Observable<string>) =>
-  //   text$.pipe(
-  //     debounceTime(200),
-  //     distinctUntilChanged(),
-  //     switchMap(term =>
-  //       term.length < 2 ? of([]) : this.http.get<client[]>(`clients/?clientName=${term}`)
-  //     )
-  //   );
-
-  formatter = (result: any) => result.clientName;
-
-  // search = (text$: Observable<string>) =>
-  //   text$.pipe(
-  //     debounceTime(200),
-  //     distinctUntilChanged(),
-  //     switchMap(term => term.length < 2 ? [] : ['Red', 'Green', 'Blue', 'Yellow'].filter(
-  //       v => v.toLowerCase().indexOf(term.toLowerCase()) > -1
-  //     ))
-  //   );
-
-  // formatter = (result: string) => result;
 
   selectedParty(party: any){
    
@@ -213,11 +181,7 @@ export class ListClientChallanComponent {
 
   //=================Items details =============
 
-  itemDetailsColDefs: ColDef<challanItems>[] = [
-    {
-      headerName: "Id",
-      field: "id",
-    },
+  itemDetailsColDefs: ColDef<challanItems>[] = [    
     {
       headerName: "Design Name",
       field: "design.designName",

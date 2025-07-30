@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 
-import { MasterDataService } from '../../pages/service/master-data.service';
+import { MasterDataService } from '../../service/master-data.service';
 import { AgGridAngular } from 'ag-grid-angular';
 import type {
   ColDef,
@@ -112,15 +112,15 @@ export class DesignStockReportsComponent {
     // };
 
     // this.gridApi.exportDataAsCsv(params);
-    this.downloadService.exportToExcel();
+    //this.downloadService.exportToExcel();
   }
 }
 class StockFilter {
-  design: string;
-  color: string;
+  designName: string;
+  colorName: string;
   constructor() {
-    this.design = '';
-    this.color = '';
+    this.designName = '';
+    this.colorName = '';
   }
 }
 

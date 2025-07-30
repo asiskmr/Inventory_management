@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, Input, OnInit, signal } from '@angular/core';
-import { MasterDataService } from '../../pages/service/master-data.service';
+import { MasterDataService } from '../../service/master-data.service';
 import { clientChallan } from '../../model/clientChallan';
 import { FormsModule } from '@Angular/forms';
 import { CommonModule } from '@angular/common';
@@ -195,7 +195,7 @@ export class CreateContractorChallanComponent {
       "challanNumber": this.contractorChallanObj.challanNumber,
       "challanDate": this.utilsService.formatDate_dd_MM_YYYY(this.challanDate),
       "contractor": {
-        "id": this.contractorChallanObj.party
+        "id": this.constructors.find(e => e.contractorName==this.contractorChallanObj.party)?.id 
       },
       "challanType": this.contractorChallanObj.challanType,
       "challanItems": this.buildItemsData()
@@ -275,6 +275,5 @@ export class CreateContractorChallanComponent {
     }
   }
   challanTypes = [{ val: "I", name: "Issue" }, { val: "R", name: "Recieve" }]
-
 }
 

@@ -6,7 +6,8 @@
         <!-- Design -->
         <div class="col-md-3">
             <label for="design" class="form-label">Design</label>
-            <select id="design" class="form-select" name="design" [(ngModel)]="filterObj.design">
+            <select id="design" class="form-select" name="design" [(ngModel)]="filterObj.designName">
+                <option value="">Select</option>
                 <option *ngFor="let design of designs" [value]="design.designName">{{ design.designName }}</option>
             </select>
             <div class="invalid-feedback">Please select a design.</div>
@@ -15,7 +16,8 @@
         <!-- Color -->
         <div class="col-md-3">
             <label for="color" class="form-label">Color</label>
-            <select id="color" class="form-select" name="color" [(ngModel)]="filterObj.color">
+            <select id="color" class="form-select" name="color" [(ngModel)]="filterObj.colorName">
+                <option value="">Select</option>
                 <option *ngFor="let color of colors" [value]="color.colorName">{{ color.colorName }}</option>
             </select>
             <div class="invalid-feedback">Please select a color.</div>

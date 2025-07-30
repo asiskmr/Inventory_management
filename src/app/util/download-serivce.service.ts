@@ -6,15 +6,11 @@ import * as FileSaver from 'file-saver';
 })
 export class DownloadSerivceService {
 
-  data = [
-    { name: 'John', age: 25, city: 'New York' },
-    { name: 'Alice', age: 30, city: 'London' },
-    { name: 'Bob', age: 22, city: 'Paris' },
-  ];
+
   constructor() { }
 
-    exportToExcel(): void {
-    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.data);
+  exportToExcel(data: any, fileName: string): void {
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
     const workbook: XLSX.WorkBook = {
       Sheets: { 'Data': worksheet },
       SheetNames: ['Data'],
@@ -23,15 +19,15 @@ export class DownloadSerivceService {
 
     // Save to file
     const blob: Blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
-    FileSaver.saveAs(blob, 'exported-data.xlsx');
-}
+    FileSaver.saveAs(blob, fileName);
+  }
 
-  exportToCSV(): void {
-    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.data);
+  exportToCSV(data: [], fileName: string): void {
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
     const csvData: string = XLSX.utils.sheet_to_csv(worksheet);
 
     const blob: Blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
-    FileSaver.saveAs(blob, 'exported-data.csv');
+    FileSaver.saveAs(blob, fileName);
   }
 
 }

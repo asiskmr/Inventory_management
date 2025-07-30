@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { MasterDataService } from '../../pages/service/master-data.service';
+import { MasterDataService } from '../../service/master-data.service';
 import { AgGridAngular } from 'ag-grid-angular';
 import type {
   ColDef,
@@ -128,14 +128,14 @@ export class ContractorStockReportsComponent {
   }
 }
 class StockFilter {
-  design: string;
-  color: string;
-  contractor: string;
+  designName: string;
+  colorName: string;
+  contractorName: string;
 
   constructor() {
-    this.design = '';
-    this.color = '';
-    this.contractor = '';
+    this.designName = '';
+    this.colorName = '';
+    this.contractorName = '';
   }
 }
 

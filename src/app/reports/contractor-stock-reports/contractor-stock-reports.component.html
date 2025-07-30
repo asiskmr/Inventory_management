@@ -4,9 +4,9 @@
 
     <!-- Contractor -->
     <div class="col-md-3">
-      <label for="contractor" class="form-label">Contractor</label>
-      <select id="contractor" class="form-select" name="contractor"
-        [(ngModel)]="filterObj.contractor">
+      <label for="contractorName" class="form-label">Contractor</label>
+      <select id="contractorName" class="form-select" name="contractorName"
+        [(ngModel)]="filterObj.contractorName">
         <option *ngFor="let contractor of contractors"
           [value]="contractor.id">{{ contractor.contractorName }}</option>
       </select>
@@ -15,9 +15,9 @@
 
     <!-- Design -->
     <div class="col-md-3">
-      <label for="design" class="form-label">Design</label>
-      <select id="design" class="form-select" name="design"
-        [(ngModel)]="filterObj.design">
+      <label for="designName" class="form-label">Design</label>
+      <select id="designName" class="form-select" name="designName"
+        [(ngModel)]="filterObj.designName">
         <option *ngFor="let design of designs" [value]="design.id">{{
           design.designName }}</option>
       </select>
@@ -26,9 +26,9 @@
 
     <!-- Color -->
     <div class="col-md-3">
-      <label for="color" class="form-label">Color</label>
-      <select id="color" class="form-select" name="color"
-        [(ngModel)]="filterObj.color">
+      <label for="colorName" class="form-label">Color</label>
+      <select id="colorName" class="form-select" name="colorName"
+        [(ngModel)]="filterObj.colorName">
         <option *ngFor="let color of colors" [value]="color.colorName">{{
           color.colorName }}</option>
       </select>

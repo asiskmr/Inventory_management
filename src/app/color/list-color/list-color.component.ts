@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { client } from '../../model/client';
-import { MasterDataService } from '../../pages/service/master-data.service';
+import { MasterDataService } from '../../service/master-data.service';
 import { AgGridAngular } from "ag-grid-angular";
 import type { ColDef, CsvExportParams, GridReadyEvent } from "ag-grid-community";
 import { GridApi } from 'ag-grid-community';
@@ -90,9 +90,7 @@ export class ListColorComponent implements OnInit {
 
   clientList$: Observable<client[]> = new Observable<client[]>;
 
-
   deletecolor() {
-
     this.masterDataService.update(this.id, false, this.url)
       .subscribe((res: any) => {
         this.colorList[0] = res;
