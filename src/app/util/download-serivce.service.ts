@@ -22,7 +22,7 @@ export class DownloadSerivceService {
     FileSaver.saveAs(blob, fileName);
   }
 
-  exportToCSV(data: [], fileName: string): void {
+  exportToCSV(data: any, fileName: string): void {
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
     const csvData: string = XLSX.utils.sheet_to_csv(worksheet);
 
