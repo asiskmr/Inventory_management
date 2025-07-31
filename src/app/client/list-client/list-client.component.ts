@@ -37,7 +37,7 @@ export class ListClientComponent implements OnInit {
   clients: client[] = [];
   clientObj: client = new client();
   private gridApi!: GridApi;
-  clientList$: Observable<client[]> = new Observable<client[]>; 
+  clientList$: Observable<client[]> = new Observable<client[]>;
   constructor(public router: ActivatedRoute) {
   }
 
@@ -86,7 +86,7 @@ export class ListClientComponent implements OnInit {
 
   };
 
-  creatClient = () => {
+  createClient = () => {
     this.route.navigate(["/create-client"])
   }
 
