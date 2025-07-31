@@ -33,16 +33,21 @@
       </div>
     </div>
     <div class="col-md-4">
-      <label for="mobile" class="form-label fw-bold">Mobile Number</label>
-      <div class="input-group has-validation">
+      <label for="mobile" class="form-label fw-bold">Mobile Number <span
+          class="text-danger">*</span></label>
+      <!-- <div class="input-group has-validation"> -->
         <!-- <span class="input-group-text" id="inputGroupPrepend">&#64;</span> -->
-        <input type="text" class="form-control" name="mobile" (keypress)="utilsService.numberOnly($event)"
-          [readOnly]="action=='view'" maxlength="10" [(ngModel)]="clientObj.mobile" id="mobile"
-          aria-describedby="inputGroupPrepend">
-        <div class="invalid-feedback">
+        <input type="text" maxlength="10" class="form-control" name="mobile" (keypress)="utilsService.numberOnly($event)"
+          [readOnly]="action=='view'"  #mobile="ngModel"  [(ngModel)]="clientObj.mobile" id="mobile"
+          aria-describedby="inputGroupPrepend" (keypress)="utilsService.numberOnly($event)" required>
+        <div class="text-danger">
+          <span *ngIf="mobile.errors?.['required'] && mobile.touched">This is
+            required</span>
+        </div>
+          <div class="invalid-feedback">
           Please Enter Mobile Number.
         </div>
-      </div>
+      <!-- </div> -->
     </div>
     <div class="col-md-4">
       <label for="address" class="form-label fw-bold">Address</label>
@@ -81,7 +86,8 @@
       </div>
     </div>
     <div class="col-md-4">
-      <label for="gstNo" class="form-label fw-bold">GST Number</label>
+      <label for="gstNo" class="form-label fw-bold">GST Number <span
+          class="text-danger">*</span></label>
       <input type="text" maxlength="15" class="form-control" (keyup)="validateGst()" name="gstNo"
         [readOnly]="action=='view'" [(ngModel)]="clientObj.gstNo" id="gstNo">
       <div class="text-danger">
@@ -93,11 +99,11 @@
 
     <div class="col-md-4">
       <label for="active" class="form-label fw-bold">Status</label>
-      <select class="form-select" name="active" [disabled]="action=='view'" [(ngModel)]="clientObj.active" id="active">       
+      <select class="form-select" name="active" [disabled]="action=='view'" [(ngModel)]="clientObj.active" id="active">
         <option value="true">Active</option>
         <option value="false">InActive</option>
       </select>
-     
+
     </div>
 
     <div class="col-md-12 margin-top-45 align-right">

@@ -18,6 +18,7 @@ export class CreateContractorComponent {
   id: string = '';
   action: string = '';
   url: string = 'contractors/';
+  isValidGst: boolean = false;
   http = inject(HttpClient)
   contractorFromData = signal(new contractor())
   readonly utilsService = inject(UtilsService);
@@ -70,7 +71,9 @@ export class CreateContractorComponent {
       ({ ...data, [key]: event.target.value })
     )
   }
-
+validateGst(){
+     this.isValidGst = this.utilsService.validateGST(this.contractorObj.gstNo);
+  }
   cancel = () => {
     this.route.navigate(["/list-contractor"])
   }

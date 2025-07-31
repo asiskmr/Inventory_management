@@ -42,13 +42,13 @@ export class UtilsService {
   }
 
   public getStatus(params: any) {
-      
-      let status = params.node.data.active? '<span class="dot-green"></span>' : '<span class="dot-red"></span>';    
+
+      let status = params.node.data.active? '<span class="dot-green"></span>' : '<span class="dot-red"></span>';
       return `${status}`;
     }
 
-  public validateGST(gstNo: string){   
-    return gstNo && gstNo.length < 15 ? true : false; 
+  public validateGST(gstNo: String){
+    return gstNo && gstNo.length < 15 ? true : false;
   }
 
 }
