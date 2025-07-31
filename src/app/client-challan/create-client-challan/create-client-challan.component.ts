@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, Input, OnInit, signal } from '@angular/core';
-import { MasterDataService } from '../../pages/service/master-data.service';
+import { MasterDataService } from '../../service/master-data.service';
 import { clientChallan } from '../../model/clientChallan';
 import { FormsModule } from '@Angular/forms';
 import { CommonModule } from '@angular/common';
@@ -42,8 +42,8 @@ export class CreateClientChallanComponent {
   colors: color[] = [];
   disableAdd: boolean = true;
   showSuccessMessage: boolean = false;
-  successMessage: string = '';
-  party: string = '';
+  successMessage: string = ''; 
+  selectedClient: string = ''
 
   constructor(public router: ActivatedRoute, public route: Router) {
     this.rowCnt = 1;
@@ -177,7 +177,7 @@ export class CreateClientChallanComponent {
     return {
       challanNumber: this.clientChallanObj.challanNumber,
       challanDate: this.utilsService.formatDate_dd_MM_YYYY(this.challanDate),
-      client: { id: this.clients.find(e => e.clientName == this.party)?.id },
+      client: { id: this.clients.find(e => e.clientName == this.selectedClient)?.id },
       challanType: this.clientChallanObj.challanType,
       challanItems: this.items.map(item => ({
         design: { id: item.designId },
@@ -241,16 +241,13 @@ export class CreateClientChallanComponent {
 
   onInputBlur(): void {
     const { design, color, quantity } = this.clientChallanObj;
-    this.disableAdd = !(design && color && quantity);
+    this.disableAdd = !(design && color && quantity > 0);
   }
 
   challanTypes = this.utilsService.challanTypes; 
 
-  selectedParty(party: any){
-   
-    console.log("party ", party)
-    const obj: client | undefined= this.clients.find(e => e.clientName==party);    
-    //this.clientChallanObj.party = obj?.clientName ? obj.clientName: 0;
+  selectedParty(selectedParty: any){     
+    const obj: client | undefined= this.clients.find(e => e.clientName==selectedParty);  
   }
 
 }

@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, OnInit } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { client } from '../../model/client';
-import { contractor } from '../../model/contractor';
+import { client } from '../model/client';
+import { contractor } from '../model/contractor';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,6 @@ export class MasterDataService implements OnInit {
   http = inject(HttpClient)
 
   constructor() {
-
     this.getJSON().subscribe(data => {
       this.configData = data;
       this.apiUrl = 'http://localhost:9090/v2/';
@@ -69,12 +68,12 @@ export class MasterDataService implements OnInit {
       }))
   }
 
-  getContractorById = (id: string) => {
-    return this.http.get<contractor[]>(`${this.apiUrl}contractors/id/${id}`)
-      .pipe(map((result: any) => {
-        return result.data
-      }))
-  }
+  // getContractorById = (id: string) => {
+  //   return this.http.get<contractor[]>(`${this.apiUrl}contractors/id/${id}`)
+  //     .pipe(map((result: any) => {
+  //       return result.data
+  //     }))
+  // }
 
   saveContractor = (contractorObj: contractor) => {
     return this.http.post(`${this.apiUrl}contractors/`, contractorObj);
@@ -83,11 +82,11 @@ export class MasterDataService implements OnInit {
   updateContractor = (id: string, status: boolean) => {
     return this.http.patch(`${this.apiUrl}contractors/${id}/${status}`, null);
   }
-  searchContractor = (contractorObj: contractor) => {
-    return this.http.get<contractor[]>(`${this.apiUrl}/contractors/email/mobile/gstno/status?email=${contractorObj.email}`)
-      .pipe(map((result: any) => {
-        return result.data
-      }))
-  }
+  // searchContractor = (contractorObj: contractor) => {
+  //   return this.http.get<contractor[]>(`${this.apiUrl}/contractors/email/mobile/gstno/status?email=${contractorObj.email}`)
+  //     .pipe(map((result: any) => {
+  //       return result.data
+  //     }))
+  // }
 
 }

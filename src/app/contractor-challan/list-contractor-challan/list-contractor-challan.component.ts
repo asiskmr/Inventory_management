@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
 
-import { MasterDataService } from '../../pages/service/master-data.service';
+import { MasterDataService } from '../../service/master-data.service';
 import { AgGridAngular } from "ag-grid-angular";
 import type { ColDef, CsvExportParams, GridReadyEvent } from "ag-grid-community";
 import { provideGlobalGridOptions, GridApi } from 'ag-grid-community';
@@ -81,11 +81,7 @@ export class ListContractorChallanComponent {
   }
 
   // Column Definitions: Defines & controls grid columns.
-  colDefs: ColDef<contractorChallan>[] = [
-    // {
-    //   headerName: "Id",
-    //   field: "id",
-    // },
+  colDefs: ColDef<contractorChallan>[] = [    
     {
       headerName: "Challan Number",
       field: "challanNumber",
@@ -112,7 +108,8 @@ export class ListContractorChallanComponent {
     },
     {
       headerName: 'Action',
-      cellRenderer: this.myCellRenderer1,
+      cellClass: 'align-center',   
+      cellRenderer: this.myCellRendererAction,
       onCellClicked: (event) => {
         this.itemDetails = event.data?.challanItems;
       }
@@ -130,8 +127,8 @@ export class ListContractorChallanComponent {
     return `<span>${totalQuantity}</span>`;
   }
 
-  myCellRenderer1(params: any) {
-    return `<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"> <i class="bi bi-pencil-square"></i> </button>`;
+  myCellRendererAction(params: any) {
+    return `<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"> <i class="bi bi-search"></i> </button>`;
   }
 
 
@@ -223,11 +220,7 @@ export class ListContractorChallanComponent {
   }
   //=================Items details =============
 
-  itemDetailsColDefs: ColDef<challanItems>[] = [
-    {
-      headerName: "Id",
-      field: "id",
-    },
+  itemDetailsColDefs: ColDef<challanItems>[] = [    
     {
       headerName: "Design Name",
       field: "design.designName",

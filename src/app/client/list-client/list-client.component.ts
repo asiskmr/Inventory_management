@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { client } from '../../model/client';
-import { MasterDataService } from '../../pages/service/master-data.service';
+import { MasterDataService } from '../../service/master-data.service';
 import { AgGridAngular } from "ag-grid-angular";
 import type { ColDef, CsvExportParams, GridReadyEvent } from "ag-grid-community";
 import { provideGlobalGridOptions, GridApi } from 'ag-grid-community';
@@ -11,6 +11,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormsModule } from '@Angular/forms';
 import { CommonModule } from '@angular/common';
 import { UtilsService } from '../../util/utils.service';
+import { DownloadSerivceService } from '../../util/download-serivce.service';
 
 provideGlobalGridOptions({ theme: "legacy" });
 @Component({
@@ -27,16 +28,16 @@ export class ListClientComponent implements OnInit {
   readonly utilsService = inject(UtilsService);
   private readonly route = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly downloadService = inject(DownloadSerivceService);
 
   id: string = '';
   action: string = '';
   url: string = 'clients/';
   totalRecord: number = 0;
-  clints: client[] = [];
+  clients: client[] = [];
   clientObj: client = new client();
   private gridApi!: GridApi;
   clientList$: Observable<client[]> = new Observable<client[]>;
-
   constructor(public router: ActivatedRoute) {
   }
 
@@ -44,16 +45,16 @@ export class ListClientComponent implements OnInit {
     this.router.queryParams.subscribe((params: Params) => {
       this.id = params['id']
       this.action = params['action']
-      this.clientObj = this.utilsService.clientObj;     
-      this.searchClient() ;
+      this.clientObj = this.utilsService.clientObj;
+      this.searchClient();
     });
   }
 
   // Column Definitions: Defines & controls grid columns.
   colDefs: ColDef<client>[] = [
     {
-      headerName: "Status", 
-      cellClass: 'margin-top-8',    
+      headerName: "Status",
+      cellClass: 'margin-top-8',
       cellRenderer: this.utilsService.getStatus
     },
     {
@@ -63,7 +64,7 @@ export class ListClientComponent implements OnInit {
     {
       headerName: "Mobile",
       field: "mobile",
-    },    
+    },
     {
       headerName: "Email",
       field: "email",
@@ -85,7 +86,7 @@ export class ListClientComponent implements OnInit {
 
   };
 
-  creatClient = () => {
+  createClient = () => {
     this.route.navigate(["/create-client"])
   }
 
@@ -93,10 +94,10 @@ export class ListClientComponent implements OnInit {
 
     this.masterDataService.update(this.id, false, this.url)
       .subscribe((res: any) => {
-        this.clints[0] = res;
-         this.searchClient();
+        this.clients[0] = res;
+        this.searchClient();
       })
-   
+
   }
 
   searchClient = () => {
@@ -106,7 +107,7 @@ export class ListClientComponent implements OnInit {
     this.utilsService.clientObj = this.clientObj;
     this.masterDataService.search(url)
       .subscribe((res: any) => {
-        this.clints = res.data;
+        this.clients = res.data;
         this.totalRecord = res.metadata.recordcount;
       })
   }
@@ -115,19 +116,28 @@ export class ListClientComponent implements OnInit {
     this.gridApi = params.api;
   }
 
-refreshData(newData: any[]): void {
- this.gridApi.applyTransaction({add: this.clints }) // Replace with new data
-}
+  refreshData(newData: any[]): void {
+    this.gridApi.applyTransaction({ add: this.clients }) // Replace with new data
+  }
 
   onBtnExport() {
-
-    const params: CsvExportParams = {
-      fileName: 'client_data.csv',
-      //onlySelected: false,       // Export only selected rows
-      // allColumns: true,         // Export all columns, even if not visible
-      columnKeys: ['id', 'clientName', 'address', 'city', 'state', 'country', 'email'],     // Export only specific columns
-    };
-
-    this.gridApi.exportDataAsCsv(params);
+    this.downloadService.exportToCSV(this.getReportData(), 'client_data.csv')
   }
+
+  onBtnExportExcel() {
+    this.downloadService.exportToExcel(this.getReportData(), 'client_data.xlsx')
+  }
+
+  getReportData() {
+    return this.clients.map(e => ({
+      'Client Name': e.clientName,
+      'Email': e.email,
+      'Mobile': e.mobile,
+      'Address': e.address,
+      'City': e.city,
+      'GST Number': e.gstNo,
+      'Status': e.active ? 'Active' : 'Inactive'
+    }));
+  }
+
 }

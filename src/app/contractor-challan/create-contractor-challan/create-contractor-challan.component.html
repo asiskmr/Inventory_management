@@ -24,13 +24,8 @@
         }
       </div>
     </div>
-    <!-- <div class="col-md-3">
-      <label for="challanType" class="form-label fw-bold">Challan Type <span class="text-danger">*</span></label>
-      <select class="form-select" name="party" [disabled]="action=='view'"
-        [(ngModel)]="contractorChallanObj.challanType" id="party">
-        <option *ngFor="let challan of challanTypes" [value]="challan.val">{{ challan.name }}</option>
-      </select>
-    </div> -->
+
+    <!-- Challan Type -->
     <div class="col-md-3">
       <label class="form-label fw-bold d-block">Challan Type</label>
       <div class="d-flex gap-3">
@@ -51,58 +46,64 @@
       </div>
     </div>
 
+    <!-- Contractor -->
     <div class="col-md-3">
-      <label for="party" class="form-label fw-bold">Contractor</label>
-      <div class="input-group has-validation">
-        <!-- <span class="input-group-text" id="inputGroupPrepend">&#64;</span> -->
-        <select class="form-select" name="party" [disabled]="action=='view'" [(ngModel)]="contractorChallanObj.party"
-          id="party">
-          <option *ngFor="let party of constructors" [value]="party.id">{{ party.contractorName }}</option>
-        </select>
-        <div class="invalid-feedback">
-          Please Select Contractor.
-
+      <div class="dropdown">
+        <label for="contractor" class="form-label fw-bold">Contractor</label>
+        <input type="text" class="form-control" [(ngModel)]="contractorChallanObj.party" #contractor="ngModel"
+          list="constructors" name="contractor" id="contractor" placeholder="Type to search..."
+          required>
+        <datalist id="constructors">
+          <option *ngFor="let party of constructors" [value]="party.contractorName">
+          </option>
+        </datalist>
+        <div class="text-danger">
+          @if(contractor.errors?.['required'] && contractor.touched && contractor.dirty) {
+          <span>This is required</span>
+          }
         </div>
       </div>
+
+      <!-- Challan Number -->
     </div>
     <div class="col-md-3">
-      <label for="challanNumber" class="form-label fw-bold">Challan Number</label>
+      <label for="challanNumber" class="form-label fw-bold">Challan Number <span class="text-danger">*</span> </label>
       <input type="text" class="form-control" name="challanNumber" [readOnly]="action=='view'" maxlength="8"
-        [(ngModel)]="contractorChallanObj.challanNumber" id="challanNumber">
-      <div class="invalid-feedback">
-        Please Enter challan Number.
+        [(ngModel)]="contractorChallanObj.challanNumber" id="challanNumber" #challanNumber="ngModel" required>
+      <div class="text-danger">
+        @if(challanNumber.errors?.['required'] && challanNumber.touched && challanNumber.dirty) {
+        <span>This is required</span>
+        }
       </div>
     </div>
 
+    <!-- Design -->
     <div class="col-md-3">
       <label for="design" class="form-label fw-bold">Desing</label>
       <select class="form-select" name="design" (blur)="onInputBlur()" [disabled]="action=='view'"
         [(ngModel)]="contractorChallanObj.design" id="design">
         <option *ngFor="let design of designs" [value]="design.id">{{ design.designName }}</option>
       </select>
-      <div class="invalid-feedback">
-        Please Select Desing.
-      </div>
     </div>
+
+    <!-- Color -->
+
     <div class="col-md-3">
       <label for="color" class="form-label fw-bold">Color</label>
       <select class="form-select" name="color" (blur)="onInputBlur()" [disabled]="action=='view'"
         [(ngModel)]="contractorChallanObj.color" id="color">
         <option *ngFor="let color of colors" [value]="color.id">{{ color.colorName }}</option>
       </select>
-      <div class="invalid-feedback">
-        Please select a valid Color.
-      </div>
     </div>
+
+    <!-- Quantity -->
     <div class="col-md-3">
       <label for="quantity" class="form-label fw-bold">Quantity</label>
-      <input type="text" (keypress)="utilsService.numberOnly($event)" (blur)="onInputBlur()" class="form-control"
-        name="quantity" [readOnly]="action=='view'" [(ngModel)]="contractorChallanObj.quantity" id="quantity"
-        name="quantity">
-      <div class="invalid-feedback">
-        Please Entity Quantity.
-      </div>
+      <input type="text" (keypress)="utilsService.numberOnly($event)" (keyup)="onInputBlur()" class="form-control"
+        name="quantity" [readOnly]="action=='view'" [(ngModel)]="contractorChallanObj.quantity" id="quantity">
     </div>
+
+    <!-- Add Button -->
     <div class="col-3 margin-top-45">
       <button class="btn btn-primary align-left" [disabled]="disableAdd" type="submit" (click)="addItems()">Add</button>
     </div>
@@ -113,12 +114,14 @@
           (cellValueChanged)="onCellValueChanged($event)" />
       </div>
     </div>
+
+    <!-- Cancel Button -->
     <div class="col-10">
 
     </div>
     <div class="col-2 ">
-      <button [disabled]="form.invalid" *ngIf="action != 'view'" class="btn btn-primary align-left" type="submit"
-        (click)="onSave()">Save</button>
+      <button [disabled]="form.invalid || items.length <= 0" *ngIf="action != 'view'" class="btn btn-primary align-left"
+        type="submit" (click)="onSave()">Save</button>
       <button class="btn btn-primary margin-left-10" type="submit" (click)="cancel()">Cancel</button>
     </div>
   </form>

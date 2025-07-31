@@ -1,7 +1,7 @@
 
 export class contractor {
 
-    id: Number;
+    id: number;
     contractorName: String;
     address: String;
     city: String;
