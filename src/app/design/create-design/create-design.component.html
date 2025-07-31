@@ -15,22 +15,16 @@
                 (ngModelChange)="designObj.designName = $event.toUpperCase()" required>
 
             <div class="text-danger">
-                @if(designName.errors?.['required'] && designName.touched && designName.dirty) {
-                <span>This is required</span>
-                }
+                <span *ngIf="designName.errors?.['required'] && designName.touched">This is required</span>
             </div>
         </div>
         <div class="col-md-4">
-            <label for="description" class="form-label fw-bold">Description <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" #description="ngModel" name="description"
-                [readOnly]="action=='view'" [(ngModel)]="designObj.description" id="description" required>
-
-            <div class="text-danger">
-                <span *ngIf="description.errors?.['required'] && description.touched">This is required</span>
-            </div>
+            <label for="description" class="form-label fw-bold">Description</label>
+            <input type="text" class="form-control" name="description" [readOnly]="action=='view'"
+                [(ngModel)]="designObj.description" id="description">
         </div>
 
-      
+
         <div class="col-md-4 margin-top-45 align-right">
             <button [disabled]="form.invalid" *ngIf="action != 'view'" class="btn btn-primary align-left" type="submit"
                 (click)="onSave()">Save</button>

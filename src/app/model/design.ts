@@ -1,7 +1,7 @@
 
 export class design {
 
-    id: Number;
+    id: number;
     designName: String;
     description: String;
     active: boolean;

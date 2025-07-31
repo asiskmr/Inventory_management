@@ -21,10 +21,10 @@ export class CreateDesignComponent {
   showSuccessMessage: boolean = false;
   successMessage: string = '';
   http = inject(HttpClient)
-  designFromData = signal(new design())
+  designFromData = signal(new designData())
   masterDataService = inject(MasterDataService)
   utilsService: UtilsService = inject(UtilsService);
-  designObj: design = new design();
+  designObj: designData = new designData();
 
   constructor(public router: ActivatedRoute, public route: Router) {
   }
@@ -62,7 +62,7 @@ export class CreateDesignComponent {
 
   }
   updateForm = (key: string, event: any) => {
-    this.designFromData.update((data: design) =>
+    this.designFromData.update((data: designData) =>
       ({ ...data, [key]: event.target.value })
     )
   }
@@ -70,4 +70,16 @@ export class CreateDesignComponent {
   cancel = () => {
     this.route.navigate(["/list-design"])
   }
+}
+
+
+ class designData {   
+    designName: String;
+    description: String;
+
+    constructor() {
+        this.designName = "";
+        this.description = "";
+        
+    }
 }

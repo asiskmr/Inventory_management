@@ -15,9 +15,7 @@
         required>
 
       <div class="text-danger">
-        @if(clientName.errors?.['required'] && clientName.touched && clientName.dirty) {
-        <span>This is required</span>
-        }
+        <span *ngIf="clientName.errors?.['required'] && clientName.touched">This is required</span>
       </div>
     </div>
     <div class="col-md-4">
@@ -33,20 +31,19 @@
       </div>
     </div>
     <div class="col-md-4">
-      <label for="mobile" class="form-label fw-bold">Mobile Number <span
-          class="text-danger">*</span></label>
+      <label for="mobile" class="form-label fw-bold">Mobile Number <span class="text-danger">*</span></label>
       <!-- <div class="input-group has-validation"> -->
-        <!-- <span class="input-group-text" id="inputGroupPrepend">&#64;</span> -->
-        <input type="text" maxlength="10" class="form-control" name="mobile" (keypress)="utilsService.numberOnly($event)"
-          [readOnly]="action=='view'"  #mobile="ngModel"  [(ngModel)]="clientObj.mobile" id="mobile"
-          aria-describedby="inputGroupPrepend" (keypress)="utilsService.numberOnly($event)" required>
-        <div class="text-danger">
-          <span *ngIf="mobile.errors?.['required'] && mobile.touched">This is
-            required</span>
-        </div>
-          <div class="invalid-feedback">
-          Please Enter Mobile Number.
-        </div>
+      <!-- <span class="input-group-text" id="inputGroupPrepend">&#64;</span> -->
+      <input type="text" maxlength="10" class="form-control" name="mobile" (keypress)="utilsService.numberOnly($event)"
+        [readOnly]="action=='view'" #mobile="ngModel" [(ngModel)]="clientObj.mobile" id="mobile"
+        aria-describedby="inputGroupPrepend" (keypress)="utilsService.numberOnly($event)" required>
+      <div class="text-danger">
+        <span *ngIf="mobile.errors?.['required'] && mobile.touched">This is
+          required</span>
+      </div>
+      <div class="invalid-feedback">
+        Please Enter Mobile Number.
+      </div>
       <!-- </div> -->
     </div>
     <div class="col-md-4">
@@ -86,8 +83,7 @@
       </div>
     </div>
     <div class="col-md-4">
-      <label for="gstNo" class="form-label fw-bold">GST Number <span
-          class="text-danger">*</span></label>
+      <label for="gstNo" class="form-label fw-bold">GST Number <span class="text-danger">*</span></label>
       <input type="text" maxlength="15" class="form-control" (keyup)="validateGst()" name="gstNo"
         [readOnly]="action=='view'" [(ngModel)]="clientObj.gstNo" id="gstNo">
       <div class="text-danger">

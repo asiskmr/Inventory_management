@@ -43,7 +43,7 @@ export class ContractorStockReportsComponent {
   colors: color[] = [];
   private gridApi!: GridApi;
   contractorStockData: ContractorStockData[] = [];
-  private url: string = 'contractorstockreports';
+  private url: string = 'contractorstockreports/';
 
   totalRecord: number = 0;
   constructor(public router: ActivatedRoute, public route: Router) {

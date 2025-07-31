@@ -45,7 +45,7 @@ export class DesignStockReportsComponent {
   colors: color[] = [];
   private gridApi!: GridApi;
   reportData: ReportData[] = [];
-  private url: string = 'designstockreports'
+  private url: string = 'designstockreports/'
 
   totalRecord: number = 0;
   constructor(public router: ActivatedRoute, public route: Router) {
