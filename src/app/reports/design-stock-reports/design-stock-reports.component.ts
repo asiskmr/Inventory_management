@@ -40,7 +40,7 @@ export class DesignStockReportsComponent {
   filterObj: StockFilter = new StockFilter();
   masterDataService = inject(MasterDataService);
   downloadService = inject(DownloadSerivceService);
-  utilsService: UtilsService = inject(UtilsService);
+  utilsService: UtilsService = inject(UtilsService);  
   designs: design[] = [];
   colors: color[] = [];
   private gridApi!: GridApi;
@@ -103,16 +103,21 @@ export class DesignStockReportsComponent {
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
   }
-  onBtnExport() {
-    // const params: CsvExportParams = {
-    //   fileName: 'client_data.csv',
-    //   //onlySelected: false,       // Export only selected rows
-    //   //allColumns: true,         // Export all columns, even if not visible
-    //   //columnKeys: ['name'],     // Export only specific columns
-    // };
+   
+ onBtnExport() {
+    this.downloadService.exportToCSV(this.getReportData(), 'design_stock_report.csv')
+  }
 
-    // this.gridApi.exportDataAsCsv(params);
-    //this.downloadService.exportToExcel();
+  onBtnExportExcel() {
+    this.downloadService.exportToExcel(this.getReportData(), 'design_stock_report.xlsx')
+  }  
+  
+   getReportData() {
+    return this.reportData.map(e => ({
+      'Design Name': e.designName,
+      'Color Name': e.colorName,
+      'Stock Balance': e.stockBalance
+    }));
   }
 }
 class StockFilter {

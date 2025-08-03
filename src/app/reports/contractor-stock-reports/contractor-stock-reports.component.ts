@@ -7,7 +7,7 @@ import type {
   GridReadyEvent,
 } from 'ag-grid-community';
 import { GridApi } from 'ag-grid-community';
-import { ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@Angular/forms';
 import { CommonModule } from '@angular/common';
 import { UtilsService } from '../../util/utils.service';
@@ -19,6 +19,7 @@ import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { contractor } from '../../model/contractor';
 import { design } from '../../model/design';
 import { color } from '../../model/color';
+import { DownloadSerivceService } from '../../util/download-serivce.service';
 
 @Component({
   selector: 'app-contractor-stock-reports',
@@ -43,6 +44,7 @@ export class ContractorStockReportsComponent {
   colors: color[] = [];
   private gridApi!: GridApi;
   contractorStockData: ContractorStockData[] = [];
+  private readonly downloadService = inject(DownloadSerivceService);
   private url: string = 'contractorstockreports/';
 
   totalRecord: number = 0;
@@ -70,14 +72,14 @@ export class ContractorStockReportsComponent {
   };
 
   // fetch color list
-  getColors = () => {   
+  getColors = () => {
     this.masterDataService.getData('colors/').subscribe((res: any) => {
       this.colors = res.data;
       console.log('colors data ', this.colors);
     });
   };
 
-  searchStock() {   
+  searchStock() {
     let url = ''
     url = this.url + this.utilsService.buildUrl(this.filterObj);
     this.masterDataService.search(url)
@@ -117,14 +119,20 @@ export class ContractorStockReportsComponent {
     this.gridApi = params.api;
   }
   onBtnExport() {
-    const params: CsvExportParams = {
-      fileName: 'client_data.csv',
-      //onlySelected: false,       // Export only selected rows
-      // allColumns: true,         // Export all columns, even if not visible
-      //columnKeys: ['name'],     // Export only specific columns
-    };
+    this.downloadService.exportToCSV(this.getReportData(), 'contractor_stock_report.csv')
+  }
 
-    this.gridApi.exportDataAsCsv(params);
+  onBtnExportExcel() {
+    this.downloadService.exportToExcel(this.getReportData(), 'contractor_stock_report.xlsx')
+  }
+
+  getReportData() {
+    return this.contractorStockData.map(e => ({
+      'Contractor Name': e.contractorName,
+      'Design Name': e.designName,
+      'Color Name': e.colorName,
+      'Stock Balance': e.stockBalance
+    }));
   }
 }
 class StockFilter {

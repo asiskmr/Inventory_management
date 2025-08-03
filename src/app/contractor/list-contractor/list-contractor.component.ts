@@ -10,6 +10,7 @@ import { FormsModule } from '@Angular/forms';
 import { CommonModule } from '@angular/common';
 import { CustomeCellComponent } from '../../util/custome-cell/custome-cell.component';
 import { UtilsService } from '../../util/utils.service';
+import { DownloadSerivceService } from '../../util/download-serivce.service';
 
 @Component({
   selector: 'app-list-contractor',
@@ -28,9 +29,10 @@ export class ListContractorComponent {
   http = inject(HttpClient)
   masterDataService = inject(MasterDataService)
   utilsService: UtilsService = inject(UtilsService);
-  clints: contractor[] = [];
+  contractor: contractor[] = [];
   contractorObj: contractor = new contractor();
   private gridApi!: GridApi;
+    private readonly downloadService = inject(DownloadSerivceService);
 
 
   constructor(public router: ActivatedRoute, public route: Router) {
@@ -44,15 +46,6 @@ export class ListContractorComponent {
       this.searchContractor()
     });
   }
-
-  // getContractorData = () => {
-  //   this.masterDataService.getContractor()
-  //     .subscribe((res: any) => {
-  //       this.clints = res.data;
-  //       this.totalRecord = res.metadata.recordcount;
-  //     })
-
-  // }
 
   // Column Definitions: Defines & controls grid columns.
   colDefs: ColDef<contractor>[] = [
@@ -101,7 +94,7 @@ export class ListContractorComponent {
 
     this.masterDataService.updateContractor(this.id, false)
       .subscribe((res: any) => {
-        this.clints[0] = res;
+        this.contractor[0] = res;
 
       })
     this.searchContractor();
@@ -115,7 +108,7 @@ export class ListContractorComponent {
     url = this.url + this.utilsService.buildUrl(this.contractorObj);
     this.masterDataService.search(url)
       .subscribe((res: any) => {
-        this.clints = res.data;
+        this.contractor = res.data;
         this.totalRecord = res.metadata.recordcount;
       })
   }
@@ -125,14 +118,22 @@ export class ListContractorComponent {
   }
 
   onBtnExport() {
+    this.downloadService.exportToCSV(this.getReportData(), 'contractor_data.csv')
+  }
 
-    const params: CsvExportParams = {
-      fileName: 'contractor_data.csv',
-      //onlySelected: false,       // Export only selected rows
-      // allColumns: true,         // Export all columns, even if not visible
-      //columnKeys: ['name'],     // Export only specific columns
-    };
+  onBtnExportExcel() {
+    this.downloadService.exportToExcel(this.getReportData(), 'contractor_data.xlsx')
+  }
 
-    this.gridApi.exportDataAsCsv(params);
+    getReportData() {
+    return this.contractor.map(e => ({
+      'Client Name': e.contractorName,
+      'Email': e.email,
+      'Mobile': e.mobile,
+      'Address': e.address,
+      'City': e.city,
+      'GST Number': e.gstNo,
+      'Status': e.active ? 'Active' : 'Inactive'
+    }));
   }
 }

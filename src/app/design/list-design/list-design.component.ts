@@ -13,6 +13,7 @@ import { FormsModule } from '@Angular/forms';
 import { CommonModule } from '@angular/common';
 import { UtilsService } from '../../util/utils.service';
 import { design } from '../../model/design';
+import { DownloadSerivceService } from '../../util/download-serivce.service';
 
 @Component({
   selector: 'app-list-design',
@@ -20,7 +21,7 @@ import { design } from '../../model/design';
   templateUrl: './list-design.component.html',
   styleUrl: './list-design.component.css'
 })
-export class ListDesignComponent implements OnInit{
+export class ListDesignComponent implements OnInit {
 
   id: string = '';
   action: string = '';
@@ -29,6 +30,7 @@ export class ListDesignComponent implements OnInit{
   http = inject(HttpClient)
   masterDataService = inject(MasterDataService)
   utilsService: UtilsService = inject(UtilsService);
+  private readonly downloadService = inject(DownloadSerivceService);
   designList: design[] = [];
   designObj: design = new design();
   private gridApi!: GridApi;
@@ -40,7 +42,7 @@ export class ListDesignComponent implements OnInit{
   ngOnInit() {
     this.router.queryParams.subscribe((params: Params) => {
       this.id = params['id']
-      this.action = params['action']     
+      this.action = params['action']
     });
   }
 
@@ -56,8 +58,8 @@ export class ListDesignComponent implements OnInit{
   // Column Definitions: Defines & controls grid columns.
   colDefs: ColDef<design>[] = [
     {
-      headerName: "Status", 
-      cellClass: 'margin-top-8',    
+      headerName: "Status",
+      cellClass: 'margin-top-8',
       cellRenderer: this.utilsService.getStatus
     },
     {
@@ -88,7 +90,7 @@ export class ListDesignComponent implements OnInit{
 
   clientList$: Observable<client[]> = new Observable<client[]>;
 
-  
+
   deleteDesign() {
 
     this.masterDataService.update(this.id, false, this.url)
@@ -100,10 +102,8 @@ export class ListDesignComponent implements OnInit{
   }
 
   searchDesign = () => {
-   // this.url += this.utilsService.buildUrl(this.designObj);
-     let url = ''
-    url = this.url +this.utilsService.buildUrl(this.designObj);
-
+    let url = ''
+    url = this.url + this.utilsService.buildUrl(this.designObj);
     this.masterDataService.search(url)
       .subscribe((res: any) => {
         this.designList = res.data;
@@ -116,14 +116,18 @@ export class ListDesignComponent implements OnInit{
   }
 
   onBtnExport() {
+    this.downloadService.exportToCSV(this.getReportData(), 'design_data.csv')
+  }
 
-    const params: CsvExportParams = {
-      fileName: 'design_data.csv',
-      //onlySelected: false,       // Export only selected rows
-      // allColumns: true,         // Export all columns, even if not visible
-      //columnKeys: ['name'],     // Export only specific columns
-    };
+  onBtnExportExcel() {
+    this.downloadService.exportToExcel(this.getReportData(), 'design_data.xlsx')
+  }
 
-    this.gridApi.exportDataAsCsv(params);
+  getReportData() {
+    return this.designList.map(e => ({
+      'Design Name': e.designName,
+      'Description': e.description,
+      'Status': e.active ? 'Active' : 'Inactive'
+    }));
   }
 }

@@ -19,6 +19,7 @@ import { challanItems } from '../../model/challanItems';
 import { contractorChallan } from '../../model/contractorChallan';
 import { contractor } from '../../model/contractor';
 import { formatDate } from '@angular/common';
+import { DownloadSerivceService } from '../../util/download-serivce.service';
 //import { MY_DATE_FORMATS } from '../../util/dateFormat';
 //import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 
@@ -42,6 +43,7 @@ export class ListContractorChallanComponent {
   utilsService: UtilsService = inject(UtilsService);
   contractorChallans: contractorChallan[] = [];
   contractorChallanObj: contractorChallan = new contractorChallan();
+  private readonly downloadService = inject(DownloadSerivceService);  
   private gridApi!: GridApi;
   contractors: contractor[] = [];
   dropdownData: contractor[] = [];
@@ -124,6 +126,8 @@ export class ListContractorChallanComponent {
   myCellRenderer(params: any) {
     let totalQuantity = 0;
     params.node.data.challanItems.forEach((e: { quantity: number; }) => totalQuantity += e.quantity);
+    //let count = this.peaceCount(params.node.data.challanItems);
+   // console.log('count data ', count)
     return `<span>${totalQuantity}</span>`;
   }
 
@@ -179,35 +183,37 @@ export class ListContractorChallanComponent {
 
   formatter = (result: any) => result.clientName;
 
-  // search = (text$: Observable<string>) =>
-  //   text$.pipe(
-  //     debounceTime(200),
-  //     distinctUntilChanged(),
-  //     switchMap(term => term.length < 2 ? [] : ['Red', 'Green', 'Blue', 'Yellow'].filter(
-  //       v => v.toLowerCase().indexOf(term.toLowerCase()) > -1
-  //     ))
-  //   );
-
-  // formatter = (result: string) => result;
-
   filterData(event: any) {
     this.dropdownData = this.contractors.filter(e => e.contractorName.includes(event.target.value.toUpperCase()))
   }
 
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
+  } 
+
+ onBtnExport() {
+    this.downloadService.exportToCSV(this.getReportData(), 'contractor_challan_data.csv')
   }
 
-  onBtnExport() {
+  onBtnExportExcel() {
+    this.downloadService.exportToExcel(this.getReportData(), 'contractor_challan_data.xlsx')
+  }
+  
+   getReportData() {
+    return this.contractorChallans.map(e => ({
+      'Challan Number': e.challanNumber,
+      'Challan Date': e.challanDate,
+      'Contractor Name': e.contractor.contractorName,
+      'Contractor Mobile': e.contractor.mobile,
+      'Challan Type': e.challanType,
+      'Peace Count': this.peaceCount(e),
+    }));
+  }
 
-    const params: CsvExportParams = {
-      fileName: 'contractor_challan_data.csv',
-      //onlySelected: false,       // Export only selected rows
-      // allColumns: true,         // Export all columns, even if not visible
-      columnKeys: ['challanNumber', 'challanDate' ],     // Export only specific columns
-    };
-
-    this.gridApi.exportDataAsCsv(params);
+   peaceCount(params: any) {
+    let totalQuantity = 0;
+    params.challanItems.forEach((e: { quantity: number; }) => totalQuantity += e.quantity);
+    return `${totalQuantity}`;
   }
 
   formatDate(event: any) {

@@ -5,10 +5,9 @@
     <!-- Contractor -->
     <div class="col-md-3">
       <label for="contractorName" class="form-label">Contractor</label>
-      <select id="contractorName" class="form-select" name="contractorName"
-        [(ngModel)]="filterObj.contractorName">
-        <option *ngFor="let contractor of contractors"
-          [value]="contractor.id">{{ contractor.contractorName }}</option>
+      <select id="contractorName" class="form-select" name="contractorName" [(ngModel)]="filterObj.contractorName">
+        <option value="">Select</option>
+        <option *ngFor="let contractor of contractors" [value]="contractor.contractorName">{{ contractor.contractorName }}</option>
       </select>
       <div class="invalid-feedback">Please select a contractor.</div>
     </div>
@@ -16,10 +15,9 @@
     <!-- Design -->
     <div class="col-md-3">
       <label for="designName" class="form-label">Design</label>
-      <select id="designName" class="form-select" name="designName"
-        [(ngModel)]="filterObj.designName">
-        <option *ngFor="let design of designs" [value]="design.id">{{
-          design.designName }}</option>
+      <select id="designName" class="form-select" name="designName" [(ngModel)]="filterObj.designName">
+        <option value="">Select</option>
+        <option *ngFor="let design of designs" [value]="design.designName">{{ design.designName }}</option>
       </select>
       <div class="invalid-feedback">Please select a design.</div>
     </div>
@@ -27,35 +25,32 @@
     <!-- Color -->
     <div class="col-md-3">
       <label for="colorName" class="form-label">Color</label>
-      <select id="colorName" class="form-select" name="colorName"
-        [(ngModel)]="filterObj.colorName">
-        <option *ngFor="let color of colors" [value]="color.colorName">{{
-          color.colorName }}</option>
+      <select id="colorName" class="form-select" name="colorName" [(ngModel)]="filterObj.colorName">
+        <option value="">Select</option>
+        <option *ngFor="let color of colors" [value]="color.colorName">{{ color.colorName }}</option>
       </select>
       <div class="invalid-feedback">Please select a color.</div>
     </div>
 
     <div class="col-1 align-right">
-      <button class="margin-top-30 btn btn-primary" name="search" id="search"
-        (click)="searchStock()">
+      <button class="margin-top-30 btn btn-primary" name="search" id="search" (click)="searchStock()">
         Search </button>
     </div>
   </form>
 
   <div class="row">
-    <div class="col-2 div-margin-top align-left font-bold">Record Count :
-      {{totalRecord}}</div>
+    <div class="col-2 div-margin-top align-left font-bold">Record Count : {{totalRecord}}</div>
     <div class="col-9"></div>
-    <div class="col-1  align-center"><i class="bi bi-filetype-csv font-size-30"
-        (click)="onBtnExport()"></i></div>
+    <div class="col-1 ">
+      <i class="bi bi-filetype-csv font-size-30" (click)="onBtnExport()"></i>
+      <i class="bi bi-filetype-xls font-size-30" (click)="onBtnExportExcel()"></i>
+    </div>
   </div>
 
   <div class="row">
     <div class="col-12">
-      <ag-grid-angular class="ag-theme-quartz" style="height: 500px;"
-        [rowData]="contractorStockData"
-        [columnDefs]="colDefs" [defaultColDef]="defaultColDef"
-        (gridReady)="onGridReady($event)" />
+      <ag-grid-angular class="ag-theme-quartz" style="height: 500px;" [rowData]="contractorStockData"
+        [columnDefs]="colDefs" [defaultColDef]="defaultColDef" (gridReady)="onGridReady($event)" />
     </div>
   </div>
 </div>

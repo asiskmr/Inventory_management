@@ -16,6 +16,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { challanItems } from '../../model/challanItems';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { DownloadSerivceService } from '../../util/download-serivce.service';
 
 @Component({
   selector: 'app-list-client-challan',
@@ -35,6 +36,7 @@ export class ListClientChallanComponent {
   utilsService: UtilsService = inject(UtilsService);
   clientChallans: clientChallan[] = [];
   clientChallanObj: clientChallan = new clientChallan();
+  private readonly downloadService = inject(DownloadSerivceService);
   private gridApi!: GridApi;
   clients: client[] = [];
   dropdownData: client[] = [];
@@ -81,11 +83,11 @@ export class ListClientChallanComponent {
       field: "challanDate",
     },
     {
-      headerName: "Party",
+      headerName: "Party Name",
       field: "client.clientName",
     },
     {
-      headerName: "Client Mobile",
+      headerName: "Party Mobile",
       field: "client.mobile",
     },
     {
@@ -168,17 +170,29 @@ export class ListClientChallanComponent {
   }
 
   onBtnExport() {
-
-    const params: CsvExportParams = {
-      fileName: 'client_data.csv',
-      //onlySelected: false,       // Export only selected rows
-      // allColumns: true,         // Export all columns, even if not visible
-      //columnKeys: ['name'],     // Export only specific columns
-    };
-
-    this.gridApi.exportDataAsCsv(params);
+    this.downloadService.exportToCSV(this.getReportData(), 'Party_challan_data.csv')
   }
 
+  onBtnExportExcel() {
+    this.downloadService.exportToExcel(this.getReportData(), 'Party_challan_data.xlsx')
+  }
+  
+   getReportData() {
+    return this.clientChallans.map(e => ({
+      'Challan Number': e.challanNumber,
+      'Challan Date': e.challanDate,
+      'Party Name': e.client.clientName,
+      'Party Mobile': e.client.mobile,
+      'Challan Type': e.challanType,
+      'Peace Count': this.peaceCount(e),
+    }));
+  }
+
+   peaceCount(params: any) {
+    let totalQuantity = 0;
+    params.challanItems.forEach((e: { quantity: number; }) => totalQuantity += e.quantity);
+    return `${totalQuantity}`;
+  }
   //=================Items details =============
 
   itemDetailsColDefs: ColDef<challanItems>[] = [    

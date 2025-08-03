@@ -13,6 +13,7 @@ import { FormsModule } from '@Angular/forms';
 import { CommonModule } from '@angular/common';
 import { UtilsService } from '../../util/utils.service';
 import { color } from '../../model/color';
+import { DownloadSerivceService } from '../../util/download-serivce.service';
 
 @Component({
   selector: 'app-list-color',
@@ -28,7 +29,7 @@ export class ListColorComponent implements OnInit {
   action: string = '';
   totalRecord: number = 0;
   url: string = 'colors/';
-
+  private readonly downloadService = inject(DownloadSerivceService);
   http = inject(HttpClient)
   masterDataService = inject(MasterDataService)
   utilsService: UtilsService = inject(UtilsService);
@@ -58,8 +59,8 @@ export class ListColorComponent implements OnInit {
   // Column Definitions: Defines & controls grid columns.
   colDefs: ColDef<color>[] = [
     {
-      headerName: "Status", 
-      cellClass: 'margin-top-8',    
+      headerName: "Status",
+      cellClass: 'margin-top-8',
       cellRenderer: this.utilsService.getStatus
     },
     {
@@ -100,7 +101,7 @@ export class ListColorComponent implements OnInit {
   }
 
   searchcolor = () => {
-    this.colorList = []    
+    this.colorList = []
     let url = ''
     url = this.url + this.utilsService.buildUrl(this.colorObj);
     this.masterDataService.search(url)
@@ -115,14 +116,18 @@ export class ListColorComponent implements OnInit {
   }
 
   onBtnExport() {
+    this.downloadService.exportToCSV(this.getReportData(), 'color_data.csv')
+  }
 
-    const params: CsvExportParams = {
-      fileName: 'color_data.csv',
-      //onlySelected: false,       // Export only selected rows
-      // allColumns: true,         // Export all columns, even if not visible
-      //columnKeys: ['name'],     // Export only specific columns
-    };
+  onBtnExportExcel() {
+    this.downloadService.exportToExcel(this.getReportData(), 'color_data.xlsx')
+  }
 
-    this.gridApi.exportDataAsCsv(params);
+
+  getReportData() {
+    return this.colorList.map(e => ({
+      'Color Name': e.colorName,
+      'Status': e.active ? 'Active' : 'Inactive'
+    }));
   }
 }
