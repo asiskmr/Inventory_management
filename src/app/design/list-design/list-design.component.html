@@ -4,10 +4,14 @@
     <div class="col-md-3">
       <label for="designName" class="form-label fw-bold">Design Name </label>
       <input type="text" class="form-control" [readOnly]="action=='view'" name="designName"
-        [(ngModel)]="designObj.designName" id="designName">
+        [(ngModel)]="designObj.designName" id="designName" #designName="ngModel" required>
+
+        <div class="text-danger">
+        <span *ngIf="designName.errors?.['required'] && designName.touched">This is required</span>
+      </div>
     </div>  
-    <div class="col-1 align-right">
-      <button class="margin-top-30 btn btn-primary" name="gstNo" (click)="searchDesign()" id="gstNo"> Search </button>
+    <div class="col-1 align-right" >
+      <button  [disabled]="form.invalid" class="margin-top-30 btn btn-primary" name="gstNo" (click)="searchDesign()" id="gstNo"> Search </button>
     </div>
   </form>
 </div>

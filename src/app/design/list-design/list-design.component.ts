@@ -25,7 +25,7 @@ export class ListDesignComponent implements OnInit {
 
   id: string = '';
   action: string = '';
-  url: string = 'designs/';
+  url: string = 'designs/name/';
 
   http = inject(HttpClient)
   masterDataService = inject(MasterDataService)
@@ -103,7 +103,9 @@ export class ListDesignComponent implements OnInit {
 
   searchDesign = () => {
     let url = ''
-    url = this.url + this.utilsService.buildUrl(this.designObj);
+    this.designObj.active = false;
+    url = this.url + this.designObj.designName;
+    console.log('search url ', url)
     this.masterDataService.search(url)
       .subscribe((res: any) => {
         this.designList = res.data;
