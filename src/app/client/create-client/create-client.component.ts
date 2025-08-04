@@ -26,12 +26,10 @@ export class CreateClientComponent implements OnInit {
   id: string = '';
   action: string = '';
   url: string = 'clients/';
-  clientObj: client = new client();
-  showSuccessMessage: boolean = false;
-  successMessage: string = '';
+  clientObj: client = new client();  
   clientFromData = signal(new client())
   isValidGst: boolean = false;
-  //searchData: any = null;
+  showStatus: boolean = false;
   constructor(public router: ActivatedRoute) {
   }
 
@@ -39,7 +37,7 @@ export class CreateClientComponent implements OnInit {
     this.router.queryParams.subscribe((params: Params) => {
       this.id = params['id']
       this.action = params['action']
-      //this.searchData = params['searchObj']
+      this.showStatus = this.action ? true : false;
     });
 
     if (this.id) {
@@ -62,14 +60,7 @@ export class CreateClientComponent implements OnInit {
     this.masterDataService.save(this.url, this.clientObj).subscribe({
       next: (res: any) => {
         if (res.status === 'success') {
-          this.successMessage = 'Data saved successfully!';
-          this.showSuccessMessage = true;
-          this.clientObj = new client();
-
-          setTimeout(() => {
-            this.showSuccessMessage = false;
-            this.successMessage = '';
-          }, 3000);
+          this.cancel();         
         } else {
           console.warn('Save failed:', res.message);
         }

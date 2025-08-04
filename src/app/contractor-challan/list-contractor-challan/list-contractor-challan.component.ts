@@ -60,7 +60,9 @@ export class ListContractorChallanComponent {
     this.router.queryParams.subscribe((params: Params) => {
       this.id = params['id']
       this.action = params['action']
+      this.searchClientChallan()
     });
+
   }
 
   getClients = () => {

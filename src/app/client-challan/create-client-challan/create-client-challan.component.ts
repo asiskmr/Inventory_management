@@ -194,7 +194,7 @@ export class CreateClientChallanComponent {
   }
 
   cancel = () => {
-    this.route.navigate(["/list-clientChallan"])
+    this.route.navigate(["/lsit-client-challan"])
   }
 
   getDesignName = (id: number) => {

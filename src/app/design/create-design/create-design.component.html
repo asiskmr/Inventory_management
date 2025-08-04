@@ -11,8 +11,7 @@
         <div class="col-md-4">
             <label for="designName" class="form-label fw-bold">Design Name <span class="text-danger">*</span></label>
             <input type="text" class="form-control" [readOnly]="action=='view'" #designName="ngModel" name="designName"
-                [(ngModel)]="designObj.designName" id="designName"
-                (ngModelChange)="designObj.designName = $event.toUpperCase()" required>
+                [(ngModel)]="designObj.designName" id="designName" required>
 
             <div class="text-danger">
                 <span *ngIf="designName.errors?.['required'] && designName.touched">This is required</span>
@@ -28,7 +27,8 @@
         <div class="col-md-4 margin-top-45 align-right">
             <button [disabled]="form.invalid" *ngIf="action != 'view'" class="btn btn-primary align-left" type="submit"
                 (click)="onSave()">Save</button>
-            <button class="btn btn-primary margin-left-10" type="submit" (click)="cancel()">Cancel</button>
+            <button *ngIf="action=='view'" class="btn btn-primary margin-left-10" type="submit" (click)="cancel()">Close</button>
+            <button *ngIf="action!='view'" class="btn btn-primary margin-left-10" type="submit" (click)="cancel()">Cancel</button>
         </div>
     </form>
 </div>

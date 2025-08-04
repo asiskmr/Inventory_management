@@ -44,6 +44,7 @@ export class UtilsService {
   public getStatus(params: any) {
 
       let status = params.node.data.active? '<span class="dot-green"></span>' : '<span class="dot-red"></span>';
+      console.log('status ',status);
       return `${status}`;
     }
 

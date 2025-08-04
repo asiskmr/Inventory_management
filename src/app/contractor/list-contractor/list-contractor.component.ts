@@ -66,10 +66,14 @@ export class ListContractorComponent {
     {
       headerName: "Email",
       field: "email",
-    }, {
-      headerName: 'Action',
+    },
+    {
+      headerName: '',
       field: 'id',
       cellRenderer: CustomeCellComponent,
+      sortable: false,
+      filter: false,
+      cellClass: 'align-center',
       cellRendererParams: {
         page: { name: "customer" }
       }
@@ -95,7 +99,6 @@ export class ListContractorComponent {
     this.masterDataService.updateContractor(this.id, false)
       .subscribe((res: any) => {
         this.contractor[0] = res;
-
       })
     this.searchContractor();
     this.route.navigate(["/list-contractor"])
@@ -115,6 +118,10 @@ export class ListContractorComponent {
 
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
+  }
+
+  refreshData(newData: any[]): void {
+    this.gridApi.applyTransaction({ add: this.contractor }) // Replace with new data
   }
 
   onBtnExport() {

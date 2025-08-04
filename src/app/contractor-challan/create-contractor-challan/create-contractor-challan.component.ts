@@ -44,8 +44,6 @@ export class CreateContractorChallanComponent {
   designs: design[] = [];
   colors: color[] = [];
   disableAdd: boolean = true;
-  showSuccessMessage: boolean = false;
-  successMessage: string = '';
 
   constructor(public router: ActivatedRoute, public route: Router) {
     this.rowCnt = 1;
@@ -175,14 +173,9 @@ export class CreateContractorChallanComponent {
     this.masterDataService.save(this.url, obj)
       .subscribe((res: any) => {
         if (res.status === 'success') {
-          this.successMessage = 'Data saved successfully!';
-          this.showSuccessMessage = true;
-          this.contractorChallanObj = new contractorChallan();
           this.items = [];
-          setTimeout(() => {
-            this.showSuccessMessage = false;
-            this.successMessage = '';
-          }, 3000);
+          this.cancel();
+         
         } else {
           console.log(res.message)
         }
@@ -227,8 +220,8 @@ export class CreateContractorChallanComponent {
     )
   }
 
-  cancel = () => {
-    this.route.navigate(["/list-clientChallan"])
+  cancel = () => {    
+    this.route.navigate(["/list-contractor-challan"])
   }
 
   getDesignName = (id: number) => {

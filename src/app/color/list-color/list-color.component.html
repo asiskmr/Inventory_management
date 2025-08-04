@@ -4,14 +4,8 @@
         <div class="col-md-3">
             <label for="colorName" class="form-label fw-bold">color Name </label>
             <input type="text" class="form-control" [readOnly]="action=='view'" name="colorName"
-                [(ngModel)]="colorObj.colorName" (ngModelChange)="colorObj.colorName = $event.toUpperCase()"
-                id="colorName">
-        </div>
-        <div class="col-md-4">
-            <label for="description" class="form-label fw-bold">Description </label>
-            <input type="text" class="form-control" minlength="4" #description="ngModel" name="description"
-                [readOnly]="action=='view'" [(ngModel)]="colorObj.description" id="description">
-        </div>
+                [(ngModel)]="colorObj.colorName" id="colorName">
+        </div>       
         <div class="col-1 align-right">
             <button class="margin-top-30 btn btn-primary" name="gstNo" (click)="searchcolor()" id="gstNo"> Search
             </button>
@@ -51,9 +45,9 @@
             </div>
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
                 <button type="button" class="btn btn-primary" (click)="deletecolor()"
-                    data-bs-dismiss="modal">Confirm</button>
+                    data-bs-dismiss="modal">Yes</button>
             </div>
 
         </div>

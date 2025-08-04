@@ -4,8 +4,7 @@
     <div class="col-md-2">
       <label for="challannumber" class="form-label fw-bold">challan Number</label>
       <input type="text" class="form-control" maxlength="8" [readOnly]="action=='view'" #challannumber="ngModel"
-        name="challannumber" [(ngModel)]="filterObj.challannumber"
-        (ngModelChange)="filterObj.challannumber = $event.toUpperCase()" id="challannumber">
+        name="challannumber" [(ngModel)]="filterObj.challannumber" id="challannumber">
     </div>
     <div class="col-md-3">
       <div class="dropdown">

@@ -91,13 +91,11 @@ export class ListClientComponent implements OnInit {
   }
 
   deleteClient() {
-
     this.masterDataService.update(this.id, false, this.url)
       .subscribe((res: any) => {
         this.clients[0] = res;
         this.searchClient();
       })
-
   }
 
   searchClient = () => {

@@ -10,8 +10,7 @@
         <div class="col-md-4">
             <label for="colorName" class="form-label fw-bold">Color Name <span class="text-danger">*</span></label>
             <input type="text" class="form-control" [readOnly]="action=='view'" #colorName="ngModel" name="colorName"
-                [(ngModel)]="colorObj.colorName" id="colorName"
-                (ngModelChange)="colorObj.colorName = $event.toUpperCase()" required>
+                [(ngModel)]="colorObj.colorName" id="colorName" required>
 
             <div class="text-danger">
                 @if(colorName.errors?.['required'] && colorName.touched && colorName.dirty) {
@@ -32,7 +31,8 @@
         <div class="col-md-4 margin-top-45 align-right">
             <button [disabled]="form.invalid" *ngIf="action != 'view'" class="btn btn-primary align-left" type="submit"
                 (click)="onSave()">Save</button>
-            <button class="btn btn-primary margin-left-10" type="submit" (click)="cancel()">Cancel</button>
+            <button *ngIf="action=='view'" class="btn btn-primary margin-left-10" type="submit" (click)="cancel()">Close</button>
+            <button *ngIf="action!='view'" class="btn btn-primary margin-left-10" type="submit" (click)="cancel()">Cancel</button>
         </div>
     </form>
 </div>

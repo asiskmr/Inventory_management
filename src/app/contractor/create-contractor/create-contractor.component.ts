@@ -23,10 +23,8 @@ export class CreateContractorComponent {
   contractorFromData = signal(new contractor())
   readonly utilsService = inject(UtilsService);
   masterDataService = inject(MasterDataService)
-  showSuccessMessage: boolean = false;
-  successMessage: string = '';
   contractorObj: contractor = new contractor();
-
+  showStatus: boolean = false;
   constructor(public router: ActivatedRoute, public route: Router) {
   }
 
@@ -34,6 +32,7 @@ export class CreateContractorComponent {
     this.router.queryParams.subscribe((params: Params) => {
       this.id = params['id']
       this.action = params['action']
+      this.showStatus = this.action ? true : false;
     });
 
     if (this.id) {
@@ -49,13 +48,7 @@ export class CreateContractorComponent {
     this.masterDataService.saveContractor(formValue)
       .subscribe((res: any) => {
         if (res.status === 'success') {
-          this.successMessage = 'Data saved successfully!';
-          this.showSuccessMessage = true;
-          this.contractorObj = new contractor();
-          setTimeout(() => {
-            this.showSuccessMessage = false;
-            this.successMessage = '';
-          }, 3000);
+          this.cancel()
         } else {
           console.log(res.message)
         }
