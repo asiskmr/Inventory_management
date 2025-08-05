@@ -14,7 +14,7 @@
                 [(ngModel)]="designObj.designName" id="designName" required>
 
             <div class="text-danger">
-                <span *ngIf="designName.errors?.['required'] && designName.touched">This is required</span>
+                <span *ngIf="designName.errors?.['required'] && designName.touched">This field is mendatory</span>
             </div>
         </div>
         <div class="col-md-4">

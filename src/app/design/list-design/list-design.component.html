@@ -2,12 +2,12 @@
 
   <form #form="ngForm" class="row g-3 needs-validation" novalidate>
     <div class="col-md-3">
-      <label for="designName" class="form-label fw-bold">Design Name </label>
+      <label for="designName" class="form-label fw-bold">Design Name <span class="text-danger">*</span></label>
       <input type="text" class="form-control" [readOnly]="action=='view'" name="designName"
         [(ngModel)]="designObj.designName" id="designName" #designName="ngModel" required>
 
         <div class="text-danger">
-        <span *ngIf="designName.errors?.['required'] && designName.touched">This is required</span>
+        <span *ngIf="designName.errors?.['required'] && designName.touched">This field is mendatory</span>
       </div>
     </div>  
     <div class="col-1 align-right" >

@@ -6,7 +6,7 @@
         [(ngModel)]="clientObj.clientName" id="clientName" required>
 
       <div class="text-danger">
-        <span *ngIf="clientName.errors?.['required'] && clientName.touched">This is required</span>
+        <span *ngIf="clientName.errors?.['required'] && clientName.touched">This field is mendatory</span>
       </div>
     </div>
     <div class="col-md-4">
@@ -55,7 +55,7 @@
         [(ngModel)]="clientObj.state" id="state" required>
 
       <div class="text-danger">
-        <span *ngIf="state.errors?.['required'] && state.touched">This is required</span>
+        <span *ngIf="state.errors?.['required'] && state.touched">This field is mendatory</span>
       </div>
     </div>
 
@@ -70,11 +70,14 @@
     <div class="col-md-4">
       <label for="gstNo" class="form-label fw-bold">GST Number <span class="text-danger">*</span></label>
       <input type="text" maxlength="15" class="form-control" (keyup)="validateGst()" name="gstNo"
-        [readOnly]="action=='view'" [(ngModel)]="clientObj.gstNo" id="gstNo">
+        [readOnly]="action=='view'" [(ngModel)]="clientObj.gstNo" id="gstNo" required #gstNo="ngModel">
       <div class="text-danger">
         @if(isValidGst) {
         <span>GST No should be 15 Digit</span>
         }
+      </div>
+       <div class="text-danger">
+        <span *ngIf="gstNo.errors?.['required'] && gstNo.touched">This field is mendatory</span>
       </div>
     </div>
     <div class="col-md-4" *ngIf="showStatus">

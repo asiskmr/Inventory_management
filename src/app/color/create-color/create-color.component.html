@@ -14,7 +14,7 @@
 
             <div class="text-danger">
                 @if(colorName.errors?.['required'] && colorName.touched && colorName.dirty) {
-                <span>This is required</span>
+                <span>This field is mendatory</span>
                 }
             </div>
         </div>
@@ -24,7 +24,7 @@
                 [readOnly]="action=='view'" [(ngModel)]="colorObj.description" id="description" required>
 
             <div class="text-danger">
-                <span *ngIf="description.errors?.['required'] && description.touched">This is required</span>
+                <span *ngIf="description.errors?.['required'] && description.touched">This field is mendatory</span>
             </div>
         </div>
 

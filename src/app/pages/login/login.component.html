@@ -42,7 +42,7 @@
                 @if(userName.touched){
                 <div class="text-danger">
                     @if (userName.errors?.['required']) {
-                    <span>This is required</span>
+                    <span>This field is mendatory</span>
                     }
                     @if (userName.errors?.['minlength']) {
                     <span>Min 6 character required</span>
@@ -57,7 +57,7 @@
                 <div class="text-danger">
 
                     @if (password.errors?.['required']) {
-                    <span>This is required</span>
+                    <span>This field is mendatory</span>
                     }
                     @if (password.errors?.['minlength']) {
                     <span>Min 8 character required</span> <br>

@@ -12,7 +12,7 @@
       <mat-datepicker #picker></mat-datepicker>
       <div class="text-danger">
         @if(challanDateModel.errors?.['required'] && challanDateModel.touched && challanDateModel.dirty) {
-        <span>This is required</span>
+        <span>This field is mendatory</span>
         }
       </div>
     </div>
@@ -51,7 +51,7 @@
         </datalist>
         <div class="text-danger">
           @if(contractor.errors?.['required'] && contractor.touched && contractor.dirty) {
-          <span>This is required</span>
+          <span>This field is mendatory</span>
           }
         </div>
       </div>
@@ -64,7 +64,7 @@
         [(ngModel)]="contractorChallanObj.challanNumber" id="challanNumber" #challanNumber="ngModel" required>
       <div class="text-danger">
         @if(challanNumber.errors?.['required'] && challanNumber.touched && challanNumber.dirty) {
-        <span>This is required</span>
+        <span>This field is mendatory</span>
         }
       </div>
     </div>

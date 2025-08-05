@@ -7,7 +7,7 @@
         name="contractorName" [(ngModel)]="contractorObj.contractorName" id="contractorName" required>
 
       <div class="text-danger">
-        <span *ngIf="contractorName.errors?.['required'] && contractorName.touched">This is required</span>
+        <span *ngIf="contractorName.errors?.['required'] && contractorName.touched">This field is mendatory</span>
       </div>
     </div>
 
@@ -65,7 +65,7 @@
       <input type="text" class="form-control" [readOnly]="action=='view'" #state="ngModel" name="state"
         [(ngModel)]="contractorObj.state" id="state" required>
       <div class="text-danger">
-        <span *ngIf="state.errors?.['required'] && state.touched">This is required</span>
+        <span *ngIf="state.errors?.['required'] && state.touched">This field is mendatory</span>
       </div>
     </div>
 
@@ -84,7 +84,7 @@
         [readOnly]="action=='view'" [(ngModel)]="contractorObj.gstNo" id="gstNo" required>
 
       <div class="text-danger">
-        <span *ngIf="gstNo.errors?.['required'] && gstNo.touched">This is required</span>
+        <span *ngIf="gstNo.errors?.['required'] && gstNo.touched">This field is mendatory</span>
       </div>
 
       <div class="text-danger">
