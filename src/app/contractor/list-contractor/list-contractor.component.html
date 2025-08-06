@@ -1,4 +1,4 @@
-<div class="row"> 
+<div class="row">
   <form #form="ngForm" class="row g-3 needs-validation" novalidate>
     <div class="col-md-3">
       <label for="contractorName" class="form-label fw-bold">Contractor Name </label>
@@ -10,7 +10,7 @@
       <input type="text" class="form-control" maxlength="50" #email="ngModel" name="email" [readOnly]="action=='view'"
         [(ngModel)]="contractorObj.email" id="email">
 
-    
+
     </div>
     <div class="col-md-2">
       <label for="mobile" class="form-label fw-bold">Mobile Number</label>
@@ -48,9 +48,9 @@
 
 <div class="row">
   <div class="col-12">
-    <ag-grid-angular class="ag-theme-quartz" 
-    style="height: 500px;" 
-    [rowData]="contractor" 
+    <ag-grid-angular class="ag-theme-quartz"
+    style="height: 500px;"
+    [rowData]="contractor"
       [columnDefs]="colDefs" [defaultColDef]="defaultColDef"  (gridReady)="onGridReady($event)"/>
   </div>
 </div>
@@ -62,13 +62,13 @@
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Delete Contractor</h4>
+        <h4 class="modal-title">Deactivate Contractor</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 
       <!-- Modal body -->
       <div class="modal-body">
-        Do you want to delete the Contractor?
+        Do you want to deactivate the Contractor?
       </div>
 
       <!-- Modal footer -->

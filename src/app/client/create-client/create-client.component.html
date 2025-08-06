@@ -17,10 +17,10 @@
       <div class="text-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
         <small *ngIf="email.errors?.['required']">Email is required.</small>
         <small *ngIf="email.errors?.['email']">Enter a valid email address.</small>
-      </div>    
+      </div>
     </div>
     <div class="col-md-4">
-      <label for="mobile" class="form-label fw-bold">Mobile Number <span class="text-danger">*</span></label>     
+      <label for="mobile" class="form-label fw-bold">Mobile Number <span class="text-danger">*</span></label>
       <input type="text" maxlength="10" class="form-control" name="mobile" (keypress)="utilsService.numberOnly($event)"
         [readOnly]="action=='view'" #mobile="ngModel" [(ngModel)]="clientObj.mobile" id="mobile"
         aria-describedby="inputGroupPrepend" (keypress)="utilsService.numberOnly($event)" required>
@@ -88,7 +88,7 @@
       </select>
     </div>
 
-    <div class="col-md-12 margin-top-45 align-right">
+    <div class="col-md-2 margin-top-45 align-right">
       <button [disabled]="form.invalid" *ngIf="action != 'view'" class="btn btn-primary align-left" type="submit"
         (click)="save()">Save</button>
       <button *ngIf="action=='view'" class="btn btn-primary margin-left-10" type="submit"

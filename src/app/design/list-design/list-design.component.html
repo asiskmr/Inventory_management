@@ -9,7 +9,7 @@
         <div class="text-danger">
         <span *ngIf="designName.errors?.['required'] && designName.touched">This field is mendatory</span>
       </div>
-    </div>  
+    </div>
     <div class="col-1 align-right" >
       <button  [disabled]="form.invalid" class="margin-top-30 btn btn-primary" name="gstNo" (click)="searchDesign()" id="gstNo"> Search </button>
     </div>
@@ -38,13 +38,13 @@
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Delete Design</h4>
+        <h4 class="modal-title">Deactivate Design</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 
       <!-- Modal body -->
       <div class="modal-body">
-        Do you want to delete the Design?
+        Do you want to deactivate the Design?
       </div>
       <!-- Modal footer -->
       <div class="modal-footer">
