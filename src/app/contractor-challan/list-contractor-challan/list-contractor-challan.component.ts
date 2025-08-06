@@ -35,7 +35,6 @@ export class ListContractorChallanComponent {
 
 
   id: string = '';
-  action: string = '';
   url: string = 'contractorchallans/';
   totalRecord: number = 0;
   http = inject(HttpClient)
@@ -43,7 +42,7 @@ export class ListContractorChallanComponent {
   utilsService: UtilsService = inject(UtilsService);
   contractorChallans: contractorChallan[] = [];
   contractorChallanObj: contractorChallan = new contractorChallan();
-  private readonly downloadService = inject(DownloadSerivceService);  
+  private readonly downloadService = inject(DownloadSerivceService);
   private gridApi!: GridApi;
   contractors: contractor[] = [];
   dropdownData: contractor[] = [];
@@ -57,11 +56,7 @@ export class ListContractorChallanComponent {
   }
 
   ngOnInit() {
-    this.router.queryParams.subscribe((params: Params) => {
-      this.id = params['id']
-      this.action = params['action']
-      this.searchClientChallan()
-    });
+    this.searchClientChallan()
 
   }
 
@@ -85,7 +80,7 @@ export class ListContractorChallanComponent {
   }
 
   // Column Definitions: Defines & controls grid columns.
-  colDefs: ColDef<contractorChallan>[] = [    
+  colDefs: ColDef<contractorChallan>[] = [
     {
       headerName: "Challan Number",
       field: "challanNumber",
@@ -112,8 +107,8 @@ export class ListContractorChallanComponent {
     },
     {
       headerName: 'Action',
-      cellClass: 'align-center',   
-      cellRenderer: this.myCellRendererAction,
+      cellClass: 'align-center',
+      cellRenderer: this.myCellRendererAction.bind(this),
       onCellClicked: (event) => {
         this.itemDetails = event.data?.challanItems;
       }
@@ -129,15 +124,15 @@ export class ListContractorChallanComponent {
     let totalQuantity = 0;
     params.node.data.challanItems.forEach((e: { quantity: number; }) => totalQuantity += e.quantity);
     //let count = this.peaceCount(params.node.data.challanItems);
-   // console.log('count data ', count)
+    // console.log('count data ', count)
     return `<span>${totalQuantity}</span>`;
   }
 
   myCellRendererAction(params: any) {
-    return `<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"> <i class="bi bi-search"></i> </button>`;
+    this.id = params.node.data.id;
+    return `<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"> <i class="bi bi-search"></i> </button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal"> <i class="bi bi-trash"></i> </button>`;
   }
-
-
 
   defaultColDef: ColDef = {
     flex: 1,
@@ -147,6 +142,9 @@ export class ListContractorChallanComponent {
 
   };
 
+  cancelChallan() {
+    console.log('cancel challan function call ', this.id)
+  }
   deleteClient() {
     this.masterDataService.update(this.id, false, this.url)
       .subscribe((res: any) => {
@@ -191,28 +189,28 @@ export class ListContractorChallanComponent {
 
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
-  } 
+  }
 
- onBtnExport() {
+  onBtnExport() {
     this.downloadService.exportToCSV(this.getReportData(), 'contractor_challan_data.csv')
   }
 
   onBtnExportExcel() {
     this.downloadService.exportToExcel(this.getReportData(), 'contractor_challan_data.xlsx')
   }
-  
-   getReportData() {
+
+  getReportData() {
     return this.contractorChallans.map(e => ({
       'Challan Number': e.challanNumber,
       'Challan Date': e.challanDate,
       'Contractor Name': e.contractor.contractorName,
       'Contractor Mobile': e.contractor.mobile,
       'Challan Type': e.challanType,
-      'Peace Count': this.peaceCount(e),
+      'Total Pieces': this.peaceCount(e),
     }));
   }
 
-   peaceCount(params: any) {
+  peaceCount(params: any) {
     let totalQuantity = 0;
     params.challanItems.forEach((e: { quantity: number; }) => totalQuantity += e.quantity);
     return `${totalQuantity}`;
@@ -228,7 +226,7 @@ export class ListContractorChallanComponent {
   }
   //=================Items details =============
 
-  itemDetailsColDefs: ColDef<challanItems>[] = [    
+  itemDetailsColDefs: ColDef<challanItems>[] = [
     {
       headerName: "Design Name",
       field: "design.designName",

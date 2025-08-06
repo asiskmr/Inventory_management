@@ -3,8 +3,8 @@
   <form #form="ngForm" class="row g-3 needs-validation" novalidate>
     <div class="col-md-2">
       <label for="challannumber" class="form-label fw-bold">challan Number</label>
-      <input type="text" class="form-control" maxlength="8" [readOnly]="action=='view'" #challannumber="ngModel"
-        name="challannumber" [(ngModel)]="filterObj.challannumber" id="challannumber">
+      <input type="text" class="form-control" maxlength="8" #challannumber="ngModel" name="challannumber"
+        [(ngModel)]="filterObj.challannumber" id="challannumber">
     </div>
     <div class="col-md-3">
       <div class="dropdown">
@@ -48,21 +48,21 @@
         <span>This field is mendatory</span>
         }
       </div>
-    </div>   
-   
+    </div>
+
     <div class="col-md-2">
       <label class="form-label fw-bold d-block">Challan Type</label>
       <div class="d-flex gap-3">
         <div class="form-check">
           <input class="form-check-input" type="radio" name="challantype" id="challantypeIssue"
-            [disabled]="action == 'view'" [(ngModel)]="filterObj.challantype" [value]="'I'" />
+            [(ngModel)]="filterObj.challantype" [value]="'I'" />
           <label class="form-check-label" for="challantypeIssue">
             Issue
           </label>
         </div>
         <div class="form-check">
           <input class="form-check-input" type="radio" name="challantype" id="challantypeReceive"
-            [disabled]="action == 'view'" [(ngModel)]="filterObj.challantype" [value]="'R'" />
+            [(ngModel)]="filterObj.challantype" [value]="'R'" />
           <label class="form-check-label" for="challantypeReceive">
             Receive
           </label>
@@ -108,6 +108,31 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="deleteModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Cancel Challan</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        Do you want to cancel the Challan?
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+        <button type="button" class="btn btn-primary" (click)="cancelChallan()" data-bs-dismiss="modal">Yes</button>
+      </div>
+
     </div>
   </div>
 </div>

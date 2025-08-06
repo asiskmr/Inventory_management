@@ -28,7 +28,6 @@ import { DownloadSerivceService } from '../../util/download-serivce.service';
 export class ListClientChallanComponent {
 
   id: string = '';
-  action: string = '';
   url: string = 'clientchallans/';
   totalRecord: number = 0;
   http = inject(HttpClient)
@@ -44,17 +43,13 @@ export class ListClientChallanComponent {
   fromDate: Date = new Date();
   toDate: Date = new Date();
   filterObj: challanFilter = new challanFilter();
-  
+
   constructor(public router: ActivatedRoute, public route: Router) {
     this.getClients();
   }
 
   ngOnInit() {
-    this.router.queryParams.subscribe((params: Params) => {
-      this.id = params['id']
-      this.action = params['action']
-      this.searchClientChallan()
-    });
+    this.searchClientChallan()
   }
 
   getClients = () => {
@@ -74,7 +69,7 @@ export class ListClientChallanComponent {
   }
 
   // Column Definitions: Defines & controls grid columns.
-  colDefs: ColDef<clientChallan>[] = [    
+  colDefs: ColDef<clientChallan>[] = [
     {
       headerName: "Challan Number",
       field: "challanNumber",
@@ -102,34 +97,40 @@ export class ListClientChallanComponent {
     {
       headerName: 'Action',
       cellClass: 'align-center',
-      cellRenderer: this.myCellRendererAction,
+      cellRenderer: this.myCellRendererAction.bind(this),
       onCellClicked: (event) => {
         this.itemDetails = event.data?.challanItems;
-      }     
+      }
     }
   ];
 
-  challanType(params: any){    
-    return `<span> ${params.node.data.challanType == 'R'? 'Recieve': 'Issue'} </span>`
+  challanType(params: any) {
+    return `<span> ${params.node.data.challanType == 'R' ? 'Recieve' : 'Issue'} </span>`
   }
-    
+
 
   myCellRenderer(params: any) {
     let totalQuantity = 0;
-    params.node.data.challanItems.forEach((e: { quantity: number; }) => totalQuantity += e.quantity);   
+    params.node.data.challanItems.forEach((e: { quantity: number; }) => totalQuantity += e.quantity);
     return `<span>${totalQuantity}</span>`;
   }
 
-  myCellRendererAction(params: any) {     
-        return `<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"> <i class="bi bi-search"></i> </button>`;
+  myCellRendererAction(params: any) {
+    this.id = params.node.data.id;
+    return `<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"> <i class="bi bi-search"></i> </button>
+     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal"> <i class="bi bi-trash"></i> </button>`;
   }
- 
+
   defaultColDef: ColDef = {
     flex: 1,
     minWidth: 100,
     sortable: true,
     filter: true,
   };
+
+  cancelChallan() {
+    console.log('cancel challan function call ', this.id)
+  }
 
   deleteClient() {
     this.masterDataService.update(this.id, false, this.url)
@@ -157,10 +158,10 @@ export class ListClientChallanComponent {
   }
 
 
-  selectedParty(party: any){
-   
-    const obj = this.dropdownData.find(e => e.clientName===party);    
-    this.filterObj.clientid = obj?.id != undefined ? obj?.id+'' : '';
+  selectedParty(party: any) {
+
+    const obj = this.dropdownData.find(e => e.clientName === party);
+    this.filterObj.clientid = obj?.id != undefined ? obj?.id + '' : '';
   }
   filterData(event: any) {
     this.dropdownData = this.clients.filter(e => e.clientName.includes(event.target.value.toUpperCase()))
@@ -177,26 +178,26 @@ export class ListClientChallanComponent {
   onBtnExportExcel() {
     this.downloadService.exportToExcel(this.getReportData(), 'Party_challan_data.xlsx')
   }
-  
-   getReportData() {
+
+  getReportData() {
     return this.clientChallans.map(e => ({
       'Challan Number': e.challanNumber,
       'Challan Date': e.challanDate,
       'Party Name': e.client.clientName,
       'Party Mobile': e.client.mobile,
       'Challan Type': e.challanType,
-      'Peace Count': this.peaceCount(e),
+      'Total Pieces': this.peaceCount(e),
     }));
   }
 
-   peaceCount(params: any) {
+  peaceCount(params: any) {
     let totalQuantity = 0;
     params.challanItems.forEach((e: { quantity: number; }) => totalQuantity += e.quantity);
     return `${totalQuantity}`;
   }
   //=================Items details =============
 
-  itemDetailsColDefs: ColDef<challanItems>[] = [    
+  itemDetailsColDefs: ColDef<challanItems>[] = [
     {
       headerName: "Design Name",
       field: "design.designName",
