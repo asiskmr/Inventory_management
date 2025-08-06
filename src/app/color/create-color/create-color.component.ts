@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject,  signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { MasterDataService } from '../../service/master-data.service';
 
 import { FormsModule } from '@Angular/forms';
@@ -19,13 +19,12 @@ export class CreateColorComponent {
   id: string = '';
   action: string = '';
   url: string = 'colors/';
-showSuccessMessage: boolean = false;
-  successMessage: string = '';
   http = inject(HttpClient)
   colorFromData = signal(new color())
   masterDataService = inject(MasterDataService)
   utilsService: UtilsService = inject(UtilsService);
   colorObj: color = new color();
+  showStatus: boolean = false
 
   constructor(public router: ActivatedRoute, public route: Router) {
   }
@@ -33,11 +32,12 @@ showSuccessMessage: boolean = false;
   ngOnInit() {
     this.router.queryParams.subscribe((params: Params) => {
       this.id = params['id']
-      this.action = params['action']     
+      this.action = params['action']
+      this.showStatus = this.action ? true : false;
     });
 
-    if (this.id) {  
-      console.log(`${this.id} and url ${this.url}`)  
+    if (this.id) {
+      console.log(`${this.id} and url ${this.url}`)
       this.masterDataService.findById(this.id, this.url)
         .subscribe((res: any) => {
           this.colorObj = res;
@@ -45,17 +45,11 @@ showSuccessMessage: boolean = false;
     }
   }
 
-  onSave = () => {    
+  onSave = () => {
     this.masterDataService.save(this.url, this.colorObj)
       .subscribe((res: any) => {
         if (res.status === 'success') {
-          this.successMessage = 'Data saved successfully!';
-                   this.showSuccessMessage = true;
-                   this.colorObj = new color();
-                   setTimeout(() => {
-                     this.showSuccessMessage = false;
-                     this.successMessage = '';
-                   }, 3000);
+          this.cancel();
         } else {
           console.log(res.message)
         }

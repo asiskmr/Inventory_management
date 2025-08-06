@@ -44,6 +44,8 @@ export class ListDesignComponent implements OnInit {
       this.id = params['id']
       this.action = params['action']
     });
+    this.designObj = this.utilsService.designObj;
+    this.searchDesign()
   }
 
   getDesignData = () => {
@@ -71,8 +73,10 @@ export class ListDesignComponent implements OnInit {
       field: "description",
     },
     {
-      headerName: 'Action',
+      headerName: '',
       field: 'id',
+      sortable: false,
+      filter: false,
       cellRenderer: CustomeCellComponent,
       cellRendererParams: {
         page: { name: "design" }
@@ -105,7 +109,7 @@ export class ListDesignComponent implements OnInit {
     let url = ''
     this.designObj.active = false;
     url = this.url + this.designObj.designName;
-    console.log('search url ', url)
+    this.utilsService.designObj = this.designObj
     this.masterDataService.search(url)
       .subscribe((res: any) => {
         this.designList = res.data;

@@ -7,22 +7,18 @@
             <div class="dropdown">
                 <label for="contractor" class="form-label fw-bold">Contractor</label>
                 <input type="text" class="form-control" [(ngModel)]="filterObj.contractorName" #contractor="ngModel"
-                    list="constructors" name="contractor" id="contractor" placeholder="Type to search..." required>
+                    list="constructors" name="contractor" id="contractor" placeholder="Type to search...">
                 <datalist id="constructors">
                     <option *ngFor="let party of constructors" [value]="party.contractorName">
                     </option>
                 </datalist>
-                <div class="text-danger">
-                    @if(contractor.errors?.['required'] && contractor.touched && contractor.dirty) {
-                    <span>This field is mendatory</span>
-                    }
-                </div>
             </div>
         </div>
         <!-- Design -->
         <div class="col-md-3">
             <label for="design" class="form-label fw-bold">Design</label>
             <select id="design" class="form-select" name="design" [(ngModel)]="filterObj.designName">
+                <option value="">Any</option>
                 <option *ngFor="let design of designs" [value]="design.designName">{{ design.designName }}</option>
             </select>
             <div class="invalid-feedback">Please select a design.</div>
@@ -32,6 +28,7 @@
         <div class="col-md-3">
             <label for="color" class="form-label fw-bold">Color</label>
             <select id="color" class="form-select" name="color" [(ngModel)]="filterObj.colorName">
+                <option value="">Any</option>
                 <option *ngFor="let color of colors" [value]="color.colorName">{{ color.colorName }}</option>
             </select>
             <div class="invalid-feedback">Please select a color.</div>

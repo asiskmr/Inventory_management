@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { client } from '../model/client';
 import { contractor } from '../model/contractor';
+import { design } from '../model/design';
+import { color } from '../model/color';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +11,9 @@ export class UtilsService {
 
   public clientObj: client = new client();
   public contractorObj: contractor = new contractor();
+  public designObj: design = new design();
+  public colorObj: color = new color();
+
   public challanTypes = [{ val: "I", name: "Issue" }, { val: "R", name: "Recieve" }]
   constructor() { }
 
@@ -43,12 +48,12 @@ export class UtilsService {
 
   public getStatus(params: any) {
 
-      let status = params.node.data.active? '<span class="dot-green"></span>' : '<span class="dot-red"></span>';
-      console.log('status ',status);
-      return `${status}`;
-    }
+    let status = params.node.data.active ? '<span class="dot-green"></span>' : '<span class="dot-red"></span>';
+    console.log('status ', status);
+    return `${status}`;
+  }
 
-  public validateGST(gstNo: String){
+  public validateGST(gstNo: String) {
     return gstNo && gstNo.length < 15 ? true : false;
   }
 

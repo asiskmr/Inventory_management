@@ -16,5 +16,11 @@
             "new": "/create-design",
             "list": "/list-design"
         }
+    },
+    {
+        "color": {
+            "new": "/create-color",
+            "list": "/list-color"
+        }
     }
 ]

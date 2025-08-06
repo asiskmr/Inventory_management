@@ -45,6 +45,8 @@ export class ListColorComponent implements OnInit {
       this.id = params['id']
       this.action = params['action']
     });
+    this.colorObj = this.utilsService.colorObj;
+    this.searchcolor()
   }
 
   getcolorData = () => {
@@ -68,12 +70,10 @@ export class ListColorComponent implements OnInit {
       field: "colorName",
     },
     {
-      headerName: "Description",
-      field: "description",
-    },
-    {
-      headerName: 'Action',
+      headerName: '',
       field: 'id',
+      sortable: false,
+      filter: false,
       cellRenderer: CustomeCellComponent,
       cellRendererParams: {
         page: { name: "color" }
@@ -104,6 +104,7 @@ export class ListColorComponent implements OnInit {
     this.colorList = []
     let url = ''
     url = this.url + this.colorObj.colorName;
+    this.utilsService.colorObj = this.colorObj;
     this.masterDataService.search(url)
       .subscribe((res: any) => {
         this.colorList = res.data;

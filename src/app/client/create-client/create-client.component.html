@@ -76,11 +76,11 @@
         <span>GST No should be 15 Digit</span>
         }
       </div>
-       <div class="text-danger">
+      <div class="text-danger">
         <span *ngIf="gstNo.errors?.['required'] && gstNo.touched">This field is mendatory</span>
       </div>
     </div>
-    <div class="col-md-4" *ngIf="showStatus">
+    <div class="col-md-2" *ngIf="showStatus">
       <label for="active" class="form-label fw-bold">Status</label>
       <select class="form-select" name="active" [disabled]="action=='view'" [(ngModel)]="clientObj.active" id="active">
         <option value="true">Active</option>

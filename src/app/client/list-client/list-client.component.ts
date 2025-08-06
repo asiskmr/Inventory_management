@@ -69,8 +69,10 @@ export class ListClientComponent implements OnInit {
       headerName: "Email",
       field: "email",
     }, {
-      headerName: 'Action',
+      headerName: '',
       field: 'id',
+      sortable: false,
+      filter: false,
       cellRenderer: CustomeCellComponent,
       cellRendererParams: {
         page: { name: "client" }

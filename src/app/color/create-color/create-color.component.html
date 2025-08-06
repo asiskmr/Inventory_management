@@ -1,11 +1,4 @@
 <div class="container">
-    <div class="col-12 div-margin-top">
-        <div *ngIf="showSuccessMessage" class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ successMessage }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    </div>
-
     <form #form="ngForm" class="row g-3 needs-validation div-margin-top" novalidate>
         <div class="col-md-4">
             <label for="colorName" class="form-label fw-bold">Color Name <span class="text-danger">*</span></label>
@@ -18,21 +11,22 @@
                 }
             </div>
         </div>
-        <div class="col-md-4">
-            <label for="description" class="form-label fw-bold">Description <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" #description="ngModel" name="description"
-                [readOnly]="action=='view'" [(ngModel)]="colorObj.description" id="description" required>
-
-            <div class="text-danger">
-                <span *ngIf="description.errors?.['required'] && description.touched">This field is mendatory</span>
-            </div>
+        <div class="col-md-2" *ngIf="showStatus">
+            <label for="active" class="form-label fw-bold">Status</label>
+            <select class="form-select" name="active" [disabled]="action=='view'" [(ngModel)]="colorObj.active"
+                id="active">
+                <option value="true">Active</option>
+                <option value="false">InActive</option>
+            </select>
         </div>
 
         <div class="col-md-4 margin-top-45 align-right">
             <button [disabled]="form.invalid" *ngIf="action != 'view'" class="btn btn-primary align-left" type="submit"
                 (click)="onSave()">Save</button>
-            <button *ngIf="action=='view'" class="btn btn-primary margin-left-10" type="submit" (click)="cancel()">Close</button>
-            <button *ngIf="action!='view'" class="btn btn-primary margin-left-10" type="submit" (click)="cancel()">Cancel</button>
+            <button *ngIf="action=='view'" class="btn btn-primary margin-left-10" type="submit"
+                (click)="cancel()">Close</button>
+            <button *ngIf="action!='view'" class="btn btn-primary margin-left-10" type="submit"
+                (click)="cancel()">Cancel</button>
         </div>
     </form>
 </div>

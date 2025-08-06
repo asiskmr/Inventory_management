@@ -42,7 +42,7 @@ export class CreateClientChallanComponent {
   colors: color[] = [];
   disableAdd: boolean = true;
   showSuccessMessage: boolean = false;
-  successMessage: string = ''; 
+  successMessage: string = '';
   selectedClient: string = ''
 
   constructor(public router: ActivatedRoute, public route: Router) {
@@ -151,26 +151,19 @@ export class CreateClientChallanComponent {
   };
 
   onCellValueChanged(event: any): void {
-    console.log('Cell changed:', event);   
+    console.log('Cell changed:', event);
   }
 
   onSave = () => {
     const obj = this.buildRequestObject();
     console.log('boj :: ', obj)
     this.masterDataService.save(this.url, obj).subscribe((res: any) => {
-        if (res.status === 'success') {
-          this.successMessage = 'Data saved successfully!';
-          this.showSuccessMessage = true;
-          this.clientChallanObj = new clientChallan();
-          this.items = [];
-          setTimeout(() => {
-            this.showSuccessMessage = false;
-            this.successMessage = '';
-          }, 3000);
-        } else {
-          console.log(res.message)
-        }
-      })
+      if (res.status === 'success') {
+        this.cancel();
+      } else {
+        console.log(res.message)
+      }
+    })
   }
 
   private buildRequestObject(): any {
@@ -244,10 +237,10 @@ export class CreateClientChallanComponent {
     this.disableAdd = !(design && color && quantity > 0);
   }
 
-  challanTypes = this.utilsService.challanTypes; 
+  challanTypes = this.utilsService.challanTypes;
 
-  selectedParty(selectedParty: any){     
-    const obj: client | undefined= this.clients.find(e => e.clientName==selectedParty);  
+  selectedParty(selectedParty: any) {
+    const obj: client | undefined = this.clients.find(e => e.clientName == selectedParty);
   }
 
 }
