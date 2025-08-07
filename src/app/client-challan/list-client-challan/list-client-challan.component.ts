@@ -130,6 +130,13 @@ export class ListClientChallanComponent {
 
   cancelChallan() {
     console.log('cancel challan function call ', this.id)
+
+    this.masterDataService.delete(this.url + this.id)
+      .subscribe((res: any) => {
+        this.clientChallans = res.data;
+        this.totalRecord = res.metadata.recordcount;
+      })
+    this.searchClientChallan()
   }
 
   deleteClient() {

@@ -59,6 +59,12 @@ export class MasterDataService implements OnInit {
       }))
   }
 
+  delete = (url: string) => {
+    console.log(`URL :: ${this.apiUrl}${url}`)
+    return this.http.delete(`${this.apiUrl}${url}`);
+  }
+
+
   //======= Contractor calls
 
   getContractor = () => {

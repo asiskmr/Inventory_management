@@ -56,7 +56,7 @@ export class ListContractorChallanComponent {
   }
 
   ngOnInit() {
-    this.searchClientChallan()
+    this.searchContractorChallan()
 
   }
 
@@ -144,7 +144,14 @@ export class ListContractorChallanComponent {
 
   cancelChallan() {
     console.log('cancel challan function call ', this.id)
+    this.masterDataService.delete(this.url + this.id)
+      .subscribe((res: any) => {
+        this.contractorChallans = res.data;
+        this.totalRecord = res.metadata.recordcount;
+      })
+    this.searchContractorChallan()
   }
+
   deleteClient() {
     this.masterDataService.update(this.id, false, this.url)
       .subscribe((res: any) => {
@@ -155,7 +162,7 @@ export class ListContractorChallanComponent {
     this.route.navigate(["/list-client"])
   }
 
-  searchClientChallan = () => {
+  searchContractorChallan = () => {
     console.log('search obj ', this.filterObj)
 
     this.filterObj.fromchallandate = this.fromDate ? this.utilsService.formatDate_dd_MM_YYYY(this.fromDate) : '';
