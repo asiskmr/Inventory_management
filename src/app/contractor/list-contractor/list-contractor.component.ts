@@ -32,7 +32,7 @@ export class ListContractorComponent {
   contractor: contractor[] = [];
   contractorObj: contractor = new contractor();
   private gridApi!: GridApi;
-    private readonly downloadService = inject(DownloadSerivceService);
+  private readonly downloadService = inject(DownloadSerivceService);
 
 
   constructor(public router: ActivatedRoute, public route: Router) {
@@ -52,6 +52,8 @@ export class ListContractorComponent {
     {
       headerName: "Status",
       cellClass: 'margin-top-8',
+      sortable: false,
+      filter: false,
       cellRenderer: this.utilsService.getStatus,
 
     },
@@ -132,7 +134,7 @@ export class ListContractorComponent {
     this.downloadService.exportToExcel(this.getReportData(), 'contractor_data.xlsx')
   }
 
-    getReportData() {
+  getReportData() {
     return this.contractor.map(e => ({
       'Client Name': e.contractorName,
       'Email': e.email,

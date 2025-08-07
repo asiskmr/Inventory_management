@@ -27,7 +27,7 @@ export class contractorChallan {
         this.createdOn = "";
         this.challanType = "I";
         this.color = 0;
-        this.quantity = 1;
+        this.quantity = 0;
     }
 
 }

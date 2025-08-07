@@ -25,7 +25,7 @@ export class ListDesignComponent implements OnInit {
 
   id: string = '';
   action: string = '';
-  url: string = 'designs/name/';
+  url: string = 'designs/';
 
   http = inject(HttpClient)
   masterDataService = inject(MasterDataService)
@@ -62,6 +62,8 @@ export class ListDesignComponent implements OnInit {
     {
       headerName: "Status",
       cellClass: 'margin-top-8',
+      sortable: false,
+      filter: false,
       cellRenderer: this.utilsService.getStatus
     },
     {
@@ -106,9 +108,13 @@ export class ListDesignComponent implements OnInit {
   }
 
   searchDesign = () => {
-    let url = ''
+    let url = this.url
     this.designObj.active = false;
-    url = this.url + this.designObj.designName;
+
+    if (this.designObj.designName) {
+      url += 'name/' + this.designObj.designName
+    }
+
     this.utilsService.designObj = this.designObj
     this.masterDataService.search(url)
       .subscribe((res: any) => {

@@ -28,7 +28,7 @@ export class ListColorComponent implements OnInit {
   id: string = '';
   action: string = '';
   totalRecord: number = 0;
-  url: string = 'colors/name/';
+  url: string = 'colors/';
   private readonly downloadService = inject(DownloadSerivceService);
   http = inject(HttpClient)
   masterDataService = inject(MasterDataService)
@@ -63,6 +63,8 @@ export class ListColorComponent implements OnInit {
     {
       headerName: "Status",
       cellClass: 'margin-top-8',
+      sortable: false,
+      filter: false,
       cellRenderer: this.utilsService.getStatus
     },
     {
@@ -102,8 +104,11 @@ export class ListColorComponent implements OnInit {
 
   searchcolor = () => {
     this.colorList = []
-    let url = ''
-    url = this.url + this.colorObj.colorName;
+    let url = this.url
+    if (this.colorObj.colorName) {
+      url += 'name/' + this.colorObj.colorName
+    }
+    //url = this.url + this.colorObj.colorName;
     this.utilsService.colorObj = this.colorObj;
     this.masterDataService.search(url)
       .subscribe((res: any) => {

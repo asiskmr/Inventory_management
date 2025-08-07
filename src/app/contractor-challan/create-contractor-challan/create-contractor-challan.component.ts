@@ -67,9 +67,9 @@ export class CreateContractorChallanComponent {
   }
 
   onInput(event: Event) {
-  const input = event.target as HTMLInputElement;
-  input.value = input.value.replace(/[^0-9]/g, '');
-}
+    const input = event.target as HTMLInputElement;
+    input.value = input.value.replace(/[^0-9]/g, '');
+  }
   //fetch client list
 
   getContractor = () => {
@@ -119,6 +119,8 @@ export class CreateContractorChallanComponent {
     },
     {
       headerName: 'Action',
+      sortable: false,
+      filter: false,
       cellRenderer: this.buttonRenderer,
       cellRendererParams: {
         onClick: this.onButtonClick.bind(this),
@@ -175,7 +177,7 @@ export class CreateContractorChallanComponent {
         if (res.status === 'success') {
           this.items = [];
           this.cancel();
-         
+
         } else {
           console.log(res.message)
         }
@@ -188,7 +190,7 @@ export class CreateContractorChallanComponent {
       "challanNumber": this.contractorChallanObj.challanNumber,
       "challanDate": this.utilsService.formatDate_dd_MM_YYYY(this.challanDate),
       "contractor": {
-        "id": this.constructors.find(e => e.contractorName==this.contractorChallanObj.party)?.id 
+        "id": this.constructors.find(e => e.contractorName == this.contractorChallanObj.party)?.id
       },
       "challanType": this.contractorChallanObj.challanType,
       "challanItems": this.buildItemsData()
@@ -220,7 +222,7 @@ export class CreateContractorChallanComponent {
     )
   }
 
-  cancel = () => {    
+  cancel = () => {
     this.route.navigate(["/list-contractor-challan"])
   }
 

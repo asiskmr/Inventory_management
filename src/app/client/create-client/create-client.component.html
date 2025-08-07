@@ -2,8 +2,8 @@
   <form #form="ngForm" class="row g-3 needs-validation div-margin-top" novalidate>
     <div class="col-md-4">
       <label for="clientName" class="form-label fw-bold">Party <span class="text-danger">*</span></label>
-      <input type="text" class="form-control" [readOnly]="action=='view'" #clientName="ngModel" name="clientName"
-        [(ngModel)]="clientObj.clientName" id="clientName" required>
+      <input type="text" class="form-control" maxlength="100" [readOnly]="action=='view'" #clientName="ngModel"
+        name="clientName" [(ngModel)]="clientObj.clientName" id="clientName" required>
 
       <div class="text-danger">
         <span *ngIf="clientName.errors?.['required'] && clientName.touched">This field is mendatory</span>
@@ -15,7 +15,7 @@
         [readOnly]="action=='view'" [(ngModel)]="clientObj.email" id="email" required>
 
       <div class="text-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
-        <small *ngIf="email.errors?.['required']">Email is required.</small>
+        <small *ngIf="email.errors?.['required']">This field is mendatory</small>
         <small *ngIf="email.errors?.['email']">Enter a valid email address.</small>
       </div>
     </div>
@@ -25,8 +25,7 @@
         [readOnly]="action=='view'" #mobile="ngModel" [(ngModel)]="clientObj.mobile" id="mobile"
         aria-describedby="inputGroupPrepend" (keypress)="utilsService.numberOnly($event)" required>
       <div class="text-danger">
-        <span *ngIf="mobile.errors?.['required'] && mobile.touched">This is
-          required</span>
+        <span *ngIf="mobile.errors?.['required'] && mobile.touched">This field is mendatory</span>
       </div>
       <div class="invalid-feedback">
         Please Enter Mobile Number.
@@ -35,34 +34,30 @@
     </div>
     <div class="col-md-4">
       <label for="address" class="form-label fw-bold">Address</label>
-      <input type="text" class="form-control" name="address" [readOnly]="action=='view'" [(ngModel)]="clientObj.address"
-        id="address">
+      <input type="text" class="form-control" maxlength="100" name="address" [readOnly]="action=='view'"
+        [(ngModel)]="clientObj.address" id="address">
       <div class="invalid-feedback">
         Please Enter Address.
       </div>
     </div>
     <div class="col-md-4">
       <label for="city" class="form-label fw-bold">City</label>
-      <input type="text" class="form-control" name="city" [readOnly]="action=='view'" [(ngModel)]="clientObj.city"
-        id="city">
+      <input type="text" class="form-control" maxlength="30" name="city" [readOnly]="action=='view'"
+        [(ngModel)]="clientObj.city" id="city">
       <div class="invalid-feedback">
         Please Enter City.
       </div>
     </div>
     <div class="col-md-4">
-      <label for="state" class="form-label fw-bold">State <span class="text-danger">*</span></label>
-      <input type="text" class="form-control" [readOnly]="action=='view'" #state="ngModel" name="state"
-        [(ngModel)]="clientObj.state" id="state" required>
-
-      <div class="text-danger">
-        <span *ngIf="state.errors?.['required'] && state.touched">This field is mendatory</span>
-      </div>
+      <label for="state" class="form-label fw-bold">State </label>
+      <input type="text" class="form-control" maxlength="30" [readOnly]="action=='view'" #state="ngModel" name="state"
+        [(ngModel)]="clientObj.state" id="state">
     </div>
 
     <div class="col-md-4">
       <label for="country" class="form-label fw-bold">Country</label>
-      <input type="text" class="form-control" name="country" [readOnly]="action=='view'" [(ngModel)]="clientObj.country"
-        id="country">
+      <input type="text" maxlength="30" class="form-control" name="country" [readOnly]="action=='view'"
+        [(ngModel)]="clientObj.country" id="country">
       <div class="invalid-feedback">
         Please Enter Country.
       </div>
@@ -73,7 +68,7 @@
         [readOnly]="action=='view'" [(ngModel)]="clientObj.gstNo" id="gstNo" required #gstNo="ngModel">
       <div class="text-danger">
         @if(isValidGst) {
-        <span>GST No should be 15 Digit</span>
+        <span>GST No should be 15 character</span>
         }
       </div>
       <div class="text-danger">

@@ -55,6 +55,8 @@ export class ListClientComponent implements OnInit {
     {
       headerName: "Status",
       cellClass: 'margin-top-8',
+      sortable: false,
+      filter: false,
       cellRenderer: this.utilsService.getStatus
     },
     {
