@@ -56,5 +56,4 @@ export class UtilsService {
   public validateGST(gstNo: String) {
     return gstNo && gstNo.length < 15 ? true : false;
   }
-
 }

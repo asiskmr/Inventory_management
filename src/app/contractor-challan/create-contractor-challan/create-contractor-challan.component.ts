@@ -44,6 +44,8 @@ export class CreateContractorChallanComponent {
   designs: design[] = [];
   colors: color[] = [];
   disableAdd: boolean = true;
+  isItemExist: boolean = false;
+
 
   constructor(public router: ActivatedRoute, public route: Router) {
     this.rowCnt = 1;
@@ -242,19 +244,30 @@ export class CreateContractorChallanComponent {
     return params.data.id// `${params.data.designId}-${params.data.colorId}`;
   }
 
+  itemExist() {
+    return this.items.some(e => e.designId == this.contractorChallanObj.design && e.colorId == this.contractorChallanObj.color)
+  }
+
   addItems = () => {
-    this.items.push({
-      'id': this.rowCnt++,
-      'designId': this.contractorChallanObj.design,
-      'designName': this.getDesignName(this.contractorChallanObj.design),
-      'colorId': this.contractorChallanObj.color,
-      'colorName': this.getColorData(this.contractorChallanObj.color),
-      'quantity': this.contractorChallanObj.quantity
-    })
-    console.log(this.contractorChallanObj, 'this.items', this.items)
-    this.gridApi.applyTransaction({ remove: this.items });
-    this.gridApi.applyTransaction({ add: this.items });
-    this.clearItems();
+
+    if (this.itemExist()) {
+      this.isItemExist = true;
+    } else {
+
+      this.items.push({
+        'id': this.rowCnt++,
+        'designId': this.contractorChallanObj.design,
+        'designName': this.getDesignName(this.contractorChallanObj.design),
+        'colorId': this.contractorChallanObj.color,
+        'colorName': this.getColorData(this.contractorChallanObj.color),
+        'quantity': this.contractorChallanObj.quantity
+      })
+      console.log(this.contractorChallanObj, 'this.items', this.items)
+      this.gridApi.applyTransaction({ remove: this.items });
+      this.gridApi.applyTransaction({ add: this.items });
+      this.clearItems();
+      this.isItemExist = false;
+    }
   }
 
   clearItems() {
@@ -265,7 +278,8 @@ export class CreateContractorChallanComponent {
   }
 
   onInputBlur = () => {
-    if (this.contractorChallanObj.design && this.contractorChallanObj.color && this.contractorChallanObj.quantity) {
+    this.isItemExist = this.itemExist();
+    if (this.contractorChallanObj.design && this.contractorChallanObj.color && this.contractorChallanObj.quantity && !this.isItemExist) {
       this.disableAdd = false;
     }
   }

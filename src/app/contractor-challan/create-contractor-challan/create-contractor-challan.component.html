@@ -1,4 +1,4 @@
-<div class="container"> 
+<div class="container">
   <form #form="ngForm" class="row g-3 needs-validation div-margin-top" novalidate>
     <div class="col-md-3">
       <label for="challanDate" class="form-label fw-bold">Challan Date <span class="text-danger">*</span></label>
@@ -43,8 +43,7 @@
       <div class="dropdown">
         <label for="contractor" class="form-label fw-bold">Contractor</label>
         <input type="text" class="form-control" [(ngModel)]="contractorChallanObj.party" #contractor="ngModel"
-          list="constructors" name="contractor" id="contractor" placeholder="Type to search..."
-          required>
+          list="constructors" name="contractor" id="contractor" placeholder="Type to search..." required>
         <datalist id="constructors">
           <option *ngFor="let party of constructors" [value]="party.contractorName">
           </option>
@@ -98,6 +97,9 @@
     <!-- Add Button -->
     <div class="col-3 margin-top-45">
       <button class="btn btn-primary align-left" [disabled]="disableAdd" type="submit" (click)="addItems()">Add</button>
+    </div>
+    <div class="col-12" *ngIf="isItemExist">
+      <span class="text-danger">Design and Color already added</span>
     </div>
     <div class="margin-top-30">
       <div class="col-12">

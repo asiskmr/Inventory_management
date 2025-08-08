@@ -148,8 +148,9 @@ export class ListContractorChallanComponent {
       .subscribe((res: any) => {
         this.contractorChallans = res.data;
         this.totalRecord = res.metadata.recordcount;
+        this.searchContractorChallan()
       })
-    this.searchContractorChallan()
+
   }
 
   deleteClient() {
