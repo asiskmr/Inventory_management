@@ -6,7 +6,7 @@ import { MasterDataService } from '../../service/master-data.service';
 import { AgGridAngular } from "ag-grid-angular";
 import type { ColDef, CsvExportParams, GridApi, GridReadyEvent } from "ag-grid-community";
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { FormsModule } from '@Angular/forms';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CustomeCellComponent } from '../../util/custome-cell/custome-cell.component';
 import { UtilsService } from '../../util/utils.service';

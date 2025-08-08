@@ -8,7 +8,7 @@ import type {
 } from 'ag-grid-community';
 import { GridApi } from 'ag-grid-community';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormsModule } from '@Angular/forms';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UtilsService } from '../../util/utils.service';
 

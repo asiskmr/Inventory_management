@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject, Input, OnInit, signal } from '@angular/core';
 import { MasterDataService } from '../../service/master-data.service';
 import { contractor } from '../../model/contractor';
-import { FormsModule } from '@Angular/forms';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { UtilsService } from '../../util/utils.service';

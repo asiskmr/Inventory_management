@@ -9,7 +9,7 @@ import { GridApi } from 'ag-grid-community';
 import { CustomeCellComponent } from '../../util/custome-cell/custome-cell.component';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import { FormsModule } from '@Angular/forms';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UtilsService } from '../../util/utils.service';
 import { design } from '../../model/design';
