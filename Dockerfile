@@ -9,6 +9,7 @@ RUN npm install
 
 # Copy all source code
 COPY . .
+COPY src/assets /app/src/assets
 
 # Build Angular App (change project name if needed)
 RUN npm run build -- --configuration production --output-path=dist/myinventory
@@ -25,3 +26,4 @@ COPY --from=builder /app/dist/myinventory /usr/share/nginx/html
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
+
