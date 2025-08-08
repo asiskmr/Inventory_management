@@ -16,6 +16,7 @@ import { color } from '../../model/color';
 import { UtilsService } from '../../util/utils.service';
 import { contractorChallan } from '../../model/contractorChallan';
 import { contractor } from '../../model/contractor';
+import { challanFilter } from '../../model/challanFilter';
 
 @Component({
   selector: 'app-create-contractor-challan',
@@ -45,6 +46,10 @@ export class CreateContractorChallanComponent {
   colors: color[] = [];
   disableAdd: boolean = true;
   isItemExist: boolean = false;
+  showSuccessMessage: boolean = false;
+  successMessage: string = '';
+  isDuplicateChallan: boolean = false;
+  filterObj: challanFilter = new challanFilter();
 
 
   constructor(public router: ActivatedRoute, public route: Router) {
@@ -170,7 +175,7 @@ export class CreateContractorChallanComponent {
     console.log(this.items, 'New row data:', event.data); // updated row
   }
 
-  onSave = () => {
+  save = () => {
 
     let obj = this.buildReqObj();
     console.log(this.url, 'boj :: ', obj)
@@ -182,6 +187,24 @@ export class CreateContractorChallanComponent {
 
         } else {
           console.log(res.message)
+        }
+      })
+  }
+  onChallanNumberChange() {
+    const isChallanSame = this.filterObj.challannumber == this.contractorChallanObj.challanNumber
+    this.isDuplicateChallan = isChallanSame ? true : false;
+  }
+
+  onSave = () => {
+
+    this.filterObj.challannumber = this.contractorChallanObj.challanNumber
+    let finalUrl = this.url + this.utilsService.buildUrl(this.filterObj);
+    this.masterDataService.search(finalUrl)
+      .subscribe((res: any) => {
+        if (res.data.length <= 0) {
+          this.save()
+        } else {
+          this.isDuplicateChallan = true
         }
       })
   }

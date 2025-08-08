@@ -5,6 +5,11 @@
         {{ successMessage }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
+      <div *ngIf="isDuplicateChallan" class="alert alert-danger alert-dismissible fade show" role="alert">
+        Challan Number should be unique
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+
     </div>
   </div>
 
@@ -70,9 +75,10 @@
 
     <!-- Challan Number -->
     <div class="col-md-3">
-      <label for="challanNumber" class="form-label fw-bold">Challan Number <span class="text-danger">*</span></label>
-      <input type="text" class="form-control" id="challanNumber" name="challanNumber"
-        [(ngModel)]="clientChallanObj.challanNumber" #challanNumber="ngModel" required />
+      <label for="challanNumber" class="form-label fw-bold">Challan Number<span class="text-danger">*</span></label>
+      <input type="text" class="form-control" id="challanNumber" name="challanNumber" maxlength="8"
+        (keyup)="onChallanNumberChange()" [(ngModel)]="clientChallanObj.challanNumber" #challanNumber="ngModel"
+        required />
 
       <div class="text-danger">
         @if(challanNumber.errors?.['required'] && challanNumber.touched && challanNumber.dirty) {
@@ -113,6 +119,9 @@
       <button type="button" class="btn btn-primary" [disabled]="disableAdd" (click)="addItems()">Add</button>
     </div>
 
+    <div class="col-12" *ngIf="isItemExist">
+      <span class="text-danger">Design and Color already added</span>
+    </div>
     <!-- Data Grid -->
     <div class="mt-4">
       <div class="col-12">
@@ -125,7 +134,7 @@
     <!-- Action Buttons -->
     <div class="col-12 text-end mt-4">
       <button *ngIf="action !== 'view'" type="button" class="btn btn-primary"
-        [disabled]="form.invalid || items.length <= 0" (click)="onSave()">
+        [disabled]="form.invalid || items.length <= 0 || isDuplicateChallan" (click)="onSave()">
         Submit
       </button>
       <button type="button" class="btn btn-primary ms-2" (click)="cancel()">Cancel</button>

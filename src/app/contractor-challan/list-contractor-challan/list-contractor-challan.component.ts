@@ -143,7 +143,6 @@ export class ListContractorChallanComponent {
   };
 
   cancelChallan() {
-    console.log('cancel challan function call ', this.id)
     this.masterDataService.delete(this.url + this.id)
       .subscribe((res: any) => {
         this.contractorChallans = res.data;

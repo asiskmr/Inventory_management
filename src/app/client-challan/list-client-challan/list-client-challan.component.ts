@@ -17,6 +17,7 @@ import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { challanItems } from '../../model/challanItems';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DownloadSerivceService } from '../../util/download-serivce.service';
+import { challanFilter } from '../../model/challanFilter';
 
 @Component({
   selector: 'app-list-client-challan',
@@ -129,14 +130,13 @@ export class ListClientChallanComponent {
   };
 
   cancelChallan() {
-    console.log('cancel challan function call ', this.id)
-
     this.masterDataService.delete(this.url + this.id)
       .subscribe((res: any) => {
         this.clientChallans = res.data;
         this.totalRecord = res.metadata.recordcount;
+        this.searchClientChallan()
       })
-    this.searchClientChallan()
+
   }
 
   deleteClient() {
@@ -219,20 +219,4 @@ export class ListClientChallanComponent {
     }
   ];
 
-}
-
-class challanFilter {
-  challannumber: string;
-  clientid: string;
-  fromchallandate: string;
-  tochallandate: string;
-  challantype: number;
-
-  constructor() {
-    this.challannumber = "";
-    this.clientid = '';
-    this.fromchallandate = '';
-    this.tochallandate = '';
-    this.challantype = 0;
-  }
 }

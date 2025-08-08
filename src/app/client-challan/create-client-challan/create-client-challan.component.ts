@@ -14,6 +14,7 @@ import { client } from '../../model/client';
 import { design } from '../../model/design';
 import { color } from '../../model/color';
 import { UtilsService } from '../../util/utils.service';
+import { challanFilter } from '../../model/challanFilter';
 
 @Component({
   selector: 'app-create-client-challan',
@@ -44,6 +45,9 @@ export class CreateClientChallanComponent {
   showSuccessMessage: boolean = false;
   successMessage: string = '';
   selectedClient: string = ''
+  isItemExist: boolean = false;
+  isDuplicateChallan: boolean = false;
+  filterObj: challanFilter = new challanFilter();
 
   constructor(public router: ActivatedRoute, public route: Router) {
     this.rowCnt = 1;
@@ -154,7 +158,7 @@ export class CreateClientChallanComponent {
     console.log('Cell changed:', event);
   }
 
-  onSave = () => {
+  save = () => {
     const obj = this.buildRequestObject();
     console.log('boj :: ', obj)
     this.masterDataService.save(this.url, obj).subscribe((res: any) => {
@@ -164,6 +168,25 @@ export class CreateClientChallanComponent {
         console.log(res.message)
       }
     })
+  }
+
+  onChallanNumberChange() {
+    const isChallanSame = this.filterObj.challannumber == this.clientChallanObj.challanNumber
+    this.isDuplicateChallan = isChallanSame ? true : false;
+  }
+
+  onSave = () => {
+
+    this.filterObj.challannumber = this.clientChallanObj.challanNumber
+    let finalUrl = this.url + this.utilsService.buildUrl(this.filterObj);
+    this.masterDataService.search(finalUrl)
+      .subscribe((res: any) => {
+        if (res.data.length <= 0) {
+          this.save()
+        } else {
+          this.isDuplicateChallan = true
+        }
+      })
   }
 
   private buildRequestObject(): any {
@@ -207,22 +230,26 @@ export class CreateClientChallanComponent {
   }
 
   addItems = () => {
+    if (this.itemExist()) {
+      this.isItemExist = true;
+    } else {
+      const { design, color, quantity } = this.clientChallanObj;
+      const newItem = {
+        id: this.rowCnt++,
+        designId: design,
+        designName: this.getDesignName(design),
+        colorId: color,
+        colorName: this.getColorName(color),
+        quantity
+      }
 
-    const { design, color, quantity } = this.clientChallanObj;
-    const newItem = {
-      id: this.rowCnt++,
-      designId: design,
-      designName: this.getDesignName(design),
-      colorId: color,
-      colorName: this.getColorName(color),
-      quantity
+      this.items.push(newItem);
+      console.log(this.clientChallanObj, 'this.items', this.items)
+      this.gridApi.applyTransaction({ remove: this.items });
+      this.gridApi.applyTransaction({ add: this.items });
+      this.clearItemInputs();
+      this.isItemExist = false;
     }
-
-    this.items.push(newItem);
-    console.log(this.clientChallanObj, 'this.items', this.items)
-    this.gridApi.applyTransaction({ remove: this.items });
-    this.gridApi.applyTransaction({ add: this.items });
-    this.clearItemInputs();
   }
 
   clearItemInputs() {
@@ -232,9 +259,14 @@ export class CreateClientChallanComponent {
     this.disableAdd = true;
   }
 
+  itemExist() {
+    return this.items.some(e => e.designId == this.clientChallanObj.design && e.colorId == this.clientChallanObj.color)
+  }
+
   onInputBlur(): void {
+    this.isItemExist = this.itemExist();
     const { design, color, quantity } = this.clientChallanObj;
-    this.disableAdd = !(design && color && quantity > 0);
+    this.disableAdd = !(design && color && quantity > 0 && !this.isItemExist);
   }
 
   challanTypes = this.utilsService.challanTypes;

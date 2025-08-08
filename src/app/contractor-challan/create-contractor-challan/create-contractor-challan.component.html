@@ -1,4 +1,18 @@
 <div class="container">
+  <div class="row">{{isDuplicateChallan}}
+    <div class="col-12 mt-3">
+      <div *ngIf="showSuccessMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ successMessage }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      <div *ngIf="isDuplicateChallan" class="alert alert-danger alert-dismissible fade show" role="alert">
+        Challan Number should be unique
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+
+    </div>
+  </div>
+
   <form #form="ngForm" class="row g-3 needs-validation div-margin-top" novalidate>
     <div class="col-md-3">
       <label for="challanDate" class="form-label fw-bold">Challan Date <span class="text-danger">*</span></label>
@@ -41,7 +55,7 @@
     <!-- Contractor -->
     <div class="col-md-3">
       <div class="dropdown">
-        <label for="contractor" class="form-label fw-bold">Contractor</label>
+        <label for="contractor" class="form-label fw-bold">Contractor <span class="text-danger">*</span></label>
         <input type="text" class="form-control" [(ngModel)]="contractorChallanObj.party" #contractor="ngModel"
           list="constructors" name="contractor" id="contractor" placeholder="Type to search..." required>
         <datalist id="constructors">
@@ -60,7 +74,8 @@
     <div class="col-md-3">
       <label for="challanNumber" class="form-label fw-bold">Challan Number <span class="text-danger">*</span> </label>
       <input type="text" class="form-control" name="challanNumber" [readOnly]="action=='view'" maxlength="8"
-        [(ngModel)]="contractorChallanObj.challanNumber" id="challanNumber" #challanNumber="ngModel" required>
+        [(ngModel)]="contractorChallanObj.challanNumber" id="challanNumber" #challanNumber="ngModel"
+        (keyup)="onChallanNumberChange()" required>
       <div class="text-danger">
         @if(challanNumber.errors?.['required'] && challanNumber.touched && challanNumber.dirty) {
         <span>This field is mendatory</span>
@@ -114,8 +129,8 @@
 
     </div>
     <div class="col-2 ">
-      <button [disabled]="form.invalid || items.length <= 0" *ngIf="action != 'view'" class="btn btn-primary align-left"
-        type="submit" (click)="onSave()">Save</button>
+      <button [disabled]="form.invalid || items.length <= 0 || isDuplicateChallan" *ngIf="action != 'view'"
+        class="btn btn-primary align-left" type="submit" (click)="onSave()">Save</button>
       <button class="btn btn-primary margin-left-10" type="submit" (click)="cancel()">Cancel</button>
     </div>
   </form>

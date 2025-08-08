@@ -9,7 +9,7 @@
     <div class="col-md-3">
       <div class="dropdown">
 
-        <label for="party" class="form-label">Party</label>
+        <label for="party" class="form-label fw-bold">Party</label>
         <input class="form-control" list="datalistOptions" [(ngModel)]="filterObj.clientid" name="party" id="party"
           placeholder="Type to search..." (change)="selectedParty($any($event.target).value)">
         <datalist id="datalistOptions">
