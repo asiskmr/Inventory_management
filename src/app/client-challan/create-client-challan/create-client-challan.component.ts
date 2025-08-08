@@ -264,6 +264,7 @@ export class CreateClientChallanComponent {
   }
 
   onInputBlur(): void {
+    this.clientChallanObj.quantity = Number(this.clientChallanObj.quantity)
     this.isItemExist = this.itemExist();
     const { design, color, quantity } = this.clientChallanObj;
     this.disableAdd = !(design && color && quantity > 0 && !this.isItemExist);

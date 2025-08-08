@@ -301,10 +301,12 @@ export class CreateContractorChallanComponent {
   }
 
   onInputBlur = () => {
+    this.contractorChallanObj.quantity = Number(this.contractorChallanObj.quantity)
     this.isItemExist = this.itemExist();
-    if (this.contractorChallanObj.design && this.contractorChallanObj.color && this.contractorChallanObj.quantity && !this.isItemExist) {
-      this.disableAdd = false;
-    }
+    const { design, color, quantity } = this.contractorChallanObj;
+    quantity
+    this.disableAdd = !(design && color && quantity > 0 && !this.isItemExist);
+
   }
   challanTypes = [{ val: "I", name: "Issue" }, { val: "R", name: "Recieve" }]
 }
