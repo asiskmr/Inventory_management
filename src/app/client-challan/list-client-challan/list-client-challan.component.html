@@ -87,7 +87,8 @@
 <div class="row">
   <div class="col-12">
     <ag-grid-angular class="ag-theme-quartz" style="height: 500px;" [rowData]="clientChallans" [columnDefs]="colDefs"
-      [defaultColDef]="defaultColDef" (gridReady)="onGridReady($event)" />
+      [defaultColDef]="defaultColDef" (gridReady)="onGridReady($event)" [pagination]="true" [paginationPageSize]="10"
+      [paginationPageSizeSelector]="[10, 20, 50]" />
   </div>
 </div>
 

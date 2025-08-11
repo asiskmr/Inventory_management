@@ -6,9 +6,11 @@ import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
-if ((window as any).ENABLE_PROD_MODE) {
-    enableProdMode();
+if (typeof window !== 'undefined' && (window as any).ENABLE_PROD_MODE) {
+  enableProdMode();
 }
+
+console.log('Running in environment:', typeof window === 'undefined' ? 'Server (SSR)' : 'Browser');
 
 bootstrapApplication(AppComponent, appConfig)
   .catch((err) => console.error(err));

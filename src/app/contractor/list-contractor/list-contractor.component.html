@@ -2,8 +2,8 @@
   <form #form="ngForm" class="row g-3 needs-validation" novalidate>
     <div class="col-md-3">
       <label for="contractorName" class="form-label fw-bold">Contractor Name </label>
-      <input type="text" class="form-control" [readOnly]="action=='view'" #contractorName="ngModel" name="contractorName"
-        [(ngModel)]="contractorObj.contractorName" id="contractorName">
+      <input type="text" class="form-control" [readOnly]="action=='view'" #contractorName="ngModel"
+        name="contractorName" [(ngModel)]="contractorObj.contractorName" id="contractorName">
     </div>
     <div class="col-md-4">
       <label for="email" class="form-label fw-bold">Email </label>
@@ -16,22 +16,24 @@
       <label for="mobile" class="form-label fw-bold">Mobile Number</label>
       <div class="input-group has-validation">
         <!-- <span class="input-group-text" id="inputGroupPrepend">&#64;</span> -->
-        <input type="text" class="form-control" name="mobile" [readOnly]="action=='view'" [(ngModel)]="contractorObj.mobile"
-          id="mobile" aria-describedby="inputGroupPrepend">
+        <input type="text" class="form-control" name="mobile" [readOnly]="action=='view'"
+          [(ngModel)]="contractorObj.mobile" id="mobile" aria-describedby="inputGroupPrepend">
         <div class="invalid-feedback">
           Please Enter Mobile Number.
         </div>
       </div>
-    </div> <div class="col-md-2">
+    </div>
+    <div class="col-md-2">
       <label for="gstNo" class="form-label fw-bold">GST Number</label>
-      <input type="text" maxlength="10" class="form-control" name="gstNo" [readOnly]="action=='view'" [(ngModel)]="contractorObj.gstNo"
-        id="gstNo">
+      <input type="text" maxlength="10" class="form-control" name="gstNo" [readOnly]="action=='view'"
+        [(ngModel)]="contractorObj.gstNo" id="gstNo">
       <div class="invalid-feedback">
         Please provide a valid GST No.
       </div>
     </div>
     <div class="col-1 align-right">
-      <button  class="margin-top-30 btn btn-primary" name="gstNo" (click)="searchContractor()" id="gstNo"> Search </button>
+      <button class="margin-top-30 btn btn-primary" name="gstNo" (click)="searchContractor()" id="gstNo"> Search
+      </button>
     </div>
   </form>
 </div>
@@ -48,10 +50,9 @@
 
 <div class="row">
   <div class="col-12">
-    <ag-grid-angular class="ag-theme-quartz"
-    style="height: 500px;"
-    [rowData]="contractor"
-      [columnDefs]="colDefs" [defaultColDef]="defaultColDef"  (gridReady)="onGridReady($event)"/>
+    <ag-grid-angular class="ag-theme-quartz grid-height" [rowData]="contractor" [pagination]="true"
+      [paginationPageSize]="10" [paginationPageSizeSelector]="[10, 20, 50]" [columnDefs]="colDefs"
+      [defaultColDef]="defaultColDef" (gridReady)="onGridReady($event)" />
   </div>
 </div>
 

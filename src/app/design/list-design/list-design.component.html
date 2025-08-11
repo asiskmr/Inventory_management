@@ -6,12 +6,13 @@
       <input type="text" class="form-control" [readOnly]="action=='view'" name="designName"
         [(ngModel)]="designObj.designName" id="designName" #designName="ngModel" required>
 
-        <div class="text-danger">
+      <div class="text-danger">
         <span *ngIf="designName.errors?.['required'] && designName.touched">This field is mendatory</span>
       </div>
     </div>
-    <div class="col-1 align-right" >
-      <button  [disabled]="form.invalid" class="margin-top-30 btn btn-primary" name="gstNo" (click)="searchDesign()" id="gstNo"> Search </button>
+    <div class="col-1 align-right">
+      <button [disabled]="form.invalid" class="margin-top-30 btn btn-primary" name="gstNo" (click)="searchDesign()"
+        id="gstNo"> Search </button>
     </div>
   </form>
 </div>
@@ -26,8 +27,9 @@
 
 <div class="row">
   <div class="col-12">
-    <ag-grid-angular class="ag-theme-quartz" style="height: 500px;" [rowData]="designList" [columnDefs]="colDefs"
-      [defaultColDef]="defaultColDef" (gridReady)="onGridReady($event)" />
+    <ag-grid-angular class="ag-theme-quartz grid-height" [rowData]="designList" [columnDefs]="colDefs"
+      [defaultColDef]="defaultColDef" (gridReady)="onGridReady($event)" [pagination]="true" [paginationPageSize]="10"
+      [paginationPageSizeSelector]="[10, 20, 50]" />
   </div>
 </div>
 

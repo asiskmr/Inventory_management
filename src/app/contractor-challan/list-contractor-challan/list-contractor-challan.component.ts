@@ -106,8 +106,9 @@ export class ListContractorChallanComponent {
       cellRenderer: this.myCellRenderer
     },
     {
-      headerName: 'Action',
-      cellClass: 'align-center',
+      headerName: '',
+      sortable: false,
+      filter: false,
       cellRenderer: this.myCellRendererAction.bind(this),
       onCellClicked: (event) => {
         this.itemDetails = event.data?.challanItems;

@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, inject, PLATFORM_ID } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 
@@ -10,15 +11,19 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
 
-  userName: FormControl= new FormControl('', [Validators.required, Validators.minLength(6)])
-  password: FormControl= new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern(/^[a-zA-Z0-9]+$/)])
+  userName: FormControl = new FormControl('', [Validators.required, Validators.minLength(6)]);
+  password: FormControl = new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern(/^[a-zA-Z0-9]+$/)]);
 
-  router = inject(Router)
+  router = inject(Router);
+  platformId = inject(PLATFORM_ID);
+
   onLogin = () => {
-    if(this.userName.value == 'ashish' && this.password.value == '12345678'){
-      this.router.navigateByUrl("dashboard")
-    }else{
-      alert('wrong password');
+    if (isPlatformBrowser(this.platformId)) {
+      if (this.userName.value === 'ashish' && this.password.value === '12345678') {
+        this.router.navigateByUrl("dashboard");
+      } else {
+        alert('wrong password');
+      }
     }
   }
 

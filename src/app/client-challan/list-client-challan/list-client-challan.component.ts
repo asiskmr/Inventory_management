@@ -96,8 +96,10 @@ export class ListClientChallanComponent {
       cellRenderer: this.myCellRenderer
     },
     {
-      headerName: 'Action',
+      headerName: '',
       cellClass: 'align-center',
+      sortable: false,
+      filter: false,
       cellRenderer: this.myCellRendererAction.bind(this),
       onCellClicked: (event) => {
         this.itemDetails = event.data?.challanItems;
